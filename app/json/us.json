@@ -1,0 +1,18 @@
+﻿[
+    {
+        "name": "Amazon Prime",
+        "amount": "79.99",
+        "image": "amazon_prime.png",
+        "cycle_unit": "year",
+        "cycle_number": "1",
+        "": ""
+    },
+    {
+        "name": "Netflix",
+        "amount": "9.99",
+        "image": "netflix",
+        "cycle_unit": "month",
+        "cycle_number": "1",
+        "": ""
+    }
+]
