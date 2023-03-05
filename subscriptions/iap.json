@@ -3,17 +3,17 @@
       {
          "product":"com.touchbits.subscriptions.iap.pro.user",
          "discount":true,
-         "off":30
+         "off":20
       },
       {
          "product":"com.touchbits.subscriptions.iap.pro.family",
          "discount":true,
-         "off":30
+         "off":20
       },
       {
          "product":"com.touchbits.subscriptions.iap.pro.family.upgrade",
          "discount":true,
-         "off":30
+         "off":20
       }
    ]
 }
