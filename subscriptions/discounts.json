@@ -7,12 +7,12 @@
       },
       {
          "product":"pro.family",
-         "discount":true,
+         "discount":false,
          "off":20
       },
       {
          "product":"pro.family.upgrade",
-         "discount":true,
+         "discount":false,
          "off":26
       }
    ]
