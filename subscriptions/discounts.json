@@ -2,18 +2,18 @@
    "products":[
       {
          "product":"pro",
-         "discount":false,
-         "off":20
+         "discount":true,
+         "off":30
       },
       {
          "product":"pro.family",
-         "discount":false,
-         "off":20
+         "discount":true,
+         "off":30
       },
       {
          "product":"pro.family.upgrade",
-         "discount":false,
-         "off":26
+         "discount":true,
+         "off":30
       }
    ]
 }
