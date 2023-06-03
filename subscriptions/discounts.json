@@ -3,19 +3,19 @@
       {
          "product":"pro",
          "discount":true,
-         "off":30
+         "off":20
       },
       {
          "product":"pro.family",
          "discount":true,
-         "off":30
+         "off":20
       },
       {
          "product":"pro.family.upgrade",
          "discount":true,
-         "off":30
+         "off":20
       }
    ],
-   "start": "2023-4-29",
-   "end": "2023-5-8"
+   "start": "2023-6-5",
+   "end": "2023-6-10"
 }
