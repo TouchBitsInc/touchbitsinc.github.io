@@ -1,0 +1,8 @@
+{
+      "title": "Test clip 1",
+      "description": "Muy awesome ERP 180 SBS clip ",
+      "url": "https://dtag-euro2024-vod.dtag-xr.accedo.tv/VOD/test/testfootage.mp4",
+      "projection_override": {
+        "projection_type_string": "180-erp-stereo-sbs"
+      }
+}
