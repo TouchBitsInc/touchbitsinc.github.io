@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriptions 3.0 - Coming Soon | TouchBits</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --accent-color: #ff3b30;
+            --background-color: #ffffff;
+            --card-background: #f5f5f7;
+            --text-color: #1d1d1f;
+            --text-secondary: #86868b;
+            --spacing-unit: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .content {
+            padding: calc(var(--spacing-unit) * 4);
+            background-color: var(--background-color);
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            margin-top: calc(var(--spacing-unit) * 6);
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: calc(var(--spacing-unit) * 4);
+            margin: calc(var(--spacing-unit) * 4) 0;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-right: calc(var(--spacing-unit) * 2);
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: calc(var(--spacing-unit) * 1);
+        }
+
+        .feature-content p {
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .testflight-section {
+            background-color: var(--card-background);
+            padding: calc(var(--spacing-unit) * 4);
+            margin-bottom: calc(var(--spacing-unit) * 6);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .testflight-icon {
+            width: 48px;
+            height: 48px;
+            margin-right: calc(var(--spacing-unit) * 3);
+            flex-shrink: 0;
+            border-radius: 10px;
+        }
+
+        .testflight-content {
+            flex: 1;
+        }
+
+        .testflight-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 1);
+        }
+
+        .testflight-content p {
+            font-size: 14px;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 15px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 4);
+            color: var(--text-secondary);
+            font-size: 13px;
+            background-color: var(--background-color);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            margin-top: calc(var(--spacing-unit) * 6);
+        }
+
+        @media (min-width: 768px) {
+            .content {
+                padding: calc(var(--spacing-unit) * 8);
+            }
+            
+            .features {
+                grid-template-columns: repeat(3, 1fr);
+                margin: calc(var(--spacing-unit) * 6) 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="testflight-section">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c3/b3/0e/c3b30ec8-18a8-972f-9910-3483e5ec58ec/AppIcon-0-1x_U007epad-0-1-0-P3-85-220-0.png/152x152bb-80.png" alt="TestFlight Icon" class="testflight-icon">
+                <div class="testflight-content">
+                    <h3>Beta Coming Soon</h3>
+                    <p>Get TestFlight now to be ready when the beta launches.</p>
+                    <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Get TestFlight</a>
+                </div>
+            </div>
+            
+            <h2>What's New</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">⚡️</div>
+                    <div class="feature-content">
+                        <h3>Complete Rebuild</h3>
+                        <p>Rewritten from scratch using the new SwiftUI Observable framework for better performance.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-content">
+                        <h3>Enhanced Analytics</h3>
+                        <p>Revamped analytics with SwiftUI Charts for beautiful, insightful visualizations.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💻</div>
+                    <div class="feature-content">
+                        <h3>Unified Experience</h3>
+                        <p>Shared codebase between iOS and macOS for a consistent experience across devices.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-content">
+                        <h3>Todo with Reminders</h3>
+                        <p>Create tasks with custom reminders to stay on top of your subscriptions.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⏱️</div>
+                    <div class="feature-content">
+                        <h3>Timeline Tracking</h3>
+                        <p>Improved timeline tracking to visualize your subscription history.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-content">
+                        <h3>Custom Fields</h3>
+                        <p>Add additional custom fields to tailor subscriptions to your needs.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <footer>
+                <p>© 2024 TouchBits Inc. All rights reserved.</p>
+                <p>TestFlight is a registered trademark of Apple Inc.</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
