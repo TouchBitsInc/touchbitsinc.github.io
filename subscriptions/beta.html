@@ -161,44 +161,46 @@
 
         .language-selector {
             position: fixed;
-            top: calc(var(--spacing-unit) * 3);
+            bottom: calc(var(--spacing-unit) * 3);
             right: calc(var(--spacing-unit) * 3);
             z-index: 1000;
         }
 
         .language-button {
-            background-color: var(--background-color);
-            border: 1px solid var(--card-background);
+            background-color: var(--primary-color);
+            border: none;
             padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
             border-radius: 20px;
             font-size: 14px;
             font-weight: 500;
-            color: var(--text-color);
+            color: var(--background-color);
             cursor: pointer;
             display: flex;
             align-items: center;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .language-button:hover {
-            background-color: var(--card-background);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .language-button img {
             width: 16px;
             height: 16px;
             margin-right: calc(var(--spacing-unit) * 1);
+            filter: invert(1);
         }
 
         .language-dropdown {
             position: absolute;
-            top: 100%;
+            bottom: 100%;
             right: 0;
-            margin-top: calc(var(--spacing-unit) * 1);
-            background-color: var(--card-background);
+            margin-bottom: calc(var(--spacing-unit) * 1);
+            background-color: var(--primary-color);
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             display: none;
             z-index: 101;
@@ -216,15 +218,15 @@
             transition: background-color 0.2s ease;
             display: flex;
             align-items: center;
+            color: var(--background-color);
         }
 
         .language-option:hover {
-            background-color: #e5e5e7;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .language-option.active {
-            background-color: rgba(0, 113, 227, 0.1);
-            color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.15);
             font-weight: 500;
         }
 
@@ -232,6 +234,7 @@
             width: 20px;
             height: 20px;
             margin-right: calc(var(--spacing-unit) * 1.5);
+            filter: invert(1);
         }
 
         @media (min-width: 768px) {
@@ -245,7 +248,7 @@
             }
 
             .language-selector {
-                top: calc(var(--spacing-unit) * 4);
+                bottom: calc(var(--spacing-unit) * 4);
                 right: calc(var(--spacing-unit) * 4);
             }
         }
@@ -315,52 +318,52 @@
                 <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c3/b3/0e/c3b30ec8-18a8-972f-9910-3483e5ec58ec/AppIcon-0-1x_U007epad-0-1-0-P3-85-220-0.png/152x152bb-80.png" alt="TestFlight Icon" class="testflight-icon">
                 <div class="testflight-content">
                     <div class="lang-content en active">
-                        <h3>Beta Coming Soon</h3>
+                        <h3>3.0 Beta Coming Soon</h3>
                         <p>Get TestFlight now to be ready when the beta launches.</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Get TestFlight</a>
                     </div>
                     <div class="lang-content zh">
-                        <h3>测试版即将推出</h3>
+                        <h3>3.0 测试版即将推出</h3>
                         <p>立即获取 TestFlight，为测试版发布做好准备。</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">获取 TestFlight</a>
                     </div>
                     <div class="lang-content ja">
-                        <h3>ベータ版近日公開</h3>
+                        <h3>3.0 ベータ版近日公開</h3>
                         <p>TestFlightを今すぐ入手して、ベータ版のリリースに備えましょう。</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">TestFlightを入手</a>
                     </div>
                     <div class="lang-content fr">
-                        <h3>Bêta Bientôt Disponible</h3>
+                        <h3>3.0 Bêta Bientôt Disponible</h3>
                         <p>Obtenez TestFlight maintenant pour être prêt lors du lancement de la bêta.</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Obtenir TestFlight</a>
                     </div>
                     <div class="lang-content ko">
-                        <h3>베타 출시 예정</h3>
+                        <h3>3.0 베타 출시 예정</h3>
                         <p>베타 출시에 대비하여 지금 TestFlight를 받으세요.</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">TestFlight 받기</a>
                     </div>
                     <div class="lang-content ru">
-                        <h3>Бета-версия Скоро</h3>
+                        <h3>3.0 Бета-версия Скоро</h3>
                         <p>Загрузите TestFlight сейчас, чтобы быть готовым к запуску бета-версии.</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Получить TestFlight</a>
                     </div>
                     <div class="lang-content es">
-                        <h3>Beta Próximamente</h3>
+                        <h3>3.0 Beta Próximamente</h3>
                         <p>Obtén TestFlight ahora para estar listo cuando se lance la beta.</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Obtener TestFlight</a>
                     </div>
                     <div class="lang-content tr">
-                        <h3>Beta Yakında Geliyor</h3>
+                        <h3>3.0 Beta Yakında Geliyor</h3>
                         <p>Beta sürümü yayınlandığında hazır olmak için TestFlight'ı şimdi edinin.</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">TestFlight'ı Edin</a>
                     </div>
                     <div class="lang-content de">
-                        <h3>Beta Kommt Bald</h3>
+                        <h3>3.0 Beta Kommt Bald</h3>
                         <p>Holen Sie sich jetzt TestFlight, um bereit zu sein, wenn die Beta startet.</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">TestFlight holen</a>
                     </div>
                     <div class="lang-content it">
-                        <h3>Beta in Arrivo</h3>
+                        <h3>3.0 Beta in Arrivo</h3>
                         <p>Ottieni TestFlight ora per essere pronto quando la beta sarà disponibile.</p>
                         <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Ottieni TestFlight</a>
                     </div>
@@ -725,8 +728,8 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
                         </div>
                         <div class="feature-content">
-                            <h3>Experiencia Unificada</h3>
-                            <p>Código compartido entre iOS y macOS para una experiencia consistente en todos los dispositivos.</p>
+                            <h3>Expérience Unifiée</h3>
+                            <p>Code partagé entre iOS et macOS pour une expérience cohérente sur tous les appareils.</p>
                         </div>
                     </div>
                     <div class="feature">
@@ -735,7 +738,7 @@
                         </div>
                         <div class="feature-content">
                             <h3>Tareas con Recordatorios</h3>
-                            <p>Crea tareas con recordatorios personalizados para gestionar tus suscripciones.</p>
+                            <p>Crea tâches avec des rappels personnalisés pour suivre vos abonnements.</p>
                         </div>
                     </div>
                     <div class="feature">
@@ -743,8 +746,8 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
                         </div>
                         <div class="feature-content">
-                            <h3>Seguimiento Cronológico</h3>
-                            <p>Seguimiento cronológico mejorado para visualizar tu historial de suscripciones.</p>
+                            <h3>Suivi Chronologique</h3>
+                            <p>Suivi chronologique amélioré pour visualiser l'historique de vos abonnements.</p>
                         </div>
                     </div>
                     <div class="feature">
@@ -752,8 +755,8 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
                         </div>
                         <div class="feature-content">
-                            <h3>Campos Personalizados</h3>
-                            <p>Añade campos personalizados adicionales para adaptar las suscripciones a tus necesidades.</p>
+                            <h3>Champs Personnalisés</h3>
+                            <p>Ajoutez des champs personnalisés supplémentaires pour adapter les abonnements à vos besoins.</p>
                         </div>
                     </div>
                     <div class="feature">
@@ -761,8 +764,8 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
                         </div>
                         <div class="feature-content">
-                            <h3>Apariencia Personalizable</h3>
-                            <p>Personaliza con temas personalizados, iconos de aplicación y preferencias de modo claro/oscuro.</p>
+                            <h3>Apariencia Personnalisable</h3>
+                            <p>Personnalisez avec des thèmes, des icônes d'application et des préférences de mode clair/sombre.</p>
                         </div>
                     </div>
                     <div class="feature">
@@ -770,14 +773,14 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
                         </div>
                         <div class="feature-content">
-                            <h3>Compartir en Familia</h3>
-                            <p>Gestiona suscripciones compartidas con miembros de la familia y realiza un seguimiento conjunto de los gastos del hogar.</p>
+                            <h3>Partage Familial</h3>
+                            <p>Gérez les abonnements partagés avec les membres de la famille et suivez les dépenses du foyer ensemble.</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="more-coming">
-                    <p>Y muchas más funciones por venir...</p>
+                    <p>Et bien d'autres fonctionnalités à venir...</p>
                 </div>
             </div>
 
