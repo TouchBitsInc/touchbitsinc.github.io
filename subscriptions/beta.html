@@ -68,9 +68,19 @@
         }
 
         .feature-icon {
-            font-size: 24px;
+            width: 36px;
+            height: 36px;
             margin-right: calc(var(--spacing-unit) * 2);
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .feature-content h3 {
@@ -132,6 +142,13 @@
             transform: translateY(-2px);
         }
 
+        .more-coming {
+            text-align: center;
+            margin-top: calc(var(--spacing-unit) * 6);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
         footer {
             text-align: center;
             padding: calc(var(--spacing-unit) * 4);
@@ -140,6 +157,81 @@
             background-color: var(--background-color);
             border-top: 1px solid rgba(0,0,0,0.05);
             margin-top: calc(var(--spacing-unit) * 6);
+        }
+
+        .language-selector {
+            position: fixed;
+            top: calc(var(--spacing-unit) * 3);
+            right: calc(var(--spacing-unit) * 3);
+            z-index: 1000;
+        }
+
+        .language-button {
+            background-color: var(--background-color);
+            border: 1px solid var(--card-background);
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .language-button:hover {
+            background-color: var(--card-background);
+        }
+
+        .language-button img {
+            width: 16px;
+            height: 16px;
+            margin-right: calc(var(--spacing-unit) * 1);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: calc(var(--spacing-unit) * 1);
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: none;
+            z-index: 101;
+            min-width: 180px;
+        }
+
+        .language-dropdown.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .language-option:hover {
+            background-color: #e5e5e7;
+        }
+
+        .language-option.active {
+            background-color: rgba(0, 113, 227, 0.1);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .language-option img {
+            width: 20px;
+            height: 20px;
+            margin-right: calc(var(--spacing-unit) * 1.5);
         }
 
         @media (min-width: 768px) {
@@ -151,72 +243,532 @@
                 grid-template-columns: repeat(3, 1fr);
                 margin: calc(var(--spacing-unit) * 6) 0;
             }
+
+            .language-selector {
+                top: calc(var(--spacing-unit) * 4);
+                right: calc(var(--spacing-unit) * 4);
+            }
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
         }
     </style>
 </head>
 <body>
+    <div class="language-selector">
+        <button class="language-button" id="language-toggle">
+            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/globe.png" alt="Language">
+            <span id="current-language">English</span>
+        </button>
+        <div class="language-dropdown" id="language-dropdown">
+            <div class="language-option active" data-lang="en">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="English">
+                English
+            </div>
+            <div class="language-option" data-lang="zh">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Chinese">
+                中文
+            </div>
+            <div class="language-option" data-lang="ja">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Japanese">
+                日本語
+            </div>
+            <div class="language-option" data-lang="fr">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="French">
+                Français
+            </div>
+            <div class="language-option" data-lang="ko">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Korean">
+                한국어
+            </div>
+            <div class="language-option" data-lang="ru">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Russian">
+                Русский
+            </div>
+            <div class="language-option" data-lang="es">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Spanish">
+                Español
+            </div>
+            <div class="language-option" data-lang="tr">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Turkish">
+                Türkçe
+            </div>
+            <div class="language-option" data-lang="de">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="German">
+                Deutsch
+            </div>
+            <div class="language-option" data-lang="it">
+                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Italian">
+                Italiano
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="content">
             <div class="testflight-section">
                 <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c3/b3/0e/c3b30ec8-18a8-972f-9910-3483e5ec58ec/AppIcon-0-1x_U007epad-0-1-0-P3-85-220-0.png/152x152bb-80.png" alt="TestFlight Icon" class="testflight-icon">
                 <div class="testflight-content">
-                    <h3>Beta Coming Soon</h3>
-                    <p>Get TestFlight now to be ready when the beta launches.</p>
-                    <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Get TestFlight</a>
+                    <div class="lang-content en active">
+                        <h3>Beta Coming Soon</h3>
+                        <p>Get TestFlight now to be ready when the beta launches.</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Get TestFlight</a>
+                    </div>
+                    <div class="lang-content zh">
+                        <h3>测试版即将推出</h3>
+                        <p>立即获取 TestFlight，为测试版发布做好准备。</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">获取 TestFlight</a>
+                    </div>
+                    <div class="lang-content ja">
+                        <h3>ベータ版近日公開</h3>
+                        <p>TestFlightを今すぐ入手して、ベータ版のリリースに備えましょう。</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">TestFlightを入手</a>
+                    </div>
+                    <div class="lang-content fr">
+                        <h3>Bêta Bientôt Disponible</h3>
+                        <p>Obtenez TestFlight maintenant pour être prêt lors du lancement de la bêta.</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Obtenir TestFlight</a>
+                    </div>
+                    <div class="lang-content ko">
+                        <h3>베타 출시 예정</h3>
+                        <p>베타 출시에 대비하여 지금 TestFlight를 받으세요.</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">TestFlight 받기</a>
+                    </div>
+                    <div class="lang-content ru">
+                        <h3>Бета-версия Скоро</h3>
+                        <p>Загрузите TestFlight сейчас, чтобы быть готовым к запуску бета-версии.</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Получить TestFlight</a>
+                    </div>
+                    <div class="lang-content es">
+                        <h3>Beta Próximamente</h3>
+                        <p>Obtén TestFlight ahora para estar listo cuando se lance la beta.</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Obtener TestFlight</a>
+                    </div>
+                    <div class="lang-content tr">
+                        <h3>Beta Yakında Geliyor</h3>
+                        <p>Beta sürümü yayınlandığında hazır olmak için TestFlight'ı şimdi edinin.</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">TestFlight'ı Edin</a>
+                    </div>
+                    <div class="lang-content de">
+                        <h3>Beta Kommt Bald</h3>
+                        <p>Holen Sie sich jetzt TestFlight, um bereit zu sein, wenn die Beta startet.</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">TestFlight holen</a>
+                    </div>
+                    <div class="lang-content it">
+                        <h3>Beta in Arrivo</h3>
+                        <p>Ottieni TestFlight ora per essere pronto quando la beta sarà disponibile.</p>
+                        <a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank" class="button">Ottieni TestFlight</a>
+                    </div>
                 </div>
             </div>
             
-            <h2>What's New</h2>
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon">⚡️</div>
-                    <div class="feature-content">
-                        <h3>Complete Rebuild</h3>
-                        <p>Rewritten from scratch using the new SwiftUI Observable framework for better performance.</p>
+            <div class="lang-content en active">
+                <h2>What's New</h2>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Complete Rebuild</h3>
+                            <p>Rewritten from scratch with a revamped UI using the new SwiftUI Observable framework.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Advanced Analytics</h3>
+                            <p>More advanced graphs and analytics with SwiftUI Charts for deeper insights.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Unified Experience</h3>
+                            <p>Shared codebase between iOS and macOS for a consistent experience across devices.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Todo with Reminders</h3>
+                            <p>Create tasks with custom reminders to stay on top of your subscriptions.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Timeline Tracking</h3>
+                            <p>Improved timeline tracking to visualize your subscription history.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Custom Fields</h3>
+                            <p>Add additional custom fields to tailor subscriptions to your needs.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Customizable Appearance</h3>
+                            <p>Personalize with custom themes, app icons, and light/dark mode preferences.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Family Sharing</h3>
+                            <p>Manage shared subscriptions with family members and track household expenses together.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-content">
-                        <h3>Enhanced Analytics</h3>
-                        <p>Revamped analytics with SwiftUI Charts for beautiful, insightful visualizations.</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">💻</div>
-                    <div class="feature-content">
-                        <h3>Unified Experience</h3>
-                        <p>Shared codebase between iOS and macOS for a consistent experience across devices.</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">✅</div>
-                    <div class="feature-content">
-                        <h3>Todo with Reminders</h3>
-                        <p>Create tasks with custom reminders to stay on top of your subscriptions.</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">⏱️</div>
-                    <div class="feature-content">
-                        <h3>Timeline Tracking</h3>
-                        <p>Improved timeline tracking to visualize your subscription history.</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🔍</div>
-                    <div class="feature-content">
-                        <h3>Custom Fields</h3>
-                        <p>Add additional custom fields to tailor subscriptions to your needs.</p>
-                    </div>
+                
+                <div class="more-coming">
+                    <p>And many more features coming soon...</p>
                 </div>
             </div>
-            
+
+            <!-- Chinese Version -->
+            <div class="lang-content zh">
+                <h2>新功能</h2>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>全面重建</h3>
+                            <p>使用新的 SwiftUI Observable 框架从头开始重写，界面全新设计。</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>高级分析</h3>
+                            <p>使用 SwiftUI Charts 提供更高级的图表和分析，获得更深入的见解。</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>统一体验</h3>
+                            <p>iOS 和 macOS 之间共享代码库，在所有设备上提供一致的体验。</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>待办事项与提醒</h3>
+                            <p>创建带有自定义提醒的任务，随时掌握您的订阅情况。</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>时间线跟踪</h3>
+                            <p>改进的时间线跟踪功能，可视化您的订阅历史。</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>自定义字段</h3>
+                            <p>添加额外的自定义字段，根据您的需求定制订阅。</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>可定制外观</h3>
+                            <p>通过自定义主题、应用图标和明暗模式偏好进行个性化设置。</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>家庭共享</h3>
+                            <p>与家庭成员管理共享订阅，共同跟踪家庭支出。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="more-coming">
+                    <p>更多功能即将推出...</p>
+                </div>
+            </div>
+
+            <!-- Korean Version -->
+            <div class="lang-content ko">
+                <h2>새로운 기능</h2>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>완전한 재구축</h3>
+                            <p>새로운 SwiftUI Observable 프레임워크를 사용하여 UI를 개선하고 처음부터 다시 작성했습니다.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>고급 분석</h3>
+                            <p>SwiftUI Charts를 통한 더 심층적인 통찰력을 위한 고급 그래프와 분석.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>통합 경험</h3>
+                            <p>iOS와 macOS 간의 공유 코드베이스로 모든 기기에서 일관된 경험을 제공합니다.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>할일 및 알림</h3>
+                            <p>구독 관리를 위한 맞춤형 알림이 포함된 작업을 만드세요.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>타임라인 추적</h3>
+                            <p>구독 기록을 시각화하기 위한 향상된 타임라인 추적.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>사용자 정의 필드</h3>
+                            <p>필요에 맞게 구독을 조정하기 위한 추가 사용자 정의 필드를 추가하세요.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>맞춤형 외관</h3>
+                            <p>사용자 정의 테마, 앱 아이콘 및 라이트/다크 모드 설정으로 개인화하세요.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>가족 공유</h3>
+                            <p>가족 구성원과 공유 구독을 관리하고 가계 지출을 함께 추적하세요.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="more-coming">
+                    <p>더 많은 기능이 곧 출시됩니다...</p>
+                </div>
+            </div>
+
+            <!-- Russian Version -->
+            <div class="lang-content ru">
+                <h2>Что нового</h2>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Полная Перестройка</h3>
+                            <p>Переписано с нуля с обновленным интерфейсом на новом фреймворке SwiftUI Observable.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Продвинутая Аналитика</h3>
+                            <p>Более продвинутые графики и аналитика с SwiftUI Charts для глубокого анализа.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Единый Опыт</h3>
+                            <p>Общий код для iOS и macOS для согласованного опыта на всех устройствах.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Задачи с Напоминаниями</h3>
+                            <p>Создавайте задачи с настраиваемыми напоминаниями для контроля подписок.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Отслеживание Timeline</h3>
+                            <p>Улучшенное отслеживание временной шкалы для визуализации истории подписок.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Настраиваемые Поля</h3>
+                            <p>Добавляйте дополнительные настраиваемые поля для адаптации подписок под ваши нужды.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Настраиваемый Внешний Вид</h3>
+                            <p>Персонализируйте с помощью пользовательских тем, иконок приложения и настроек светлого/темного режима.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
+                        </div>
+                        <div class="feature-content">
+                            <h3>Семейный Доступ</h3>
+                            <p>Управляйте общими подписками с членами семьи и отслеживайте расходы домохозяйства вместе.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="more-coming">
+                    <p>И много других функций в разработке...</p>
+                </div>
+            </div>
+
             <footer>
                 <p>© 2024 TouchBits Inc. All rights reserved.</p>
                 <p>TestFlight is a registered trademark of Apple Inc.</p>
             </footer>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageToggle = document.getElementById('language-toggle');
+            const languageDropdown = document.getElementById('language-dropdown');
+            const currentLanguageText = document.getElementById('current-language');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            // Auto-detect browser language
+            const detectLanguage = () => {
+                const browserLang = navigator.language.split('-')[0];
+                const supportedLangs = ['en', 'zh', 'ja', 'fr', 'ko', 'ru', 'es', 'tr', 'de', 'it'];
+                return supportedLangs.includes(browserLang) ? browserLang : 'en';
+            };
+            
+            // Set initial language based on browser settings
+            const initialLang = detectLanguage();
+            setLanguage(initialLang);
+            
+            // Toggle dropdown
+            languageToggle.addEventListener('click', function() {
+                languageDropdown.classList.toggle('show');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!languageToggle.contains(event.target) && !languageDropdown.contains(event.target)) {
+                    languageDropdown.classList.remove('show');
+                }
+            });
+            
+            // Language selection
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    languageDropdown.classList.remove('show');
+                });
+            });
+            
+            function setLanguage(lang) {
+                // Update active language in dropdown
+                languageOptions.forEach(option => {
+                    if (option.getAttribute('data-lang') === lang) {
+                        option.classList.add('active');
+                        currentLanguageText.textContent = option.textContent.trim();
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+                
+                // Update content visibility
+                const langElements = document.querySelectorAll('.lang-content');
+                langElements.forEach(el => {
+                    if (el.classList.contains(lang)) {
+                        el.classList.add('active');
+                    } else {
+                        el.classList.remove('active');
+                    }
+                });
+                
+                // Update HTML lang attribute
+                document.documentElement.setAttribute('lang', lang);
+            }
+        });
+    </script>
 </body>
 </html>
