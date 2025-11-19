@@ -3,7 +3,7 @@
       {
          "product":"pro",
          "discount":true,
-         "off":15
+         "off":20
       },
       {
          "product":"pro.family",
@@ -13,9 +13,9 @@
       {
          "product":"pro.family.upgrade",
          "discount":true,
-         "off":15
+         "off":20
       }
    ],
-   "start": "2024-11-15",
-   "end": "2025-1-05"
+   "start": "2025-11-18",
+   "end": "2026-1-04"
 }
