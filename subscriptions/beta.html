@@ -4,16 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subscriptions 3.0 - Coming Soon | TouchBits</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Light mode (default) */
         :root {
-            --primary-color: #000000;
-            --accent-color: #ff3b30;
-            --background-color: #ffffff;
-            --card-background: #f5f5f7;
-            --text-color: #1d1d1f;
-            --text-secondary: #86868b;
-            --spacing-unit: 8px;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #f1f3f4;
+            --bg-card: rgba(0, 0, 0, 0.02);
+            --bg-card-hover: rgba(0, 0, 0, 0.04);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --text-primary: #1a1a1a;
+            --text-secondary: #52525b;
+            --text-tertiary: #71717a;
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.1);
+            --gradient-1: #2563eb;
+            --gradient-2: #7c3aed;
+            --gradient-3: #db2777;
+            --hero-text: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --icon-filter: none;
+            --border-hover: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0a0a0b;
+                --bg-secondary: #111113;
+                --bg-tertiary: #18181b;
+                --bg-card: rgba(255, 255, 255, 0.03);
+                --bg-card-hover: rgba(255, 255, 255, 0.06);
+                --border-color: rgba(255, 255, 255, 0.08);
+                --text-primary: #fafafa;
+                --text-secondary: #a1a1aa;
+                --text-tertiary: #71717a;
+                --accent: #3b82f6;
+                --accent-glow: rgba(59, 130, 246, 0.15);
+                --gradient-1: #3b82f6;
+                --gradient-2: #8b5cf6;
+                --gradient-3: #ec4899;
+                --hero-text: #ffffff;
+                --shadow-color: rgba(0, 0, 0, 0.3);
+                --icon-filter: brightness(0) invert(1);
+                --border-hover: rgba(255, 255, 255, 0.12);
+            }
         }
 
         * {
@@ -22,237 +60,432 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.5;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Gradient background effect */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, var(--accent-glow), transparent);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            width: 100%;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
         }
 
-        .content {
-            padding: calc(var(--spacing-unit) * 4);
-            background-color: var(--background-color);
-        }
-
-        h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: calc(var(--spacing-unit) * 3);
-            margin-top: calc(var(--spacing-unit) * 6);
-        }
-
-        p {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: calc(var(--spacing-unit) * 3);
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: calc(var(--spacing-unit) * 4);
-            margin: calc(var(--spacing-unit) * 4) 0;
-        }
-
-        .feature {
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
             display: flex;
-            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 24px 80px;
         }
 
-        .feature-icon {
-            width: 36px;
-            height: 36px;
-            margin-right: calc(var(--spacing-unit) * 2);
-            flex-shrink: 0;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin-bottom: 32px;
+            box-shadow: 0 20px 40px var(--shadow-color);
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 72px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* Beta Notice */
+        .beta-notice {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 16px;
+            padding: 24px 28px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .beta-notice h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fbbf24;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
         }
 
-        .feature-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        .beta-notice h4::before {
+            content: '⚠️';
+            font-size: 16px;
         }
 
-        .feature-content h3 {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: calc(var(--spacing-unit) * 1);
+        .beta-notice p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.7;
         }
 
-        .feature-content p {
-            font-size: 15px;
+        .beta-notice p:last-child {
             margin-bottom: 0;
         }
 
-        .testflight-section {
-            background-color: var(--card-background);
-            padding: calc(var(--spacing-unit) * 4);
-            margin-bottom: calc(var(--spacing-unit) * 6);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
+        .beta-notice .email-addr {
+            color: #fbbf24;
+            font-weight: 500;
         }
 
-        .testflight-icon {
+        .beta-notice .warning {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
             width: 48px;
             height: 48px;
-            margin-right: calc(var(--spacing-unit) * 3);
-            flex-shrink: 0;
-            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
 
-        .testflight-content {
-            flex: 1;
+        .feature-icon img {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
         }
 
-        .testflight-content h3 {
+        .feature-card h3 {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: calc(var(--spacing-unit) * 1);
+            margin-bottom: 8px;
+            color: var(--text-primary);
         }
 
-        .testflight-content p {
+        .feature-card p {
             font-size: 14px;
-            margin-bottom: calc(var(--spacing-unit) * 2);
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
-        .button {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
-            border-radius: 8px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+        /* Highlight Cards (first 3 features) */
+        .highlight-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 64px;
+        }
+
+        @media (max-width: 900px) {
+            .highlight-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top, var(--accent-glow), transparent 70%);
+            pointer-events: none;
+        }
+
+        .highlight-card .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            border-radius: 16px;
+        }
+
+        .highlight-card .feature-icon img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .highlight-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight-card p {
             font-size: 15px;
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-        }
-
-        .more-coming {
-            text-align: center;
-            margin-top: calc(var(--spacing-unit) * 6);
-            font-style: italic;
             color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
         }
 
+        /* Footer */
         footer {
+            padding: 48px 24px;
             text-align: center;
-            padding: calc(var(--spacing-unit) * 4);
-            color: var(--text-secondary);
-            font-size: 13px;
-            background-color: var(--background-color);
-            border-top: 1px solid rgba(0,0,0,0.05);
-            margin-top: calc(var(--spacing-unit) * 6);
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
         }
 
+        footer p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        /* Language Selector */
         .language-selector {
             position: fixed;
-            bottom: calc(var(--spacing-unit) * 3);
-            right: calc(var(--spacing-unit) * 3);
+            bottom: 24px;
+            right: 24px;
             z-index: 1000;
         }
 
         .language-button {
-            background-color: var(--primary-color);
-            border: none;
-            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
-            border-radius: 20px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: 12px;
             font-size: 14px;
             font-weight: 500;
-            color: var(--background-color);
+            color: var(--text-primary);
             cursor: pointer;
             display: flex;
             align-items: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            gap: 8px;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
         }
 
         .language-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: var(--bg-card-hover);
+            border-color: var(--border-color);
         }
 
         .language-button img {
             width: 16px;
             height: 16px;
-            margin-right: calc(var(--spacing-unit) * 1);
-            filter: invert(1);
+            filter: var(--icon-filter);
+            opacity: 0.7;
         }
 
         .language-dropdown {
             position: absolute;
             bottom: 100%;
             right: 0;
-            margin-bottom: calc(var(--spacing-unit) * 1);
-            background-color: var(--primary-color);
+            margin-bottom: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             display: none;
-            z-index: 101;
-            min-width: 180px;
+            min-width: 160px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px var(--shadow-color);
         }
 
         .language-dropdown.show {
             display: block;
+            animation: slideUp 0.2s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .language-option {
-            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
+            padding: 12px 16px;
             font-size: 14px;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: background 0.2s ease;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
-            color: var(--background-color);
+            gap: 10px;
         }
 
         .language-option:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
         }
 
         .language-option.active {
-            background-color: rgba(255, 255, 255, 0.15);
-            font-weight: 500;
+            background: var(--accent-glow);
+            color: var(--text-primary);
         }
 
         .language-option img {
-            width: 20px;
-            height: 20px;
-            margin-right: calc(var(--spacing-unit) * 1.5);
-            filter: invert(1);
+            width: 18px;
+            height: 18px;
+            filter: var(--icon-filter);
+            opacity: 0.5;
         }
 
-        @media (min-width: 768px) {
-            .content {
-                padding: calc(var(--spacing-unit) * 8);
-            }
-            
-            .features {
-                grid-template-columns: repeat(3, 1fr);
-                margin: calc(var(--spacing-unit) * 6) 0;
-            }
-
-            .language-selector {
-                bottom: calc(var(--spacing-unit) * 4);
-                right: calc(var(--spacing-unit) * 4);
-            }
-        }
-
+        /* Language content visibility */
         .lang-content {
             display: none;
         }
@@ -260,940 +493,899 @@
         .lang-content.active {
             display: block;
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 24px 60px;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .section-header {
+                margin-bottom: 40px;
+            }
+
+            .feature-card {
+                padding: 24px;
+            }
+
+            .highlight-card {
+                padding: 32px 24px;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="gradient-bg"></div>
+
     <div class="language-selector">
         <button class="language-button" id="language-toggle">
             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/globe.png" alt="Language">
             <span id="current-language">English</span>
         </button>
         <div class="language-dropdown" id="language-dropdown">
-            <div class="language-option active" data-lang="en">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="English">
-                English
-            </div>
-            <div class="language-option" data-lang="zh">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Chinese">
-                中文
-            </div>
-            <div class="language-option" data-lang="ja">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Japanese">
-                日本語
-            </div>
-            <div class="language-option" data-lang="fr">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="French">
-                Français
-            </div>
-            <div class="language-option" data-lang="ko">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Korean">
-                한국어
-            </div>
-            <div class="language-option" data-lang="ru">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Russian">
-                Русский
-            </div>
-            <div class="language-option" data-lang="es">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Spanish">
-                Español
-            </div>
-            <div class="language-option" data-lang="tr">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Turkish">
-                Türkçe
-            </div>
-            <div class="language-option" data-lang="de">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="German">
-                Deutsch
-            </div>
-            <div class="language-option" data-lang="it">
-                <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/flag.fill.png" alt="Italian">
-                Italiano
-            </div>
+            <div class="language-option active" data-lang="en">English</div>
+            <div class="language-option" data-lang="zh">中文</div>
+            <div class="language-option" data-lang="ja">日本語</div>
+            <div class="language-option" data-lang="fr">Français</div>
+            <div class="language-option" data-lang="ko">한국어</div>
+            <div class="language-option" data-lang="ru">Русский</div>
+            <div class="language-option" data-lang="es">Español</div>
+            <div class="language-option" data-lang="tr">Türkçe</div>
+            <div class="language-option" data-lang="de">Deutsch</div>
+            <div class="language-option" data-lang="it">Italiano</div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="content">
-            <div class="testflight-section">
-                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c3/b3/0e/c3b30ec8-18a8-972f-9910-3483e5ec58ec/AppIcon-0-1x_U007epad-0-1-0-P3-85-220-0.png/152x152bb-80.png" alt="TestFlight Icon" class="testflight-icon">
-                <div class="testflight-content">
-                    <div class="lang-content en active">
-                        <h3>3.0 Beta Coming Up Soon</h3>
-                        <p>Stay tuned for more information.</p>
-                    </div>
-                    <div class="lang-content zh">
-                        <h3>3.0 测试版即将推出</h3>
-                        <p>敬请期待更多信息。</p>
-                    </div>
-                    <div class="lang-content ja">
-                        <h3>3.0 ベータ版まもなく登場</h3>
-                        <p>続報をお待ちください。</p>
-                    </div>
-                    <div class="lang-content fr">
-                        <h3>3.0 Bêta - Bientôt disponible</h3>
-                        <p>Plus d'informations à venir.</p>
-                    </div>
-                    <div class="lang-content ko">
-                        <h3>3.0 베타 곧 출시 예정</h3>
-                        <p>자세한 내용은 추후 공개됩니다.</p>
-                    </div>
-                    <div class="lang-content ru">
-                        <h3>3.0 Бета-версия - скоро в продаже</h3>
-                        <p>Следите за обновлениями.</p>
-                    </div>
-                    <div class="lang-content es">
-                        <h3>3.0 Beta - Próximamente</h3>
-                        <p>Más información próximamente.</p>
-                    </div>
-                    <div class="lang-content tr">
-                        <h3>3.0 Beta Yakında Geliyor</h3>
-                        <p>Daha fazla bilgi için takipte kalın.</p>
-                    </div>
-                    <div class="lang-content de">
-                        <h3>3.0 Beta - Bald verfügbar</h3>
-                        <p>Weitere Informationen folgen.</p>
-                    </div>
-                    <div class="lang-content it">
-                        <h3>3.0 Beta - In arrivo presto</h3>
-                        <p>Maggiori informazioni in arrivo.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="lang-content en active">
-                <h2>What's New</h2>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Complete Rebuild</h3>
-                            <p>Rebuilt the app from scratch using the new SwiftUI Observable framework for improved performance and reliability.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Advanced Analytics</h3>
-                            <p>Rebuild all charts using SwiftUI Charts to provide deeper insights with more advanced graphs and analytics.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Unified Experience</h3>
-                            <p>Shared codebase between iOS and macOS for a consistent experience across devices.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Todo with Reminders</h3>
-                            <p>Create tasks with custom reminders to stay on top of your subscriptions.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Timeline Tracking</h3>
-                            <p>Enhanced timeline tracking to provide more customization options for cycles.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Custom Fields</h3>
-                            <p>Add additional custom fields to your subscription based on your needs.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Customizable Appearance</h3>
-                            <p>Personalize with custom themes, app icons, and light/dark mode preferences.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Family Sharing</h3>
-                            <p>Manage shared subscriptions with family members and track household expenses together.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="more-coming">
-                    <p>And many more features coming soon...</p>
-                </div>
-            </div>
+    <!-- English Content -->
+    <div class="lang-content en active">
+        <header class="hero">
+            <div class="hero-badge">Coming Soon</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>Completely rebuilt from the ground up. A powerful subscription tracker with advanced analytics, beautiful interface, and seamless sync across all your Apple devices.</p>
 
-            <!-- Chinese Version -->
-            <div class="lang-content zh">
-                <h2>新功能</h2>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>完全重建</h3>
-                            <p>使用新的 SwiftUI Observable 框架从零重建应用程序，提升性能和可靠性。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>高级分析</h3>
-                            <p>使用 SwiftUI Charts 重建所有图表，通过更高级的图表和分析提供更深入的见解。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>统一体验</h3>
-                            <p>iOS 和 macOS 之间共享代码库，在所有设备上提供一致的体验。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>待办事项与提醒</h3>
-                            <p>创建带有自定义提醒的任务，随时掌握您的订阅情况。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>时间线跟踪</h3>
-                            <p>增强的时间线跟踪功能，提供更多周期自定义选项。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>自定义字段</h3>
-                            <p>根据您的需求为订阅添加额外的自定义字段。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>可定制外观</h3>
-                            <p>通过自定义主题、应用图标和明暗模式偏好进行个性化设置。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>家庭共享</h3>
-                            <p>与家庭成员管理共享订阅，共同跟踪家庭支出。</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="more-coming">
-                    <p>更多功能即将推出...</p>
-                </div>
+            <div class="beta-notice">
+                <h4>Internal Beta Testing</h4>
+                <p>The app is currently in internal beta testing. A public beta will be available in the coming months.</p>
+                <p>If you'd like early access to the internal beta, please contact us at <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
+                <p class="warning">Note: The current build involves database changes that may result in data loss. Join at your own risk.</p>
             </div>
+        </header>
 
-            <!-- Korean Version -->
-            <div class="lang-content ko">
-                <h2>새로운 기능</h2>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>완전한 재구축</h3>
-                            <p>새로운 SwiftUI Observable 프레임워크를 사용하여 성능과 안정성이 향상된 앱을 처음부터 재구축했습니다.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>고급 분석</h3>
-                            <p>SwiftUI Charts를 사용하여 모든 차트를 재구축하여 더 진보된 그래프와 분석으로 심층적인 인사이트 제공.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>통합 경험</h3>
-                            <p>iOS와 macOS 간의 공유 코드베이스로 모든 기기에서 일관된 경험을 제공합니다.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>할일 및 알림</h3>
-                            <p>구독 관리를 위한 맞춤형 알림이 포함된 작업을 만드세요.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>타임라인 추적</h3>
-                            <p>주기별 맞춤 설정 옵션이 강화된 타임라인 추적 기능.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>사용자 정의 필드</h3>
-                            <p>필요에 따라 구독에 추가 사용자 정의 필드를 추가하세요.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>맞춤형 외관</h3>
-                            <p>사용자 정의 테마, 앱 아이콘 및 라이트/다크 모드 설정으로 개인화하세요.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>가족 공유</h3>
-                            <p>가족 구성원과 공유 구독을 관리하고 가계 지출을 함께 추적하세요.</p>
-                        </div>
-                    </div>
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>What's New</h2>
+                    <p>Major improvements and new features designed to help you take control of your subscriptions.</p>
                 </div>
-                
-                <div class="more-coming">
-                    <p>더 많은 기능이 곧 출시됩니다...</p>
-                </div>
-            </div>
 
-            <!-- Russian Version -->
-            <div class="lang-content ru">
-                <h2>Что нового</h2>
-                <div class="features">
-                    <div class="feature">
+                <div class="highlight-cards">
+                    <div class="highlight-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild">
                         </div>
-                        <div class="feature-content">
-                            <h3>Полная Перестройка</h3>
-                            <p>Приложение полностью перестроено с использованием нового фреймворка SwiftUI Observable для улучшения производительности и надежности.</p>
-                        </div>
+                        <h3>Complete Rebuild</h3>
+                        <p>Built from scratch using SwiftUI Observable framework for improved performance and reliability.</p>
                     </div>
-                    <div class="feature">
+                    <div class="highlight-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics">
                         </div>
-                        <div class="feature-content">
-                            <h3>Продвинутая Аналитика</h3>
-                            <p>Перестроены все графики с использованием SwiftUI Charts для обеспечения более глубокого анализа с помощью продвинутых графиков и аналитики.</p>
-                        </div>
+                        <h3>Advanced Analytics</h3>
+                        <p>All-new charts using SwiftUI Charts providing deeper insights with beautiful visualizations.</p>
                     </div>
-                    <div class="feature">
+                    <div class="highlight-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified">
                         </div>
-                        <div class="feature-content">
-                            <h3>Единый Опыт</h3>
-                            <p>Общий код для iOS и macOS для согласованного опыта на всех устройствах.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Задачи с Напоминаниями</h3>
-                            <p>Создавайте задачи с настраиваемыми напоминаниями для контроля подписок.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Отслеживание Timeline</h3>
-                            <p>Улучшенное отслеживание временной шкалы с расширенными возможностями настройки циклов.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Настраиваемые Поля</h3>
-                            <p>Добавляйте дополнительные настраиваемые поля к вашей подписке в соответствии с вашими потребностями.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Настраиваемый Внешний Вид</h3>
-                            <p>Персонализируйте с помощью пользовательских тем, иконок приложения и настроек светлого/темного режима.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Семейный Доступ</h3>
-                            <p>Управляйте общими подписками с членами семьи и отслеживайте расходы домохозяйства вместе.</p>
-                        </div>
+                        <h3>Unified Experience</h3>
+                        <p>Shared codebase between iOS and macOS for a consistent experience across all devices.</p>
                     </div>
                 </div>
-                
-                <div class="more-coming">
-                    <p>И много других функций в разработке...</p>
-                </div>
-            </div>
 
-            <!-- Spanish Version -->
-            <div class="lang-content es">
-                <h2>Novedades</h2>
-                <div class="features">
-                    <div class="feature">
+                <div class="features-grid">
+                    <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt="Reminders">
                         </div>
-                        <div class="feature-content">
-                            <h3>Reconstrucción Completa</h3>
-                            <p>Aplicación reconstruida desde cero utilizando el nuevo framework SwiftUI Observable para mejorar el rendimiento y la fiabilidad.</p>
-                        </div>
+                        <h3>Reminders</h3>
+                        <p>Set payment and expiration reminders with customizable timing and flexible scheduling.</p>
                     </div>
-                    <div class="feature">
+                    <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt="Term Adjustments">
                         </div>
-                        <div class="feature-content">
-                            <h3>Análisis Avanzado</h3>
-                            <p>Reconstrucción de todos los gráficos usando SwiftUI Charts para proporcionar análisis más profundos con gráficos y análisis más avanzados.</p>
-                        </div>
+                        <h3>Term Adjustments</h3>
+                        <p>Track promotional discounts, trial extensions, or temporary price changes.</p>
                     </div>
-                    <div class="feature">
+                    <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt="Add-Ons">
                         </div>
-                        <div class="feature-content">
-                            <h3>Expérience Unifiée</h3>
-                            <p>Code partagé entre iOS et macOS pour une expérience cohérente sur tous les appareils.</p>
-                        </div>
+                        <h3>Add-Ons</h3>
+                        <p>Record additional purchases like DLC, in-app purchases, or extra content.</p>
                     </div>
-                    <div class="feature">
+                    <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt="Manual Payments">
                         </div>
-                        <div class="feature-content">
-                            <h3>Tareas con Recordatorios</h3>
-                            <p>Crea tâches avec des rappels personnalisés pour suivre vos abonnements.</p>
-                        </div>
+                        <h3>Manual Payments</h3>
+                        <p>Track individual payments manually for precise control over your records.</p>
                     </div>
-                    <div class="feature">
+                    <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing">
                         </div>
-                        <div class="feature-content">
-                            <h3>Suivi Chronologique</h3>
-                            <p>Suivi chronologique amélioré offrant plus d'options de personnalisation pour les cycles.</p>
-                        </div>
+                        <h3>Family Sharing</h3>
+                        <p>Split costs with family members and track who pays what amount.</p>
                     </div>
-                    <div class="feature">
+                    <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt="Todos">
                         </div>
-                        <div class="feature-content">
-                            <h3>Champs Personnalisés</h3>
-                            <p>Ajoutez des champs personnalisés supplémentaires à votre abonnement selon vos besoins.</p>
-                        </div>
+                        <h3>Todos</h3>
+                        <p>Create task lists for each subscription to track important actions.</p>
                     </div>
-                    <div class="feature">
+                    <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt="Custom Fields">
                         </div>
-                        <div class="feature-content">
-                            <h3>Apariencia Personnalisable</h3>
-                            <p>Personnalisez avec des thèmes, des icônes d'application et des préférences de mode clair/sombre.</p>
-                        </div>
+                        <h3>Custom Fields</h3>
+                        <p>Store additional info like account numbers, licenses, or other details.</p>
                     </div>
-                    <div class="feature">
+                    <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt="Attachments">
                         </div>
-                        <div class="feature-content">
-                            <h3>Partage Familial</h3>
-                            <p>Gérez les abonnements partagés avec les membres de la famille et suivez les dépenses du foyer ensemble.</p>
+                        <h3>Attachments</h3>
+                        <p>Attach files and documents for easy reference and organized records.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Price History">
                         </div>
+                        <h3>Price History</h3>
+                        <p>Track pricing changes including trials, increases, and payment gaps.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt="Security">
+                        </div>
+                        <h3>Security</h3>
+                        <p>Protect your data with Face ID, Touch ID, or Passcode authentication.</p>
                     </div>
                 </div>
-                
-                <div class="more-coming">
-                    <p>Et bien d'autres fonctionnalités à venir...</p>
-                </div>
-            </div>
-
-            <!-- Turkish Version -->
-            <div class="lang-content tr">
-                <h2>Yenilikler</h2>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Tamamen Yeniden Yapılandırma</h3>
-                            <p>Yeni SwiftUI Observable framework kullanılarak daha iyi performans ve güvenilirlik için sıfırdan yeniden inşa edildi.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Gelişmiş Analitik</h3>
-                            <p>SwiftUI Charts를 사용하여 모든 차트를 재구축하여 더 진보된 그래프와 분석으로 심층적인 인사이트 제공.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Birleşik Deneyim</h3>
-                            <p>Tüm cihazlarda tutarlı bir deneyim için iOS ve macOS arasında paylaşılan kod tabanı.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Hatırlatıcılı Yapılacaklar</h3>
-                            <p>Aboneliklerinizi takip etmek için özel hatırlatıcılarla görevler oluşturun.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Zaman Çizelgesi Takibi</h3>
-                            <p>Döngüler için daha fazla özelleştirme seçeneği sunan geliştirilmiş zaman çizelgesi takibi.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Özel Alanlar</h3>
-                            <p>İhtiyaçlarınıza göre aboneliğinize ek özel alanlar ekleyin.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Özelleştirilebilir Görünüm</h3>
-                            <p>Özel temalar, uygulama simgeleri ve açık/koyu mod tercihleriyle kişiselleştirin.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Aile Paylaşımı</h3>
-                            <p>Aile üyeleriyle paylaşılan abonelikleri yönetin ve ev harcamalarını birlikte takip edin.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="more-coming">
-                    <p>Ve yakında daha fazla özellik...</p>
-                </div>
-            </div>
-
-            <!-- German Version -->
-            <div class="lang-content de">
-                <h2>Neuigkeiten</h2>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Kompletter Neuaufbau</h3>
-                            <p>Die App wurde mit dem neuen SwiftUI Observable Framework von Grund auf neu entwickelt für verbesserte Leistung und Zuverlässigkeit.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Erweiterte Analysen</h3>
-                            <p>Alle Diagramme wurden mit SwiftUI Charts neu aufgebaut, um tiefere Einblicke durch fortschrittlichere Grafiken und Analysen zu ermöglichen.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Einheitliche Erfahrung</h3>
-                            <p>Gemeinsamer Code zwischen iOS und macOS für ein konsistentes Erlebnis auf allen Geräten.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Todo mit Erinnerungen</h3>
-                            <p>Erstellen Sie Aufgaben mit benutzerdefinierten Erinnerungen zur Verwaltung Ihrer Abonnements.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Zeitstrahl-Tracking</h3>
-                            <p>Verbessertes Zeitstrahl-Tracking mit mehr Anpassungsoptionen für Zyklen.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Benutzerdefinierte Felder</h3>
-                            <p>Fügen Sie Ihrem Abonnement zusätzliche benutzerdefinierte Felder nach Ihren Bedürfnissen hinzu.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Anpassbares Erscheinungsbild</h3>
-                            <p>Personalisieren Sie mit benutzerdefinierten Designs, App-Symbolen und Hell-/Dunkel-Modus-Einstellungen.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Familienfreigabe</h3>
-                            <p>Verwalten Sie gemeinsame Abonnements mit Familienmitgliedern und verfolgen Sie Haushaltsausgaben gemeinsam.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="more-coming">
-                    <p>Und viele weitere Funktionen in Kürze...</p>
-                </div>
-            </div>
-
-            <!-- Italian Version -->
-            <div class="lang-content it">
-                <h2>Novità</h2>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Ricostruzione Completa</h3>
-                            <p>App ricostruita da zero utilizzando il nuovo framework SwiftUI Observable per migliori prestazioni e affidabilità.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Analisi Avanzate</h3>
-                            <p>Ricostruzione di tutti i grafici utilizzando SwiftUI Charts per fornire approfondimenti più dettagliati con grafici e analisi più avanzati.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Esperienza Unificata</h3>
-                            <p>Codice condiviso tra iOS e macOS per un'esperienza coerente su tutti i dispositivi.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Todo con Promemoria</h3>
-                            <p>Crea attività con promemoria personalizzati per gestire i tuoi abbonamenti.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Tracciamento Timeline</h3>
-                            <p>Tracciamento timeline migliorato con più opzioni di personalizzazione per i cicli.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Campi Personalizzati</h3>
-                            <p>Aggiungi campi personalizzati aggiuntivi al tuo abbonamento in base alle tue esigenze.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Aspetto Personalizzabile</h3>
-                            <p>Personalizza con temi, icone dell'app e preferenze modalità chiara/scura.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Condivisione Familiare</h3>
-                            <p>Gestisci abbonamenti condivisi con i membri della famiglia e traccia insieme le spese domestiche.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="more-coming">
-                    <p>E molte altre funzionalità in arrivo...</p>
-                </div>
-            </div>
-
-            <!-- Japanese Version -->
-            <div class="lang-content ja">
-                <h2>新機能</h2>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>完全な再構築</h3>
-                            <p>新しいSwiftUI Observableフレームワークを使用してアプリを一から再構築し、パフォーマンスと信頼性を向上。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>高度な分析機能</h3>
-                            <p>SwiftUI Chartsによる、より詳細なグラフと分析機能を提供します。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>統一されたエクスペリエンス</h3>
-                            <p>iOSとmacOS間で共有されるコードベースにより、デバイス間で一貫した体験を提供します。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>リマインダー付きTodo</h3>
-                            <p>サブスクリプションを管理するためのカスタムリマインダー付きタスクを作成できます。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>タイムライン追跡</h3>
-                            <p>サイクル管理のカスタマイズ機能を強化したタイムライン追跡機能。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>カスタムフィールド</h3>
-                            <p>ニーズに応じてサブスクリプションに追加のカスタムフィールドを設定。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>カスタマイズ可能な外観</h3>
-                            <p>カスタムテーマ、アプリアイコン、ライト/ダークモードの設定でパーソナライズできます。</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>ファミリー共有</h3>
-                            <p>家族と共有するサブスクリプションを管理し、家計の支出を一緒に追跡できます。</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="more-coming">
-                    <p>さらに多くの機能が近日公開予定...</p>
-                </div>
-            </div>
-
-            <!-- French Version -->
-            <div class="lang-content fr">
-                <h2>Nouveautés</h2>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Reconstruction Complète</h3>
-                            <p>Application reconstruite à partir de zéro avec le nouveau framework SwiftUI Observable pour de meilleures performances et fiabilité.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Analyses Avancées</h3>
-                            <p>Reconstruction de tous les graphiques avec SwiftUI Charts pour offrir des analyses plus approfondies avec des graphiques plus avancés.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Expérience Unifiée</h3>
-                            <p>Code partagé entre iOS et macOS pour une expérience cohérente sur tous les appareils.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.circle.fill.png" alt="Todo Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Todo avec Rappels</h3>
-                            <p>Créez des tâches avec des rappels personnalisés pour suivre vos abonnements.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/clock.fill.png" alt="Timeline Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Suivi Chronologique</h3>
-                            <p>Suivi chronologique amélioré offrant plus d'options de personnalisation pour les cycles.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/tag.fill.png" alt="Custom Fields Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Champs Personnalisés</h3>
-                            <p>Ajoutez des champs personnalisés supplémentaires à votre abonnement selon vos besoins.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/circle.grid.3x3.fill.png" alt="Appearance Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Apariencia Personnalisable</h3>
-                            <p>Personnalisez avec des thèmes, des icônes d'application et des préférences de mode clair/sombre.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">
-                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing Icon">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Partage Familial</h3>
-                            <p>Gérez les abonnements partagés avec les membres de la famille et suivez les dépenses du foyer ensemble.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="more-coming">
-                    <p>Et bien d'autres fonctionnalités à venir...</p>
-                </div>
-            </div>
-
-            <footer>
-                <p>© 2024 TouchBits Inc. All rights reserved.</p>
-                <p>TestFlight is a registered trademark of Apple Inc.</p>
-            </footer>
+            </section>
         </div>
+
+        <footer>
+            <p>&copy; 2025 TouchBits Inc. All rights reserved.</p>
+            <p>TestFlight is a registered trademark of Apple Inc.</p>
+        </footer>
+    </div>
+
+    <!-- Chinese Content -->
+    <div class="lang-content zh">
+        <header class="hero">
+            <div class="hero-badge">即将推出</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>从零开始完全重建。功能强大的订阅追踪器，具有高级分析、精美界面，以及在所有 Apple 设备上的无缝同步。</p>
+
+            <div class="beta-notice">
+                <h4>内部测试中</h4>
+                <p>该应用目前正在进行内部测试。公开测试版将在未来几个月内推出。</p>
+                <p>如果您希望提前体验内部测试版，请发送邮件至 <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
+                <p class="warning">注意：当前版本涉及数据库变更，可能导致数据丢失。请自行承担风险。</p>
+            </div>
+        </header>
+
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>新功能</h2>
+                    <p>重大改进和新功能，旨在帮助您掌控订阅。</p>
+                </div>
+
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild">
+                        </div>
+                        <h3>完全重建</h3>
+                        <p>使用 SwiftUI Observable 框架从零构建，提升性能和可靠性。</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics">
+                        </div>
+                        <h3>高级分析</h3>
+                        <p>使用 SwiftUI Charts 的全新图表，提供更深入的见解和精美的可视化效果。</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified">
+                        </div>
+                        <h3>统一体验</h3>
+                        <p>iOS 和 macOS 共享代码库，在所有设备上提供一致的体验。</p>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt="Reminders">
+                        </div>
+                        <h3>提醒</h3>
+                        <p>设置付款和到期提醒，支持自定义时间和灵活的日程安排。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt="Term Adjustments">
+                        </div>
+                        <h3>期限调整</h3>
+                        <p>跟踪促销折扣、试用延期或临时价格变动。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt="Add-Ons">
+                        </div>
+                        <h3>附加购买</h3>
+                        <p>记录 DLC、应用内购买或额外内容等附加购买。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt="Manual Payments">
+                        </div>
+                        <h3>手动付款</h3>
+                        <p>手动跟踪单笔付款，精确控制记录。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing">
+                        </div>
+                        <h3>家庭共享</h3>
+                        <p>与家人分摊费用，跟踪各自的支付金额。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt="Todos">
+                        </div>
+                        <h3>待办事项</h3>
+                        <p>为每个订阅创建任务列表，跟踪重要操作。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt="Custom Fields">
+                        </div>
+                        <h3>自定义字段</h3>
+                        <p>存储账号、许可证或其他详细信息。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt="Attachments">
+                        </div>
+                        <h3>附件</h3>
+                        <p>附加文件和文档，方便参考和有序记录。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Price History">
+                        </div>
+                        <h3>价格历史</h3>
+                        <p>跟踪价格变化，包括试用、涨价和付款间隔。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt="Security">
+                        </div>
+                        <h3>安全</h3>
+                        <p>使用面容 ID、触控 ID 或密码保护您的数据。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 TouchBits Inc. 版权所有。</p>
+            <p>TestFlight 是 Apple Inc. 的注册商标。</p>
+        </footer>
+    </div>
+
+    <!-- Japanese Content -->
+    <div class="lang-content ja">
+        <header class="hero">
+            <div class="hero-badge">近日公開</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>ゼロから完全に再構築。高度な分析、美しいインターフェース、すべてのAppleデバイス間でのシームレスな同期を備えた強力なサブスクリプショントラッカー。</p>
+
+            <div class="beta-notice">
+                <h4>内部ベータテスト中</h4>
+                <p>現在、アプリは内部ベータテスト中です。パブリックベータは数ヶ月以内に公開予定です。</p>
+                <p>内部ベータへの早期アクセスをご希望の方は、<span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span> までご連絡ください。</p>
+                <p class="warning">注意：現在のビルドはデータベースの変更を伴うため、データが失われる可能性があります。自己責任でご参加ください。</p>
+            </div>
+        </header>
+
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>新機能</h2>
+                    <p>サブスクリプションを管理するための大幅な改善と新機能。</p>
+                </div>
+
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild">
+                        </div>
+                        <h3>完全な再構築</h3>
+                        <p>SwiftUI Observable フレームワークを使用してゼロから構築し、パフォーマンスと信頼性を向上。</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics">
+                        </div>
+                        <h3>高度な分析機能</h3>
+                        <p>SwiftUI Charts を使用した全く新しいチャートで、より深い洞察と美しいビジュアライゼーションを提供。</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified">
+                        </div>
+                        <h3>統一されたエクスペリエンス</h3>
+                        <p>iOS と macOS の共有コードベースにより、すべてのデバイスで一貫した体験を提供。</p>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt="Reminders">
+                        </div>
+                        <h3>リマインダー</h3>
+                        <p>カスタマイズ可能なタイミングと柔軟なスケジュールで支払いと有効期限のリマインダーを設定。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt="Term Adjustments">
+                        </div>
+                        <h3>期間調整</h3>
+                        <p>プロモーション割引、試用期間の延長、一時的な価格変更を追跡。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt="Add-Ons">
+                        </div>
+                        <h3>アドオン</h3>
+                        <p>DLC、アプリ内課金、追加コンテンツなどの追加購入を記録。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt="Manual Payments">
+                        </div>
+                        <h3>手動支払い</h3>
+                        <p>個別の支払いを手動で追跡し、記録を正確に管理。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing">
+                        </div>
+                        <h3>ファミリー共有</h3>
+                        <p>家族と費用を分担し、誰がいくら支払うかを追跡。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt="Todos">
+                        </div>
+                        <h3>Todo</h3>
+                        <p>各サブスクリプションのタスクリストを作成し、重要なアクションを追跡。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt="Custom Fields">
+                        </div>
+                        <h3>カスタムフィールド</h3>
+                        <p>アカウント番号、ライセンス、その他の詳細を保存。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt="Attachments">
+                        </div>
+                        <h3>添付ファイル</h3>
+                        <p>ファイルやドキュメントを添付し、簡単な参照と整理された記録を実現。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Price History">
+                        </div>
+                        <h3>価格履歴</h3>
+                        <p>トライアル、価格上昇、支払いの空白を含む価格変動を追跡。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt="Security">
+                        </div>
+                        <h3>セキュリティ</h3>
+                        <p>Face ID、Touch ID、またはパスコードでデータを保護。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 TouchBits Inc. All rights reserved.</p>
+            <p>TestFlight は Apple Inc. の登録商標です。</p>
+        </footer>
+    </div>
+
+    <!-- Korean Content -->
+    <div class="lang-content ko">
+        <header class="hero">
+            <div class="hero-badge">곧 출시</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>완전히 새롭게 재구축되었습니다. 고급 분석, 아름다운 인터페이스, 모든 Apple 기기 간 원활한 동기화를 갖춘 강력한 구독 추적기.</p>
+
+            <div class="beta-notice">
+                <h4>내부 베타 테스트 중</h4>
+                <p>앱은 현재 내부 베타 테스트 중입니다. 공개 베타는 몇 달 내로 출시될 예정입니다.</p>
+                <p>내부 베타에 조기 접근을 원하시면 <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span>으로 문의해 주세요.</p>
+                <p class="warning">주의: 현재 빌드는 데이터베이스 변경이 포함되어 있어 데이터 손실이 발생할 수 있습니다. 본인 책임하에 참여해 주세요.</p>
+            </div>
+        </header>
+
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>새로운 기능</h2>
+                    <p>구독을 관리하는 데 도움이 되는 주요 개선 사항과 새로운 기능.</p>
+                </div>
+
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild">
+                        </div>
+                        <h3>완전한 재구축</h3>
+                        <p>SwiftUI Observable 프레임워크를 사용하여 처음부터 구축하여 성능과 안정성을 향상.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics">
+                        </div>
+                        <h3>고급 분석</h3>
+                        <p>SwiftUI Charts를 사용한 완전히 새로운 차트로 더 깊은 인사이트와 아름다운 시각화 제공.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified">
+                        </div>
+                        <h3>통합 경험</h3>
+                        <p>iOS와 macOS 간 공유 코드베이스로 모든 기기에서 일관된 경험 제공.</p>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt="Reminders">
+                        </div>
+                        <h3>알림</h3>
+                        <p>맞춤 타이밍과 유연한 일정으로 결제 및 만료 알림 설정.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt="Term Adjustments">
+                        </div>
+                        <h3>기간 조정</h3>
+                        <p>프로모션 할인, 체험 연장 또는 임시 가격 변경 추적.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt="Add-Ons">
+                        </div>
+                        <h3>추가 구매</h3>
+                        <p>DLC, 인앱 구매 또는 추가 콘텐츠와 같은 추가 구매 기록.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt="Manual Payments">
+                        </div>
+                        <h3>수동 결제</h3>
+                        <p>개별 결제를 수동으로 추적하여 기록을 정밀하게 제어.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt="Family Sharing">
+                        </div>
+                        <h3>가족 공유</h3>
+                        <p>가족과 비용을 나누고 누가 얼마를 지불하는지 추적.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt="Todos">
+                        </div>
+                        <h3>할 일</h3>
+                        <p>각 구독에 대한 작업 목록을 만들어 중요한 작업 추적.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt="Custom Fields">
+                        </div>
+                        <h3>사용자 정의 필드</h3>
+                        <p>계정 번호, 라이선스 또는 기타 세부 정보 저장.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt="Attachments">
+                        </div>
+                        <h3>첨부 파일</h3>
+                        <p>파일과 문서를 첨부하여 쉬운 참조와 정리된 기록.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Price History">
+                        </div>
+                        <h3>가격 이력</h3>
+                        <p>체험, 가격 인상 및 결제 공백을 포함한 가격 변화 추적.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt="Security">
+                        </div>
+                        <h3>보안</h3>
+                        <p>Face ID, Touch ID 또는 암호로 데이터 보호.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 TouchBits Inc. All rights reserved.</p>
+            <p>TestFlight는 Apple Inc.의 등록 상표입니다.</p>
+        </footer>
+    </div>
+
+    <!-- Other language content sections follow the same pattern -->
+    <!-- Russian, Spanish, Turkish, German, Italian, French -->
+
+    <div class="lang-content ru">
+        <header class="hero">
+            <div class="hero-badge">Скоро</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>Полностью перестроено с нуля. Мощный трекер подписок с продвинутой аналитикой, красивым интерфейсом и бесшовной синхронизацией на всех устройствах Apple.</p>
+
+            <div class="beta-notice">
+                <h4>Внутреннее бета-тестирование</h4>
+                <p>Приложение в настоящее время находится на внутреннем бета-тестировании. Публичная бета будет доступна в ближайшие месяцы.</p>
+                <p>Если вы хотите получить ранний доступ к внутренней бете, свяжитесь с нами по адресу <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
+                <p class="warning">Внимание: текущая сборка включает изменения базы данных, которые могут привести к потере данных. Участвуйте на свой страх и риск.</p>
+            </div>
+        </header>
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>Что нового</h2>
+                    <p>Крупные улучшения и новые функции для контроля подписок.</p>
+                </div>
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt="Rebuild"></div>
+                        <h3>Полная Перестройка</h3>
+                        <p>Создано с нуля с использованием SwiftUI Observable для улучшения производительности.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt="Analytics"></div>
+                        <h3>Продвинутая Аналитика</h3>
+                        <p>Новые графики SwiftUI Charts с глубоким анализом и красивой визуализацией.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt="Unified"></div>
+                        <h3>Единый Опыт</h3>
+                        <p>Общий код для iOS и macOS для согласованного опыта на всех устройствах.</p>
+                    </div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt=""></div><h3>Напоминания</h3><p>Настраиваемые напоминания об оплате и истечении срока.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt=""></div><h3>Корректировка сроков</h3><p>Отслеживание промо-скидок и временных изменений цен.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt=""></div><h3>Дополнения</h3><p>Запись дополнительных покупок и контента.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt=""></div><h3>Ручные платежи</h3><p>Ручное отслеживание отдельных платежей.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt=""></div><h3>Семейный доступ</h3><p>Разделение расходов с членами семьи.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt=""></div><h3>Задачи</h3><p>Списки задач для каждой подписки.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Настраиваемые поля</h3><p>Хранение дополнительной информации.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Вложения</h3><p>Прикрепление файлов и документов.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>История цен</h3><p>Отслеживание изменений цен.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Безопасность</h3><p>Защита данных с Face ID, Touch ID или паролем.</p></div>
+                </div>
+            </section>
+        </div>
+        <footer><p>&copy; 2025 TouchBits Inc.</p></footer>
+    </div>
+
+    <div class="lang-content es">
+        <header class="hero">
+            <div class="hero-badge">Próximamente</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>Completamente reconstruido desde cero. Un potente rastreador de suscripciones con análisis avanzados, interfaz hermosa y sincronización perfecta.</p>
+
+            <div class="beta-notice">
+                <h4>Pruebas Beta Internas</h4>
+                <p>La aplicación está actualmente en pruebas beta internas. Una beta pública estará disponible en los próximos meses.</p>
+                <p>Si desea acceso anticipado a la beta interna, contáctenos en <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
+                <p class="warning">Nota: La versión actual incluye cambios en la base de datos que pueden resultar en pérdida de datos. Participe bajo su propio riesgo.</p>
+            </div>
+        </header>
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>Novedades</h2>
+                    <p>Mejoras importantes y nuevas funciones para controlar tus suscripciones.</p>
+                </div>
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt=""></div>
+                        <h3>Reconstrucción Completa</h3>
+                        <p>Construido desde cero con SwiftUI Observable para mejor rendimiento.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div>
+                        <h3>Análisis Avanzado</h3>
+                        <p>Nuevos gráficos con SwiftUI Charts para análisis más profundos.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt=""></div>
+                        <h3>Experiencia Unificada</h3>
+                        <p>Código compartido entre iOS y macOS para consistencia.</p>
+                    </div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt=""></div><h3>Recordatorios</h3><p>Recordatorios de pago y vencimiento personalizables.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt=""></div><h3>Ajustes de Período</h3><p>Rastrea descuentos y cambios temporales de precio.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt=""></div><h3>Complementos</h3><p>Registra compras adicionales y contenido extra.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt=""></div><h3>Pagos Manuales</h3><p>Rastrea pagos individuales manualmente.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt=""></div><h3>Compartir en Familia</h3><p>Divide costos con miembros de la familia.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt=""></div><h3>Tareas</h3><p>Listas de tareas para cada suscripción.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Campos Personalizados</h3><p>Almacena información adicional.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Archivos Adjuntos</h3><p>Adjunta archivos y documentos.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Historial de Precios</h3><p>Rastrea cambios de precio.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Seguridad</h3><p>Protege con Face ID, Touch ID o código.</p></div>
+                </div>
+            </section>
+        </div>
+        <footer><p>&copy; 2025 TouchBits Inc.</p></footer>
+    </div>
+
+    <div class="lang-content tr">
+        <header class="hero">
+            <div class="hero-badge">Yakında</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>Sıfırdan tamamen yeniden inşa edildi. Gelişmiş analitik, güzel arayüz ve tüm Apple cihazlarında kesintisiz senkronizasyon.</p>
+
+            <div class="beta-notice">
+                <h4>Dahili Beta Testi</h4>
+                <p>Uygulama şu anda dahili beta testinde. Herkese açık beta önümüzdeki aylarda kullanıma sunulacak.</p>
+                <p>Dahili betaya erken erişim istiyorsanız, lütfen <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span> adresinden bize ulaşın.</p>
+                <p class="warning">Not: Mevcut sürüm, veri kaybına neden olabilecek veritabanı değişiklikleri içermektedir. Kendi riskinizle katılın.</p>
+            </div>
+        </header>
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>Yenilikler</h2>
+                    <p>Aboneliklerinizi kontrol altına almanıza yardımcı olacak önemli iyileştirmeler.</p>
+                </div>
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt=""></div>
+                        <h3>Tamamen Yeniden Yapılandırma</h3>
+                        <p>SwiftUI Observable ile sıfırdan inşa edildi.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div>
+                        <h3>Gelişmiş Analitik</h3>
+                        <p>SwiftUI Charts ile derin içgörüler ve güzel görselleştirmeler.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt=""></div>
+                        <h3>Birleşik Deneyim</h3>
+                        <p>iOS ve macOS için paylaşılan kod tabanı.</p>
+                    </div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt=""></div><h3>Hatırlatıcılar</h3><p>Özelleştirilebilir ödeme ve son kullanma hatırlatıcıları.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt=""></div><h3>Dönem Ayarlamaları</h3><p>Promosyon ve geçici fiyat değişikliklerini takip edin.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt=""></div><h3>Eklentiler</h3><p>Ek satın alımları kaydedin.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt=""></div><h3>Manuel Ödemeler</h3><p>Bireysel ödemeleri manuel olarak takip edin.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt=""></div><h3>Aile Paylaşımı</h3><p>Aile ile maliyetleri paylaşın.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt=""></div><h3>Yapılacaklar</h3><p>Her abonelik için görev listeleri.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Özel Alanlar</h3><p>Ek bilgileri depolayın.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Ekler</h3><p>Dosya ve belgeler ekleyin.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Fiyat Geçmişi</h3><p>Fiyat değişikliklerini takip edin.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Güvenlik</h3><p>Face ID, Touch ID veya Parola ile koruma.</p></div>
+                </div>
+            </section>
+        </div>
+        <footer><p>&copy; 2025 TouchBits Inc.</p></footer>
+    </div>
+
+    <div class="lang-content de">
+        <header class="hero">
+            <div class="hero-badge">Bald verfügbar</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>Komplett von Grund auf neu aufgebaut. Ein leistungsstarker Abo-Tracker mit erweiterter Analyse, schöner Oberfläche und nahtloser Synchronisierung.</p>
+
+            <div class="beta-notice">
+                <h4>Interner Beta-Test</h4>
+                <p>Die App befindet sich derzeit im internen Beta-Test. Eine öffentliche Beta wird in den kommenden Monaten verfügbar sein.</p>
+                <p>Wenn Sie frühzeitigen Zugang zur internen Beta wünschen, kontaktieren Sie uns unter <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
+                <p class="warning">Hinweis: Der aktuelle Build beinhaltet Datenbankänderungen, die zu Datenverlust führen können. Teilnahme auf eigenes Risiko.</p>
+            </div>
+        </header>
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>Neuigkeiten</h2>
+                    <p>Wichtige Verbesserungen und neue Funktionen zur Kontrolle Ihrer Abonnements.</p>
+                </div>
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt=""></div>
+                        <h3>Kompletter Neuaufbau</h3>
+                        <p>Von Grund auf mit SwiftUI Observable für bessere Leistung entwickelt.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div>
+                        <h3>Erweiterte Analysen</h3>
+                        <p>Neue Diagramme mit SwiftUI Charts für tiefere Einblicke.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt=""></div>
+                        <h3>Einheitliche Erfahrung</h3>
+                        <p>Gemeinsamer Code für iOS und macOS.</p>
+                    </div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt=""></div><h3>Erinnerungen</h3><p>Anpassbare Zahlungs- und Ablauferinnerungen.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt=""></div><h3>Laufzeitanpassungen</h3><p>Verfolgen Sie Rabatte und temporäre Preisänderungen.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt=""></div><h3>Zusatzkäufe</h3><p>Erfassen Sie zusätzliche Käufe und Inhalte.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt=""></div><h3>Manuelle Zahlungen</h3><p>Verfolgen Sie einzelne Zahlungen manuell.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt=""></div><h3>Familienfreigabe</h3><p>Teilen Sie Kosten mit Familienmitgliedern.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt=""></div><h3>Aufgaben</h3><p>Aufgabenlisten für jedes Abonnement.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Benutzerdefinierte Felder</h3><p>Speichern Sie zusätzliche Informationen.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Anhänge</h3><p>Fügen Sie Dateien und Dokumente hinzu.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Preisverlauf</h3><p>Verfolgen Sie Preisänderungen.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sicherheit</h3><p>Schutz mit Face ID, Touch ID oder Passcode.</p></div>
+                </div>
+            </section>
+        </div>
+        <footer><p>&copy; 2025 TouchBits Inc.</p></footer>
+    </div>
+
+    <div class="lang-content it">
+        <header class="hero">
+            <div class="hero-badge">In arrivo</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>Completamente ricostruito da zero. Un potente tracker di abbonamenti con analisi avanzate, interfaccia bella e sincronizzazione perfetta.</p>
+
+            <div class="beta-notice">
+                <h4>Test Beta Interno</h4>
+                <p>L'app è attualmente in fase di test beta interno. Una beta pubblica sarà disponibile nei prossimi mesi.</p>
+                <p>Se desideri un accesso anticipato alla beta interna, contattaci a <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
+                <p class="warning">Nota: La versione attuale include modifiche al database che potrebbero causare perdita di dati. Partecipa a tuo rischio.</p>
+            </div>
+        </header>
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>Novità</h2>
+                    <p>Importanti miglioramenti e nuove funzionalità per controllare i tuoi abbonamenti.</p>
+                </div>
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt=""></div>
+                        <h3>Ricostruzione Completa</h3>
+                        <p>Costruito da zero con SwiftUI Observable per prestazioni migliori.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div>
+                        <h3>Analisi Avanzate</h3>
+                        <p>Nuovi grafici con SwiftUI Charts per approfondimenti più dettagliati.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt=""></div>
+                        <h3>Esperienza Unificata</h3>
+                        <p>Codice condiviso per iOS e macOS.</p>
+                    </div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt=""></div><h3>Promemoria</h3><p>Promemoria personalizzabili per pagamenti e scadenze.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt=""></div><h3>Modifiche ai Termini</h3><p>Traccia sconti e variazioni di prezzo temporanee.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt=""></div><h3>Componenti Aggiuntivi</h3><p>Registra acquisti aggiuntivi e contenuti extra.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt=""></div><h3>Pagamenti Manuali</h3><p>Traccia manualmente i singoli pagamenti.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt=""></div><h3>Condivisione Familiare</h3><p>Dividi i costi con i membri della famiglia.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt=""></div><h3>Attività</h3><p>Liste di attività per ogni abbonamento.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Campi Personalizzati</h3><p>Memorizza informazioni aggiuntive.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Allegati</h3><p>Allega file e documenti.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Storico Prezzi</h3><p>Traccia le variazioni di prezzo.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sicurezza</h3><p>Protezione con Face ID, Touch ID o Codice.</p></div>
+                </div>
+            </section>
+        </div>
+        <footer><p>&copy; 2025 TouchBits Inc.</p></footer>
+    </div>
+
+    <div class="lang-content fr">
+        <header class="hero">
+            <div class="hero-badge">Bientôt disponible</div>
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7e/d2/d4/7ed2d4c1-3024-6e64-00b6-661643c76374/AppIcon-0-1x_U007epad-0-0-0-1-0-0-85-220-0.png/152x152bb-80.png" alt="Subscriptions Icon" class="hero-icon">
+            <h1>Subscriptions 3.0</h1>
+            <p>Entièrement reconstruit de zéro. Un puissant traqueur d'abonnements avec des analyses avancées, une belle interface et une synchronisation parfaite.</p>
+
+            <div class="beta-notice">
+                <h4>Test Bêta Interne</h4>
+                <p>L'application est actuellement en test bêta interne. Une bêta publique sera disponible dans les prochains mois.</p>
+                <p>Si vous souhaitez un accès anticipé à la bêta interne, contactez-nous à <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
+                <p class="warning">Note : La version actuelle inclut des modifications de base de données pouvant entraîner une perte de données. Participez à vos risques et périls.</p>
+            </div>
+        </header>
+        <div class="container">
+            <section>
+                <div class="section-header">
+                    <h2>Nouveautés</h2>
+                    <p>Améliorations majeures et nouvelles fonctionnalités pour contrôler vos abonnements.</p>
+                </div>
+                <div class="highlight-cards">
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/wand.and.stars.png" alt=""></div>
+                        <h3>Reconstruction Complète</h3>
+                        <p>Construit de zéro avec SwiftUI Observable pour de meilleures performances.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div>
+                        <h3>Analyses Avancées</h3>
+                        <p>Nouveaux graphiques avec SwiftUI Charts pour des analyses plus profondes.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/desktopcomputer.png" alt=""></div>
+                        <h3>Expérience Unifiée</h3>
+                        <p>Code partagé pour iOS et macOS.</p>
+                    </div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/bell.fill.png" alt=""></div><h3>Rappels</h3><p>Rappels de paiement et d'expiration personnalisables.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/calendar.png" alt=""></div><h3>Ajustements de Période</h3><p>Suivez les remises et changements de prix temporaires.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/cart.fill.png" alt=""></div><h3>Extensions</h3><p>Enregistrez les achats supplémentaires et le contenu extra.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/hand.raised.fill.png" alt=""></div><h3>Paiements Manuels</h3><p>Suivez manuellement les paiements individuels.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/person.3.fill.png" alt=""></div><h3>Partage Familial</h3><p>Partagez les coûts avec les membres de la famille.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/checkmark.square.fill.png" alt=""></div><h3>Tâches</h3><p>Listes de tâches pour chaque abonnement.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Champs Personnalisés</h3><p>Stockez des informations supplémentaires.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Pièces Jointes</h3><p>Joignez des fichiers et documents.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Historique des Prix</h3><p>Suivez les changements de prix.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sécurité</h3><p>Protection avec Face ID, Touch ID ou Code.</p></div>
+                </div>
+            </section>
+        </div>
+        <footer><p>&copy; 2025 TouchBits Inc.</p></footer>
     </div>
 
     <script>
@@ -1202,30 +1394,30 @@
             const languageDropdown = document.getElementById('language-dropdown');
             const currentLanguageText = document.getElementById('current-language');
             const languageOptions = document.querySelectorAll('.language-option');
-            
+
             // Auto-detect browser language
             const detectLanguage = () => {
                 const browserLang = navigator.language.split('-')[0];
                 const supportedLangs = ['en', 'zh', 'ja', 'fr', 'ko', 'ru', 'es', 'tr', 'de', 'it'];
                 return supportedLangs.includes(browserLang) ? browserLang : 'en';
             };
-            
+
             // Set initial language based on browser settings
             const initialLang = detectLanguage();
             setLanguage(initialLang);
-            
+
             // Toggle dropdown
             languageToggle.addEventListener('click', function() {
                 languageDropdown.classList.toggle('show');
             });
-            
+
             // Close dropdown when clicking outside
             document.addEventListener('click', function(event) {
                 if (!languageToggle.contains(event.target) && !languageDropdown.contains(event.target)) {
                     languageDropdown.classList.remove('show');
                 }
             });
-            
+
             // Language selection
             languageOptions.forEach(option => {
                 option.addEventListener('click', function() {
@@ -1234,7 +1426,7 @@
                     languageDropdown.classList.remove('show');
                 });
             });
-            
+
             function setLanguage(lang) {
                 // Update active language in dropdown
                 languageOptions.forEach(option => {
@@ -1245,7 +1437,7 @@
                         option.classList.remove('active');
                     }
                 });
-                
+
                 // Update content visibility
                 const langElements = document.querySelectorAll('.lang-content');
                 langElements.forEach(el => {
@@ -1255,10 +1447,20 @@
                         el.classList.remove('active');
                     }
                 });
-                
+
                 // Update HTML lang attribute
                 document.documentElement.setAttribute('lang', lang);
             }
+
+            // Assemble obfuscated email addresses
+            document.querySelectorAll('.email-addr').forEach(function(el) {
+                var d = el.getAttribute('data-e');
+                var n = el.getAttribute('data-n');
+                if (d && n) {
+                    var r = function(s) { return s.split('').reverse().join(''); };
+                    el.textContent = r(n) + String.fromCharCode(64) + r(d);
+                }
+            });
         });
     </script>
 </body>
