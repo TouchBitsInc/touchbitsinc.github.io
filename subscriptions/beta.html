@@ -328,13 +328,15 @@
 
         /* Beta Notice */
         .beta-notice {
-            background: rgba(251, 191, 36, 0.1);
+            background: rgba(251, 191, 36, 0.08);
             border: 1px solid rgba(251, 191, 36, 0.2);
             border-radius: 16px;
             padding: 24px 28px;
             max-width: 600px;
             margin: 0 auto;
             text-align: left;
+            backdrop-filter: blur(8px) saturate(1.3);
+            -webkit-backdrop-filter: blur(8px) saturate(1.3);
         }
 
         .beta-notice h4 {
@@ -676,23 +678,15 @@
             z-index: 1;
         }
 
-        /* Footer - hide the ones inside lang-content */
+        /* Footer at bottom of content */
         .lang-content footer {
-            display: none;
-        }
-
-        /* Fixed footer on the planet */
-        .fixed-footer {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
             text-align: center;
-            z-index: 0;
-            pointer-events: none;
+            padding: 40px 20px;
+            z-index: 1;
         }
 
-        .fixed-footer p {
+        .lang-content footer p {
             font-size: 12px;
             color: rgba(255, 255, 255, 0.5);
             margin-bottom: 4px;
@@ -847,11 +841,6 @@
         <div class="atmosphere"></div>
         <div class="planet"></div>
         <div class="planet-glow"></div>
-    </div>
-
-    <div class="fixed-footer">
-        <p>&copy; 2025 TouchBits Inc. All rights reserved.</p>
-        <p>TestFlight is a registered trademark of Apple Inc.</p>
     </div>
 
     <div class="language-selector">
@@ -1907,31 +1896,23 @@
 
         createStars();
 
-        // Hide footer when scrolling past hero section and expand aurora
-        const fixedFooter = document.querySelector('.fixed-footer');
+        // Expand aurora when scrolling past hero section
         const heroSection = document.querySelector('.hero');
         const atmosphere = document.querySelector('.atmosphere');
 
-        function checkFooterVisibility() {
-            if (heroSection && fixedFooter) {
+        function checkAuroraExpand() {
+            if (heroSection && atmosphere) {
                 const heroBottom = heroSection.getBoundingClientRect().bottom;
                 if (heroBottom < window.innerHeight * 0.86) {
-                    fixedFooter.style.opacity = '0';
-                    fixedFooter.style.transition = 'opacity 0.3s ease';
-                    if (atmosphere) {
-                        atmosphere.classList.add('expanded');
-                    }
+                    atmosphere.classList.add('expanded');
                 } else {
-                    fixedFooter.style.opacity = '1';
-                    if (atmosphere) {
-                        atmosphere.classList.remove('expanded');
-                    }
+                    atmosphere.classList.remove('expanded');
                 }
             }
         }
 
-        window.addEventListener('scroll', checkFooterVisibility);
-        checkFooterVisibility();
+        window.addEventListener('scroll', checkAuroraExpand);
+        checkAuroraExpand();
     </script>
 </body>
 </html>
