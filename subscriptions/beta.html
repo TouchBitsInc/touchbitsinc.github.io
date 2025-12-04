@@ -166,6 +166,13 @@
                 transparent 70%);
             filter: blur(40px);
             animation: aurora 6s ease-in-out infinite;
+            transition: height 0.02s, filter 0.02s;
+        }
+
+        .atmosphere.expanded {
+            height: 1400px;
+            filter: blur(50px) saturate(1.8) brightness(1.5);
+            transition: height 0.4s ease-out, filter 0.4s ease-out;
         }
 
         .atmosphere::before {
@@ -253,13 +260,13 @@
 
         /* Hero Section */
         .hero {
-            min-height: 60vh;
+            min-height: 70vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 120px 24px 80px;
+            padding: 120px 24px 130px;
             position: relative;
             z-index: 1;
             background: transparent;
@@ -505,17 +512,34 @@
 
         .feature-card {
             position: relative;
-            border-radius: 48px;
+            border-radius: 28px;
             padding: 28px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
-            background: transparent;
+            background: rgba(20, 20, 25, 0.4);
+            backdrop-filter: blur(8px) saturate(1.3) contrast(1.1);
+            -webkit-backdrop-filter: blur(8px) saturate(1.3) contrast(1.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow:
-                0 4px 8px rgba(0, 0, 0, 0.3),
-                0 15px 35px rgba(0, 0, 0, 0.2),
-                inset 0 -12px 25px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.12),
-                inset 0 0 15px rgba(255, 255, 255, 0.04);
+                0 4px 24px rgba(0, 0, 0, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.02);
+        }
+
+        /* Top shine */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                transparent 100%
+            );
+            pointer-events: none;
         }
 
         .feature-card > * {
@@ -525,12 +549,11 @@
 
         .feature-card:hover {
             transform: translateY(-4px);
+            background: rgba(25, 25, 30, 0.5);
+            border-color: rgba(255, 255, 255, 0.15);
             box-shadow:
-                0 8px 16px rgba(0, 0, 0, 0.35),
-                0 25px 50px rgba(0, 0, 0, 0.25),
-                inset 0 -12px 25px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.18),
-                inset 0 0 20px rgba(255, 255, 255, 0.06);
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 0 30px rgba(255, 255, 255, 0.03);
         }
 
         .feature-icon {
@@ -580,18 +603,35 @@
 
         .highlight-card {
             position: relative;
-            border-radius: 56px;
+            border-radius: 32px;
             padding: 40px 32px;
             text-align: center;
             overflow: hidden;
-            background: transparent;
+            background: rgba(20, 20, 25, 0.4);
+            backdrop-filter: blur(8px) saturate(1.3) contrast(1.1);
+            -webkit-backdrop-filter: blur(8px) saturate(1.3) contrast(1.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow:
-                0 4px 8px rgba(0, 0, 0, 0.3),
-                0 20px 40px rgba(0, 0, 0, 0.2),
-                inset 0 -15px 30px rgba(0, 0, 0, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15),
-                inset 0 0 20px rgba(255, 255, 255, 0.05);
+                0 4px 24px rgba(0, 0, 0, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.02);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Top shine */
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                transparent 100%
+            );
+            pointer-events: none;
         }
 
         .highlight-card > * {
@@ -601,12 +641,11 @@
 
         .highlight-card:hover {
             transform: translateY(-4px);
+            background: rgba(25, 25, 30, 0.5);
+            border-color: rgba(255, 255, 255, 0.15);
             box-shadow:
-                0 8px 16px rgba(0, 0, 0, 0.35),
-                0 30px 60px rgba(0, 0, 0, 0.25),
-                inset 0 -15px 30px rgba(0, 0, 0, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                inset 0 0 25px rgba(255, 255, 255, 0.08);
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 0 30px rgba(255, 255, 255, 0.03);
         }
 
         .highlight-card .feature-icon {
@@ -649,13 +688,13 @@
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
-            z-index: 10;
+            z-index: 0;
             pointer-events: none;
         }
 
         .fixed-footer p {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 4px;
         }
 
@@ -1868,176 +1907,31 @@
 
         createStars();
 
-        // Liquid Glass Effect for Cards
-        // Adapted from Shu Ding's liquid-glass (https://github.com/shuding/liquid-glass)
-        (function() {
-            'use strict';
+        // Hide footer when scrolling past hero section and expand aurora
+        const fixedFooter = document.querySelector('.fixed-footer');
+        const heroSection = document.querySelector('.hero');
+        const atmosphere = document.querySelector('.atmosphere');
 
-            function smoothStep(a, b, t) {
-                t = Math.max(0, Math.min(1, (t - a) / (b - a)));
-                return t * t * (3 - 2 * t);
-            }
-
-            function length(x, y) {
-                return Math.sqrt(x * x + y * y);
-            }
-
-            function roundedRectSDF(x, y, width, height, radius) {
-                const qx = Math.abs(x) - width + radius;
-                const qy = Math.abs(y) - height + radius;
-                return Math.min(Math.max(qx, qy), 0) + length(Math.max(qx, 0), Math.max(qy, 0)) - radius;
-            }
-
-            function texture(x, y) {
-                return { x, y };
-            }
-
-            function generateId() {
-                return 'liquid-glass-' + Math.random().toString(36).substr(2, 9);
-            }
-
-            class LiquidGlassCard {
-                constructor(element, options = {}) {
-                    this.element = element;
-                    this.width = options.width || 100;
-                    this.height = options.height || 100;
-                    this.borderRadius = options.borderRadius || 0.4;
-                    this.id = generateId();
-                    this.canvasDPI = 1;
-
-                    this.createFilter();
-                    this.updateShader();
-                    this.applyToElement();
-                }
-
-                createFilter() {
-                    this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                    this.svg.setAttribute('width', '0');
-                    this.svg.setAttribute('height', '0');
-                    this.svg.style.cssText = 'position: absolute; pointer-events: none;';
-
-                    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-                    const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
-                    filter.setAttribute('id', `${this.id}_filter`);
-                    filter.setAttribute('filterUnits', 'userSpaceOnUse');
-                    filter.setAttribute('colorInterpolationFilters', 'sRGB');
-                    filter.setAttribute('x', '0');
-                    filter.setAttribute('y', '0');
-                    filter.setAttribute('width', this.width.toString());
-                    filter.setAttribute('height', this.height.toString());
-
-                    this.feImage = document.createElementNS('http://www.w3.org/2000/svg', 'feImage');
-                    this.feImage.setAttribute('id', `${this.id}_map`);
-                    this.feImage.setAttribute('width', this.width.toString());
-                    this.feImage.setAttribute('height', this.height.toString());
-
-                    this.feDisplacementMap = document.createElementNS('http://www.w3.org/2000/svg', 'feDisplacementMap');
-                    this.feDisplacementMap.setAttribute('in', 'SourceGraphic');
-                    this.feDisplacementMap.setAttribute('in2', `${this.id}_map`);
-                    this.feDisplacementMap.setAttribute('xChannelSelector', 'R');
-                    this.feDisplacementMap.setAttribute('yChannelSelector', 'G');
-
-                    filter.appendChild(this.feImage);
-                    filter.appendChild(this.feDisplacementMap);
-                    defs.appendChild(filter);
-                    this.svg.appendChild(defs);
-
-                    this.canvas = document.createElement('canvas');
-                    this.canvas.width = this.width * this.canvasDPI;
-                    this.canvas.height = this.height * this.canvasDPI;
-                    this.context = this.canvas.getContext('2d');
-
-                    document.body.appendChild(this.svg);
-                }
-
-                fragment(uv) {
-                    const ix = uv.x - 0.5;
-                    const iy = uv.y - 0.5;
-                    const aspectRatio = this.width / this.height;
-                    const distanceToEdge = roundedRectSDF(
-                        ix * aspectRatio,
-                        iy,
-                        0.25 * aspectRatio,
-                        0.25,
-                        this.borderRadius
-                    );
-                    const displacement = smoothStep(0.5, 0, distanceToEdge - 0.05);
-                    const scaled = smoothStep(0, 1, displacement) * 0.7 + 0.3;
-                    return texture(ix * scaled + 0.5, iy * scaled + 0.5);
-                }
-
-                updateShader() {
-                    const w = this.width * this.canvasDPI;
-                    const h = this.height * this.canvasDPI;
-                    const data = new Uint8ClampedArray(w * h * 4);
-
-                    let maxScale = 0;
-                    const rawValues = [];
-
-                    for (let i = 0; i < data.length; i += 4) {
-                        const x = (i / 4) % w;
-                        const y = Math.floor(i / 4 / w);
-                        const pos = this.fragment({ x: x / w, y: y / h });
-                        const dx = pos.x * w - x;
-                        const dy = pos.y * h - y;
-                        maxScale = Math.max(maxScale, Math.abs(dx), Math.abs(dy));
-                        rawValues.push(dx, dy);
+        function checkFooterVisibility() {
+            if (heroSection && fixedFooter) {
+                const heroBottom = heroSection.getBoundingClientRect().bottom;
+                if (heroBottom < window.innerHeight * 0.86) {
+                    fixedFooter.style.opacity = '0';
+                    fixedFooter.style.transition = 'opacity 0.3s ease';
+                    if (atmosphere) {
+                        atmosphere.classList.add('expanded');
                     }
-
-                    maxScale *= 0.3;
-
-                    let index = 0;
-                    for (let i = 0; i < data.length; i += 4) {
-                        const r = rawValues[index++] / maxScale + 0.5;
-                        const g = rawValues[index++] / maxScale + 0.5;
-                        data[i] = r * 255;
-                        data[i + 1] = g * 255;
-                        data[i + 2] = 0;
-                        data[i + 3] = 255;
+                } else {
+                    fixedFooter.style.opacity = '1';
+                    if (atmosphere) {
+                        atmosphere.classList.remove('expanded');
                     }
-
-                    this.context.putImageData(new ImageData(data, w, h), 0, 0);
-                    this.feImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.canvas.toDataURL());
-                    this.feDisplacementMap.setAttribute('scale', (maxScale / this.canvasDPI).toString());
-                }
-
-                applyToElement() {
-                    this.element.style.backdropFilter = `url(#${this.id}_filter) blur(1px) contrast(1.15) brightness(1.08) saturate(1.2)`;
-                    this.element.style.webkitBackdropFilter = `url(#${this.id}_filter) blur(1px) contrast(1.15) brightness(1.08) saturate(1.2)`;
                 }
             }
+        }
 
-            // Apply liquid glass to all cards
-            function initLiquidGlass() {
-                const highlightCards = document.querySelectorAll('.highlight-card');
-                const featureCards = document.querySelectorAll('.feature-card');
-
-                highlightCards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    new LiquidGlassCard(card, {
-                        width: Math.round(rect.width) || 300,
-                        height: Math.round(rect.height) || 200,
-                        borderRadius: 0.5
-                    });
-                });
-
-                featureCards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    new LiquidGlassCard(card, {
-                        width: Math.round(rect.width) || 250,
-                        height: Math.round(rect.height) || 150,
-                        borderRadius: 0.4
-                    });
-                });
-            }
-
-            // Wait for DOM and fonts to load
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => setTimeout(initLiquidGlass, 100));
-            } else {
-                setTimeout(initLiquidGlass, 100);
-            }
-        })();
+        window.addEventListener('scroll', checkFooterVisibility);
+        checkFooterVisibility();
     </script>
 </body>
 </html>
