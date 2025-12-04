@@ -198,15 +198,107 @@
             margin-bottom: 0;
         }
 
-        .beta-notice .email-addr {
-            color: #fbbf24;
-            font-weight: 500;
+        .beta-notice .join-beta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 8px;
         }
 
-        .beta-notice .warning {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            font-style: italic;
+        .beta-notice .join-beta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Beta Modal */
+        .beta-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .beta-modal-overlay.show {
+            display: flex;
+        }
+
+        .beta-modal {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 40px var(--shadow-color);
+        }
+
+        .beta-modal h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .beta-modal p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .beta-modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .beta-modal .btn-cancel {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .beta-modal .btn-cancel:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+        }
+
+        .beta-modal .btn-acknowledge {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .beta-modal .btn-acknowledge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
         /* Section Styling */
@@ -560,8 +652,7 @@
             <div class="beta-notice">
                 <h4>Internal Beta Testing</h4>
                 <p>The app is currently in internal beta testing. A public beta will be available in the coming months.</p>
-                <p>If you'd like early access to the internal beta, please contact us at <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
-                <p class="warning">Note: As we continue improving features, updates may result in data loss. Join at your own risk.</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">Join Internal Beta</button>
             </div>
         </header>
 
@@ -688,8 +779,7 @@
             <div class="beta-notice">
                 <h4>内部测试中</h4>
                 <p>该应用目前正在进行内部测试。公开测试版将在未来几个月内推出。</p>
-                <p>如果您希望提前体验内部测试版，请发送邮件至 <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
-                <p class="warning">注意：随着功能持续改进，更新可能导致数据丢失。请自行承担风险。</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">加入内部测试</button>
             </div>
         </header>
 
@@ -816,8 +906,7 @@
             <div class="beta-notice">
                 <h4>内部ベータテスト中</h4>
                 <p>現在、アプリは内部ベータテスト中です。パブリックベータは数ヶ月以内に公開予定です。</p>
-                <p>内部ベータへの早期アクセスをご希望の方は、<span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span> までご連絡ください。</p>
-                <p class="warning">注意：機能改善を進める中で、アップデートによりデータが失われる可能性があります。自己責任でご参加ください。</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">内部ベータに参加</button>
             </div>
         </header>
 
@@ -944,8 +1033,7 @@
             <div class="beta-notice">
                 <h4>내부 베타 테스트 중</h4>
                 <p>앱은 현재 내부 베타 테스트 중입니다. 공개 베타는 몇 달 내로 출시될 예정입니다.</p>
-                <p>내부 베타에 조기 접근을 원하시면 <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span>으로 문의해 주세요.</p>
-                <p class="warning">주의: 기능 개선이 진행됨에 따라 업데이트로 인해 데이터 손실이 발생할 수 있습니다. 본인 책임하에 참여해 주세요.</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">내부 베타 참여</button>
             </div>
         </header>
 
@@ -1074,8 +1162,7 @@
             <div class="beta-notice">
                 <h4>Внутреннее бета-тестирование</h4>
                 <p>Приложение в настоящее время находится на внутреннем бета-тестировании. Публичная бета будет доступна в ближайшие месяцы.</p>
-                <p>Если вы хотите получить ранний доступ к внутренней бете, свяжитесь с нами по адресу <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
-                <p class="warning">Внимание: по мере улучшения функций обновления могут привести к потере данных. Участвуйте на свой страх и риск.</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">Присоединиться к бета-тесту</button>
             </div>
         </header>
         <div class="container">
@@ -1128,8 +1215,7 @@
             <div class="beta-notice">
                 <h4>Pruebas Beta Internas</h4>
                 <p>La aplicación está actualmente en pruebas beta internas. Una beta pública estará disponible en los próximos meses.</p>
-                <p>Si desea acceso anticipado a la beta interna, contáctenos en <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
-                <p class="warning">Nota: A medida que mejoramos las funciones, las actualizaciones pueden resultar en pérdida de datos. Participe bajo su propio riesgo.</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">Unirse a la Beta Interna</button>
             </div>
         </header>
         <div class="container">
@@ -1182,8 +1268,7 @@
             <div class="beta-notice">
                 <h4>Dahili Beta Testi</h4>
                 <p>Uygulama şu anda dahili beta testinde. Herkese açık beta önümüzdeki aylarda kullanıma sunulacak.</p>
-                <p>Dahili betaya erken erişim istiyorsanız, lütfen <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span> adresinden bize ulaşın.</p>
-                <p class="warning">Not: Özellikler geliştirildikçe güncellemeler veri kaybına neden olabilir. Kendi riskinizle katılın.</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">Dahili Betaya Katıl</button>
             </div>
         </header>
         <div class="container">
@@ -1236,8 +1321,7 @@
             <div class="beta-notice">
                 <h4>Interner Beta-Test</h4>
                 <p>Die App befindet sich derzeit im internen Beta-Test. Eine öffentliche Beta wird in den kommenden Monaten verfügbar sein.</p>
-                <p>Wenn Sie frühzeitigen Zugang zur internen Beta wünschen, kontaktieren Sie uns unter <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
-                <p class="warning">Hinweis: Da wir die Funktionen kontinuierlich verbessern, können Updates zu Datenverlust führen. Teilnahme auf eigenes Risiko.</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">Zur internen Beta beitreten</button>
             </div>
         </header>
         <div class="container">
@@ -1290,8 +1374,7 @@
             <div class="beta-notice">
                 <h4>Test Beta Interno</h4>
                 <p>L'app è attualmente in fase di test beta interno. Una beta pubblica sarà disponibile nei prossimi mesi.</p>
-                <p>Se desideri un accesso anticipato alla beta interna, contattaci a <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
-                <p class="warning">Nota: Man mano che miglioriamo le funzionalità, gli aggiornamenti potrebbero causare perdita di dati. Partecipa a tuo rischio.</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">Partecipa alla Beta Interna</button>
             </div>
         </header>
         <div class="container">
@@ -1344,8 +1427,7 @@
             <div class="beta-notice">
                 <h4>Test Bêta Interne</h4>
                 <p>L'application est actuellement en test bêta interne. Une bêta publique sera disponible dans les prochains mois.</p>
-                <p>Si vous souhaitez un accès anticipé à la bêta interne, contactez-nous à <span class="email-addr" data-e="moc.stibhcuot" data-n="ateb"></span></p>
-                <p class="warning">Note : À mesure que nous améliorons les fonctionnalités, les mises à jour peuvent entraîner une perte de données. Participez à vos risques et périls.</p>
+                <button class="join-beta-btn" onclick="showBetaModal()">Rejoindre la Bêta Interne</button>
             </div>
         </header>
         <div class="container">
@@ -1386,6 +1468,18 @@
             </section>
         </div>
         <footer><p>&copy; 2025 TouchBits Inc.</p></footer>
+    </div>
+
+    <!-- Beta Warning Modal -->
+    <div class="beta-modal-overlay" id="beta-modal">
+        <div class="beta-modal">
+            <h3 data-i18n="modal-title">⚠️ Data Loss Warning</h3>
+            <p data-i18n="modal-message">Internal beta updates may result in data loss on new features as we continue to improve them. By proceeding, you acknowledge and accept this risk.</p>
+            <div class="beta-modal-buttons">
+                <button class="btn-cancel" onclick="hideBetaModal()" data-i18n="modal-cancel">Cancel</button>
+                <button class="btn-acknowledge" onclick="acknowledgeBeta()" data-i18n="modal-acknowledge">I Understand, Continue</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1461,6 +1555,99 @@
                     el.textContent = r(n) + String.fromCharCode(64) + r(d);
                 }
             });
+        });
+
+        // Beta Modal translations
+        const modalTranslations = {
+            en: {
+                title: '⚠️ Data Loss Warning',
+                message: 'Internal beta updates may result in data loss on new features as we continue to improve them. By proceeding, you acknowledge and accept this risk.',
+                cancel: 'Cancel',
+                acknowledge: 'I Understand, Continue'
+            },
+            zh: {
+                title: '⚠️ 数据丢失警告',
+                message: '内部测试版更新可能导致新功能的数据丢失，因为我们还在持续改进中。继续即表示您了解并接受此风险。',
+                cancel: '取消',
+                acknowledge: '我理解，继续'
+            },
+            ja: {
+                title: '⚠️ データ損失の警告',
+                message: '内部ベータのアップデートにより、改善中の新機能でデータが失われる可能性があります。続行することで、このリスクを理解し受け入れたものとします。',
+                cancel: 'キャンセル',
+                acknowledge: '理解しました、続ける'
+            },
+            ko: {
+                title: '⚠️ 데이터 손실 경고',
+                message: '내부 베타 업데이트로 인해 개선 중인 새 기능의 데이터가 손실될 수 있습니다. 계속 진행하면 이 위험을 이해하고 수락하는 것입니다.',
+                cancel: '취소',
+                acknowledge: '이해합니다, 계속'
+            },
+            ru: {
+                title: '⚠️ Предупреждение о потере данных',
+                message: 'Обновления внутренней бета-версии могут привести к потере данных для новых функций, которые мы продолжаем улучшать. Продолжая, вы подтверждаете и принимаете этот риск.',
+                cancel: 'Отмена',
+                acknowledge: 'Понимаю, продолжить'
+            },
+            es: {
+                title: '⚠️ Advertencia de Pérdida de Datos',
+                message: 'Las actualizaciones de la beta interna pueden resultar en pérdida de datos para nuevas funciones mientras continuamos mejorándolas. Al continuar, reconoce y acepta este riesgo.',
+                cancel: 'Cancelar',
+                acknowledge: 'Entiendo, Continuar'
+            },
+            tr: {
+                title: '⚠️ Veri Kaybı Uyarısı',
+                message: 'Dahili beta güncellemeleri, geliştirmeye devam ettiğimiz yeni özelliklerde veri kaybına neden olabilir. Devam ederek bu riski kabul etmiş olursunuz.',
+                cancel: 'İptal',
+                acknowledge: 'Anlıyorum, Devam Et'
+            },
+            de: {
+                title: '⚠️ Datenverlust-Warnung',
+                message: 'Interne Beta-Updates können zu Datenverlust bei neuen Funktionen führen, da wir diese weiter verbessern. Durch Fortfahren bestätigen und akzeptieren Sie dieses Risiko.',
+                cancel: 'Abbrechen',
+                acknowledge: 'Verstanden, Fortfahren'
+            },
+            it: {
+                title: '⚠️ Avviso di Perdita Dati',
+                message: 'Gli aggiornamenti della beta interna potrebbero causare perdita di dati per le nuove funzionalità mentre continuiamo a migliorarle. Procedendo, riconosci e accetti questo rischio.',
+                cancel: 'Annulla',
+                acknowledge: 'Capisco, Continua'
+            },
+            fr: {
+                title: '⚠️ Avertissement de Perte de Données',
+                message: 'Les mises à jour de la bêta interne peuvent entraîner une perte de données pour les nouvelles fonctionnalités que nous continuons d\'améliorer. En continuant, vous reconnaissez et acceptez ce risque.',
+                cancel: 'Annuler',
+                acknowledge: 'Je comprends, Continuer'
+            }
+        };
+
+        function showBetaModal() {
+            const modal = document.getElementById('beta-modal');
+            const lang = document.documentElement.getAttribute('lang') || 'en';
+            const t = modalTranslations[lang] || modalTranslations.en;
+
+            modal.querySelector('[data-i18n="modal-title"]').textContent = t.title;
+            modal.querySelector('[data-i18n="modal-message"]').textContent = t.message;
+            modal.querySelector('[data-i18n="modal-cancel"]').textContent = t.cancel;
+            modal.querySelector('[data-i18n="modal-acknowledge"]').textContent = t.acknowledge;
+
+            modal.classList.add('show');
+        }
+
+        function hideBetaModal() {
+            document.getElementById('beta-modal').classList.remove('show');
+        }
+
+        function acknowledgeBeta() {
+            window.open(atob('aHR0cHM6Ly90ZXN0ZmxpZ2h0LmFwcGxlLmNvbS9qb2luLzZqYmdybjds'), '_blank');
+            hideBetaModal();
+        }
+
+        // Close modal when clicking overlay
+        document.getElementById('beta-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideBetaModal();
+            }
         });
     </script>
 </body>
