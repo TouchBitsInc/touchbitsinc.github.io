@@ -8,26 +8,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Light mode (default) */
+        /* Dark mode (default) */
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --bg-tertiary: #f1f3f4;
-            --bg-card: rgba(0, 0, 0, 0.02);
-            --bg-card-hover: rgba(0, 0, 0, 0.04);
-            --border-color: rgba(0, 0, 0, 0.08);
-            --text-primary: #1a1a1a;
-            --text-secondary: #52525b;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111113;
+            --bg-tertiary: #18181b;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.06);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
             --text-tertiary: #71717a;
-            --accent: #2563eb;
-            --accent-glow: rgba(37, 99, 235, 0.1);
-            --gradient-1: #2563eb;
-            --gradient-2: #7c3aed;
-            --gradient-3: #db2777;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --gradient-1: #3b82f6;
+            --gradient-2: #8b5cf6;
+            --gradient-3: #ec4899;
             --hero-text: #ffffff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --icon-filter: none;
-            --border-hover: rgba(0, 0, 0, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --icon-filter: brightness(0) invert(1);
+            --border-hover: rgba(255, 255, 255, 0.12);
         }
 
         /* Dark mode */
@@ -66,7 +66,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background-color: var(--bg-primary);
+            background: transparent;
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
@@ -74,16 +74,172 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Gradient background effect */
+        html {
+            background-color: #0a0a0a;
+        }
+
+        /* Space background effect */
         .gradient-bg {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 100vh;
-            background: radial-gradient(ellipse 80% 50% at 50% -20%, var(--accent-glow), transparent);
+            bottom: 0;
+            overflow: hidden;
             pointer-events: none;
             z-index: 0;
+            background: #0a0a0a;
+        }
+
+        /* Stars */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: var(--max-opacity); }
+        }
+
+        /* Planet horizon */
+        .planet {
+            position: absolute;
+            bottom: -900px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3000px;
+            height: 1000px;
+            border-radius: 50%;
+            background: #0a0a0f;
+            z-index: 1;
+        }
+
+        /* Edge lighting - curved to match planet, thicker in center */
+        .planet-glow {
+            position: absolute;
+            bottom: -898px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3000px;
+            height: 1000px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            border-top: 2px solid rgba(180, 200, 220, 0.7);
+            box-shadow:
+                0 -2px 4px 0 rgba(150, 170, 190, 0.5),
+                0 -4px 10px 0 rgba(120, 150, 180, 0.3),
+                0 -8px 20px 0 rgba(100, 130, 170, 0.2),
+                0 -15px 40px 0 rgba(80, 110, 150, 0.15),
+                0 -25px 60px 0 rgba(60, 90, 130, 0.08);
+            -webkit-mask-image: radial-gradient(ellipse 30% 100% at 50% 0%, black 0%, transparent 70%);
+            mask-image: radial-gradient(ellipse 30% 100% at 50% 0%, black 0%, transparent 70%);
+        }
+
+        /* Aurora glow */
+        .atmosphere {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 350px;
+            background: radial-gradient(ellipse 80% 100% at 50% 100%,
+                rgba(100, 160, 255, 0.35) 0%,
+                rgba(120, 140, 220, 0.2) 30%,
+                rgba(140, 100, 200, 0.1) 50%,
+                transparent 70%);
+            filter: blur(40px);
+            animation: aurora 6s ease-in-out infinite;
+        }
+
+        .atmosphere::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(ellipse 100% 100% at 30% 100%,
+                rgba(80, 180, 255, 0.3) 0%,
+                rgba(100, 200, 220, 0.15) 40%,
+                transparent 70%);
+            filter: blur(50px);
+            animation: aurora2 8s ease-in-out infinite;
+        }
+
+        .atmosphere::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(ellipse 100% 100% at 70% 100%,
+                rgba(160, 120, 255, 0.25) 0%,
+                rgba(200, 100, 180, 0.12) 40%,
+                transparent 70%);
+            filter: blur(50px);
+            animation: aurora3 7s ease-in-out infinite;
+        }
+
+        @keyframes aurora {
+            0%, 100% {
+                opacity: 0.7;
+                transform: translateX(-50%) scaleX(1) scaleY(1);
+                filter: blur(40px) hue-rotate(0deg);
+            }
+            33% {
+                opacity: 1;
+                transform: translateX(-50%) scaleX(1.1) scaleY(1.15);
+                filter: blur(45px) hue-rotate(10deg);
+            }
+            66% {
+                opacity: 0.85;
+                transform: translateX(-50%) scaleX(0.95) scaleY(1.05);
+                filter: blur(35px) hue-rotate(-10deg);
+            }
+        }
+
+        @keyframes aurora2 {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translateX(-5%) scaleX(1);
+                filter: blur(50px) hue-rotate(0deg);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translateX(8%) scaleX(1.15);
+                filter: blur(55px) hue-rotate(20deg);
+            }
+        }
+
+        @keyframes aurora3 {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translateX(5%) scaleX(1);
+                filter: blur(50px) hue-rotate(0deg);
+            }
+            50% {
+                opacity: 0.85;
+                transform: translateX(-8%) scaleX(1.2);
+                filter: blur(60px) hue-rotate(-15deg);
+            }
         }
 
         .container {
@@ -92,6 +248,7 @@
             padding: 0 24px;
             position: relative;
             z-index: 1;
+            background: transparent;
         }
 
         /* Hero Section */
@@ -103,6 +260,9 @@
             align-items: center;
             text-align: center;
             padding: 120px 24px 80px;
+            position: relative;
+            z-index: 1;
+            background: transparent;
         }
 
         .hero-badge {
@@ -140,6 +300,7 @@
             border-radius: 20px;
             margin-bottom: 32px;
             box-shadow: 0 20px 40px var(--shadow-color);
+            object-fit: contain;
         }
 
         .hero h1 {
@@ -148,10 +309,7 @@
             letter-spacing: -0.03em;
             line-height: 1.1;
             margin-bottom: 24px;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #ffffff;
         }
 
         .hero p {
@@ -304,6 +462,7 @@
         /* Section Styling */
         section {
             padding: 80px 0;
+            background: transparent;
         }
 
         .section-header {
@@ -345,35 +504,33 @@
         }
 
         .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 28px;
-            transition: all 0.3s ease;
             position: relative;
+            border-radius: 48px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
+            background: transparent;
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                0 15px 35px rgba(0, 0, 0, 0.2),
+                inset 0 -12px 25px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                inset 0 0 15px rgba(255, 255, 255, 0.04);
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .feature-card > * {
+            position: relative;
+            z-index: 2;
         }
 
         .feature-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
             transform: translateY(-4px);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
+            box-shadow:
+                0 8px 16px rgba(0, 0, 0, 0.35),
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                inset 0 -12px 25px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                inset 0 0 20px rgba(255, 255, 255, 0.06);
         }
 
         .feature-icon {
@@ -390,6 +547,7 @@
         .feature-icon img {
             width: 24px;
             height: 24px;
+            object-fit: contain;
             filter: brightness(0) invert(1);
         }
 
@@ -421,24 +579,34 @@
         }
 
         .highlight-card {
-            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
+            position: relative;
+            border-radius: 56px;
             padding: 40px 32px;
             text-align: center;
-            position: relative;
             overflow: hidden;
+            background: transparent;
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                inset 0 -15px 30px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .highlight-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at top, var(--accent-glow), transparent 70%);
-            pointer-events: none;
+        .highlight-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 8px 16px rgba(0, 0, 0, 0.35),
+                0 30px 60px rgba(0, 0, 0, 0.25),
+                inset 0 -15px 30px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 0 25px rgba(255, 255, 255, 0.08);
         }
 
         .highlight-card .feature-icon {
@@ -451,6 +619,7 @@
         .highlight-card .feature-icon img {
             width: 32px;
             height: 32px;
+            object-fit: contain;
         }
 
         .highlight-card h3 {
@@ -468,18 +637,26 @@
             z-index: 1;
         }
 
-        /* Footer */
-        footer {
-            padding: 48px 24px;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-            margin-top: 80px;
+        /* Footer - hide the ones inside lang-content */
+        .lang-content footer {
+            display: none;
         }
 
-        footer p {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            margin-bottom: 8px;
+        /* Fixed footer on the planet */
+        .fixed-footer {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .fixed-footer p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 4px;
         }
 
         /* Language Selector */
@@ -514,6 +691,7 @@
         .language-button img {
             width: 16px;
             height: 16px;
+            object-fit: contain;
             filter: var(--icon-filter);
             opacity: 0.7;
         }
@@ -573,6 +751,7 @@
         .language-option img {
             width: 18px;
             height: 18px;
+            object-fit: contain;
             filter: var(--icon-filter);
             opacity: 0.5;
         }
@@ -580,6 +759,9 @@
         /* Language content visibility */
         .lang-content {
             display: none;
+            position: relative;
+            z-index: 1;
+            background: transparent;
         }
 
         .lang-content.active {
@@ -620,7 +802,18 @@
     </style>
 </head>
 <body>
-    <div class="gradient-bg"></div>
+
+    <div class="gradient-bg">
+        <div class="stars" id="stars"></div>
+        <div class="atmosphere"></div>
+        <div class="planet"></div>
+        <div class="planet-glow"></div>
+    </div>
+
+    <div class="fixed-footer">
+        <p>&copy; 2025 TouchBits Inc. All rights reserved.</p>
+        <p>TestFlight is a registered trademark of Apple Inc.</p>
+    </div>
 
     <div class="language-selector">
         <button class="language-button" id="language-toggle">
@@ -756,7 +949,7 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt="Security">
                         </div>
                         <h3>Security</h3>
-                        <p>Protect your data with Face ID, Touch ID, or Passcode authentication.</p>
+                        <p>Protect your data with Face ID, Touch ID, Passcode, or custom PIN authentication.</p>
                     </div>
                 </div>
             </section>
@@ -883,7 +1076,7 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt="Security">
                         </div>
                         <h3>安全</h3>
-                        <p>使用面容 ID、触控 ID 或密码保护您的数据。</p>
+                        <p>使用面容 ID、触控 ID、密码或自定义 PIN 保护您的数据。</p>
                     </div>
                 </div>
             </section>
@@ -1010,7 +1203,7 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt="Security">
                         </div>
                         <h3>セキュリティ</h3>
-                        <p>Face ID、Touch ID、またはパスコードでデータを保護。</p>
+                        <p>Face ID、Touch ID、パスコード、またはカスタムPINでデータを保護。</p>
                     </div>
                 </div>
             </section>
@@ -1137,7 +1330,7 @@
                             <img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt="Security">
                         </div>
                         <h3>보안</h3>
-                        <p>Face ID, Touch ID 또는 암호로 데이터 보호.</p>
+                        <p>Face ID, Touch ID, 암호 또는 사용자 지정 PIN으로 데이터 보호.</p>
                     </div>
                 </div>
             </section>
@@ -1198,7 +1391,7 @@
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Настраиваемые поля</h3><p>Хранение дополнительной информации.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Вложения</h3><p>Прикрепление файлов и документов.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>История цен</h3><p>Отслеживание изменений цен.</p></div>
-                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Безопасность</h3><p>Защита данных с Face ID, Touch ID или паролем.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Безопасность</h3><p>Защита данных с Face ID, Touch ID, паролем или пользовательским PIN.</p></div>
                 </div>
             </section>
         </div>
@@ -1251,7 +1444,7 @@
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Campos Personalizados</h3><p>Almacena información adicional.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Archivos Adjuntos</h3><p>Adjunta archivos y documentos.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Historial de Precios</h3><p>Rastrea cambios de precio.</p></div>
-                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Seguridad</h3><p>Protege con Face ID, Touch ID o código.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Seguridad</h3><p>Protege con Face ID, Touch ID, código o PIN personalizado.</p></div>
                 </div>
             </section>
         </div>
@@ -1304,7 +1497,7 @@
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Özel Alanlar</h3><p>Ek bilgileri depolayın.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Ekler</h3><p>Dosya ve belgeler ekleyin.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Fiyat Geçmişi</h3><p>Fiyat değişikliklerini takip edin.</p></div>
-                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Güvenlik</h3><p>Face ID, Touch ID veya Parola ile koruma.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Güvenlik</h3><p>Face ID, Touch ID, Parola veya özel PIN ile koruma.</p></div>
                 </div>
             </section>
         </div>
@@ -1357,7 +1550,7 @@
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Benutzerdefinierte Felder</h3><p>Speichern Sie zusätzliche Informationen.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Anhänge</h3><p>Fügen Sie Dateien und Dokumente hinzu.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Preisverlauf</h3><p>Verfolgen Sie Preisänderungen.</p></div>
-                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sicherheit</h3><p>Schutz mit Face ID, Touch ID oder Passcode.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sicherheit</h3><p>Schutz mit Face ID, Touch ID, Passcode oder benutzerdefinierter PIN.</p></div>
                 </div>
             </section>
         </div>
@@ -1410,7 +1603,7 @@
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Campi Personalizzati</h3><p>Memorizza informazioni aggiuntive.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Allegati</h3><p>Allega file e documenti.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Storico Prezzi</h3><p>Traccia le variazioni di prezzo.</p></div>
-                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sicurezza</h3><p>Protezione con Face ID, Touch ID o Codice.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sicurezza</h3><p>Protezione con Face ID, Touch ID, Codice o PIN personalizzato.</p></div>
                 </div>
             </section>
         </div>
@@ -1463,7 +1656,7 @@
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/doc.text.png" alt=""></div><h3>Champs Personnalisés</h3><p>Stockez des informations supplémentaires.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/paperclip.png" alt=""></div><h3>Pièces Jointes</h3><p>Joignez des fichiers et documents.</p></div>
                     <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/chart.bar.fill.png" alt=""></div><h3>Historique des Prix</h3><p>Suivez les changements de prix.</p></div>
-                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sécurité</h3><p>Protection avec Face ID, Touch ID ou Code.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><img src="https://raw.githubusercontent.com/andrewtavis/sf-symbols-online/master/glyphs/lock.fill.png" alt=""></div><h3>Sécurité</h3><p>Protection avec Face ID, Touch ID, Code ou PIN personnalisé.</p></div>
                 </div>
             </section>
         </div>
@@ -1649,6 +1842,202 @@
                 hideBetaModal();
             }
         });
+
+        // Generate stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 80;
+
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 70 + '%'; // Keep stars in upper 70%
+                star.style.setProperty('--duration', (3 + Math.random() * 4) + 's');
+                star.style.setProperty('--delay', Math.random() * 5 + 's');
+                star.style.setProperty('--max-opacity', (0.3 + Math.random() * 0.7));
+
+                // Vary star sizes
+                const size = Math.random() < 0.8 ? 1 : 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+
+                starsContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        // Liquid Glass Effect for Cards
+        // Adapted from Shu Ding's liquid-glass (https://github.com/shuding/liquid-glass)
+        (function() {
+            'use strict';
+
+            function smoothStep(a, b, t) {
+                t = Math.max(0, Math.min(1, (t - a) / (b - a)));
+                return t * t * (3 - 2 * t);
+            }
+
+            function length(x, y) {
+                return Math.sqrt(x * x + y * y);
+            }
+
+            function roundedRectSDF(x, y, width, height, radius) {
+                const qx = Math.abs(x) - width + radius;
+                const qy = Math.abs(y) - height + radius;
+                return Math.min(Math.max(qx, qy), 0) + length(Math.max(qx, 0), Math.max(qy, 0)) - radius;
+            }
+
+            function texture(x, y) {
+                return { x, y };
+            }
+
+            function generateId() {
+                return 'liquid-glass-' + Math.random().toString(36).substr(2, 9);
+            }
+
+            class LiquidGlassCard {
+                constructor(element, options = {}) {
+                    this.element = element;
+                    this.width = options.width || 100;
+                    this.height = options.height || 100;
+                    this.borderRadius = options.borderRadius || 0.4;
+                    this.id = generateId();
+                    this.canvasDPI = 1;
+
+                    this.createFilter();
+                    this.updateShader();
+                    this.applyToElement();
+                }
+
+                createFilter() {
+                    this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    this.svg.setAttribute('width', '0');
+                    this.svg.setAttribute('height', '0');
+                    this.svg.style.cssText = 'position: absolute; pointer-events: none;';
+
+                    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                    const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+                    filter.setAttribute('id', `${this.id}_filter`);
+                    filter.setAttribute('filterUnits', 'userSpaceOnUse');
+                    filter.setAttribute('colorInterpolationFilters', 'sRGB');
+                    filter.setAttribute('x', '0');
+                    filter.setAttribute('y', '0');
+                    filter.setAttribute('width', this.width.toString());
+                    filter.setAttribute('height', this.height.toString());
+
+                    this.feImage = document.createElementNS('http://www.w3.org/2000/svg', 'feImage');
+                    this.feImage.setAttribute('id', `${this.id}_map`);
+                    this.feImage.setAttribute('width', this.width.toString());
+                    this.feImage.setAttribute('height', this.height.toString());
+
+                    this.feDisplacementMap = document.createElementNS('http://www.w3.org/2000/svg', 'feDisplacementMap');
+                    this.feDisplacementMap.setAttribute('in', 'SourceGraphic');
+                    this.feDisplacementMap.setAttribute('in2', `${this.id}_map`);
+                    this.feDisplacementMap.setAttribute('xChannelSelector', 'R');
+                    this.feDisplacementMap.setAttribute('yChannelSelector', 'G');
+
+                    filter.appendChild(this.feImage);
+                    filter.appendChild(this.feDisplacementMap);
+                    defs.appendChild(filter);
+                    this.svg.appendChild(defs);
+
+                    this.canvas = document.createElement('canvas');
+                    this.canvas.width = this.width * this.canvasDPI;
+                    this.canvas.height = this.height * this.canvasDPI;
+                    this.context = this.canvas.getContext('2d');
+
+                    document.body.appendChild(this.svg);
+                }
+
+                fragment(uv) {
+                    const ix = uv.x - 0.5;
+                    const iy = uv.y - 0.5;
+                    const aspectRatio = this.width / this.height;
+                    const distanceToEdge = roundedRectSDF(
+                        ix * aspectRatio,
+                        iy,
+                        0.25 * aspectRatio,
+                        0.25,
+                        this.borderRadius
+                    );
+                    const displacement = smoothStep(0.5, 0, distanceToEdge - 0.05);
+                    const scaled = smoothStep(0, 1, displacement) * 0.7 + 0.3;
+                    return texture(ix * scaled + 0.5, iy * scaled + 0.5);
+                }
+
+                updateShader() {
+                    const w = this.width * this.canvasDPI;
+                    const h = this.height * this.canvasDPI;
+                    const data = new Uint8ClampedArray(w * h * 4);
+
+                    let maxScale = 0;
+                    const rawValues = [];
+
+                    for (let i = 0; i < data.length; i += 4) {
+                        const x = (i / 4) % w;
+                        const y = Math.floor(i / 4 / w);
+                        const pos = this.fragment({ x: x / w, y: y / h });
+                        const dx = pos.x * w - x;
+                        const dy = pos.y * h - y;
+                        maxScale = Math.max(maxScale, Math.abs(dx), Math.abs(dy));
+                        rawValues.push(dx, dy);
+                    }
+
+                    maxScale *= 0.3;
+
+                    let index = 0;
+                    for (let i = 0; i < data.length; i += 4) {
+                        const r = rawValues[index++] / maxScale + 0.5;
+                        const g = rawValues[index++] / maxScale + 0.5;
+                        data[i] = r * 255;
+                        data[i + 1] = g * 255;
+                        data[i + 2] = 0;
+                        data[i + 3] = 255;
+                    }
+
+                    this.context.putImageData(new ImageData(data, w, h), 0, 0);
+                    this.feImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.canvas.toDataURL());
+                    this.feDisplacementMap.setAttribute('scale', (maxScale / this.canvasDPI).toString());
+                }
+
+                applyToElement() {
+                    this.element.style.backdropFilter = `url(#${this.id}_filter) blur(1px) contrast(1.15) brightness(1.08) saturate(1.2)`;
+                    this.element.style.webkitBackdropFilter = `url(#${this.id}_filter) blur(1px) contrast(1.15) brightness(1.08) saturate(1.2)`;
+                }
+            }
+
+            // Apply liquid glass to all cards
+            function initLiquidGlass() {
+                const highlightCards = document.querySelectorAll('.highlight-card');
+                const featureCards = document.querySelectorAll('.feature-card');
+
+                highlightCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    new LiquidGlassCard(card, {
+                        width: Math.round(rect.width) || 300,
+                        height: Math.round(rect.height) || 200,
+                        borderRadius: 0.5
+                    });
+                });
+
+                featureCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    new LiquidGlassCard(card, {
+                        width: Math.round(rect.width) || 250,
+                        height: Math.round(rect.height) || 150,
+                        borderRadius: 0.4
+                    });
+                });
+            }
+
+            // Wait for DOM and fonts to load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => setTimeout(initLiquidGlass, 100));
+            } else {
+                setTimeout(initLiquidGlass, 100);
+            }
+        })();
     </script>
 </body>
 </html>
