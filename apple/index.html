@@ -157,68 +157,20 @@
         .breakdown-table tr:hover {
             background: #f9f9f9;
         }
-        .verification {
-            margin-top: 20px;
-            padding: 16px;
-            border-radius: 8px;
-        }
-        .verification.success {
-            background: #e8f5e9;
-            border: 1px solid #34c759;
-        }
-        .verification.error {
-            background: #ffebee;
-            border: 1px solid #ff3b30;
-        }
-        .status-icon {
-            font-size: 24px;
-            margin-right: 8px;
-        }
-        .exchange-rates-section {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .transactions-section {
-            max-height: 400px;
-            overflow-y: auto;
-        }
         .info-text {
             color: #86868b;
             font-size: 14px;
             margin-top: 8px;
         }
-        .tab-container {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 16px;
-            border-bottom: 1px solid #e5e5e5;
-        }
-        .tab {
-            padding: 12px 24px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            color: #86868b;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s;
-        }
-        .tab:hover {
-            color: #1d1d1f;
-        }
-        .tab.active {
-            color: #0071e3;
-            border-bottom-color: #0071e3;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
         .small-text {
             font-size: 12px;
             color: #86868b;
+        }
+        #ratesSection, #breakdownSection, #transactionsSection {
+            display: none;
+        }
+        #ratesSection.visible, #breakdownSection.visible, #transactionsSection.visible {
+            display: block;
         }
     </style>
 </head>
@@ -236,7 +188,7 @@
                 <p class="file-name" id="salesFileName">No file selected</p>
             </div>
             <div class="file-box" id="paymentsBox">
-                <label>Payments File (CSV)</label>
+                <label>Financial Report (CSV)</label>
                 <p class="info-text">CSV with exchange rates by currency region</p>
                 <label class="upload-btn" for="paymentsFile">Choose File</label>
                 <input type="file" id="paymentsFile" accept=".csv">
@@ -252,111 +204,94 @@
     <div class="section results" id="resultsSection">
         <h2>Calculation Results</h2>
 
-        <div class="tab-container">
-            <button class="tab active" data-tab="summary">Summary</button>
-            <button class="tab" data-tab="breakdown">Country Breakdown</button>
-            <button class="tab" data-tab="rates">Exchange Rates</button>
-            <button class="tab" data-tab="transactions">All Transactions</button>
-        </div>
-
-        <div class="tab-content active" id="summary">
-            <div class="result-grid">
-                <div class="result-card">
-                    <h3>Total Gross Sales (CAD)</h3>
-                    <p class="value" id="totalGrossSales">$0.00</p>
-                </div>
-                <div class="result-card">
-                    <h3>Gross Foreign (CAD)</h3>
-                    <p class="value" id="grossForeign">$0.00</p>
-                </div>
-                <div class="result-card">
-                    <h3>Gross Canadian (CAD)</h3>
-                    <p class="value" id="grossCanadian">$0.00</p>
-                </div>
-                <div class="result-card">
-                    <h3>Total Commission (CAD)</h3>
-                    <p class="value" id="totalCommission">$0.00</p>
-                </div>
-                <div class="result-card">
-                    <h3>Commission Foreign (CAD)</h3>
-                    <p class="value" id="commissionForeign">$0.00</p>
-                </div>
-                <div class="result-card">
-                    <h3>Commission Canadian (CAD)</h3>
-                    <p class="value" id="commissionCanadian">$0.00</p>
-                </div>
-                <div class="result-card">
-                    <h3>Tax on Canadian Commission</h3>
-                    <p class="value" id="taxCanadian">$0.00</p>
-                </div>
-                <div class="result-card highlight">
-                    <h3>Total Payment (CAD)</h3>
-                    <p class="value" id="totalPayment">$0.00</p>
-                </div>
+        <div class="result-grid">
+            <div class="result-card">
+                <h3>Total Gross Sales (CAD)</h3>
+                <p class="value" id="totalGrossSales">$0.00</p>
             </div>
-
-            <div class="verification" id="verification">
-                <h3><span class="status-icon" id="verifyIcon"></span>Verification</h3>
-                <p id="verifyMessage"></p>
-                <p class="small-text" id="verifyDetails"></p>
+            <div class="result-card">
+                <h3>Gross Foreign (CAD)</h3>
+                <p class="value" id="grossForeign">$0.00</p>
+            </div>
+            <div class="result-card">
+                <h3>Gross Canadian (CAD)</h3>
+                <p class="value" id="grossCanadian">$0.00</p>
+            </div>
+            <div class="result-card">
+                <h3>Total Commission (CAD)</h3>
+                <p class="value" id="totalCommission">$0.00</p>
+            </div>
+            <div class="result-card">
+                <h3>Commission Foreign (CAD)</h3>
+                <p class="value" id="commissionForeign">$0.00</p>
+            </div>
+            <div class="result-card">
+                <h3>Commission Canadian (CAD)</h3>
+                <p class="value" id="commissionCanadian">$0.00</p>
+            </div>
+            <div class="result-card">
+                <h3>Tax on Canadian Commission</h3>
+                <p class="value" id="taxCanadian">$0.00</p>
+            </div>
+            <div class="result-card highlight">
+                <h3>Total Payment (CAD)</h3>
+                <p class="value" id="totalPayment">$0.00</p>
             </div>
         </div>
 
-        <div class="tab-content" id="breakdown">
-            <div class="transactions-section">
-                <table class="breakdown-table" id="breakdownTable">
-                    <thead>
-                        <tr>
-                            <th>Country</th>
-                            <th>Currency</th>
-                            <th>Transactions</th>
-                            <th>Gross (Local)</th>
-                            <th>Commission (Local)</th>
-                            <th>Exchange Rate</th>
-                            <th>Gross (CAD)</th>
-                            <th>Commission (CAD)</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+    </div>
 
-        <div class="tab-content" id="rates">
-            <div class="exchange-rates-section">
-                <table class="breakdown-table" id="ratesTable">
-                    <thead>
-                        <tr>
-                            <th>Currency Region</th>
-                            <th>Currency Code</th>
-                            <th>Exchange Rate (to CAD)</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+    <div class="section" id="ratesSection">
+        <h2>Exchange Rates</h2>
+        <table class="breakdown-table" id="ratesTable">
+            <thead>
+                <tr>
+                    <th>Currency Region</th>
+                    <th>Currency Code</th>
+                    <th>Exchange Rate (to CAD)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-        <div class="tab-content" id="transactions">
-            <p class="info-text">Total rows processed: <span id="totalRows">0</span></p>
-            <div class="transactions-section">
-                <table class="breakdown-table" id="transactionsTable">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Country</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Customer Price</th>
-                            <th>Partner Share</th>
-                            <th>Commission (Local)</th>
-                            <th>Commission (CAD)</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+    <div class="section" id="breakdownSection">
+        <h2>Country Breakdown</h2>
+        <table class="breakdown-table" id="breakdownTable">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Currency</th>
+                    <th>Transactions</th>
+                    <th>Gross (Local)</th>
+                    <th>Commission (Local)</th>
+                    <th>Exchange Rate</th>
+                    <th>Gross (CAD)</th>
+                    <th>Commission (CAD)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="section" id="transactionsSection">
+        <h2>All Transactions</h2>
+        <p class="info-text">Total rows processed: <span id="totalRows">0</span></p>
+        <table class="breakdown-table" id="transactionsTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Country</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Customer Price</th>
+                    <th>Partner Share</th>
+                    <th>Commission (Local)</th>
+                    <th>Commission (CAD)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 
     <script>
@@ -530,6 +465,8 @@
             // Handle different line endings (Windows \r\n, Mac \r, Unix \n)
             const lines = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
 
+            console.log('Parsing payments file, total lines:', lines.length);
+
             // Parse CSV properly (handling quoted values)
             function parseCSVLine(line) {
                 const result = [];
@@ -551,70 +488,37 @@
                 return result;
             }
 
-            // Find header row - look for row with column headers
-            let headerIndex = -1;
-            let headers = [];
+            // Parse each line looking for currency data
+            // Format: "Region (CUR)","...","...","...","...","adj","...","...","rate","proceeds","CAD"
             for (let i = 0; i < lines.length; i++) {
-                const line = lines[i];
-                // Header row contains these column names
-                if (line.includes('Exchange Rate') || line.includes('exchange rate')) {
-                    headerIndex = i;
-                    headers = parseCSVLine(line);
-                    break;
-                }
-            }
-
-            if (headerIndex === -1) {
-                console.error('Could not find header row in payments file');
-                return;
-            }
-
-            // Find column indices
-            let exchangeRateColIndex = -1;
-            let adjustmentsColIndex = -1;
-            let regionColIndex = 0; // Usually first column
-
-            headers.forEach((col, idx) => {
-                const colLower = col.toLowerCase().trim();
-                if (colLower.includes('exchange rate')) exchangeRateColIndex = idx;
-                if (colLower === 'adjustments') adjustmentsColIndex = idx;
-                if (colLower.includes('country') || colLower.includes('region')) regionColIndex = idx;
-            });
-
-            console.log('Payments file parsed - Header at line:', headerIndex);
-            console.log('Exchange Rate column:', exchangeRateColIndex);
-            console.log('Adjustments column:', adjustmentsColIndex);
-
-            // Parse data rows
-            for (let i = headerIndex + 1; i < lines.length; i++) {
                 const line = lines[i].trim();
                 if (!line) continue;
 
                 const parts = parseCSVLine(line);
-                if (parts.length <= exchangeRateColIndex) continue;
 
-                const regionCell = parts[regionColIndex] || '';
+                // Check if first column has a currency code in parentheses like "Australia (AUD)"
+                const firstCol = parts[0] || '';
+                const currencyMatch = firstCol.match(/\(([A-Z]{3})\)/);
 
-                // Extract currency code from region like "Australia (AUD)"
-                const match = regionCell.match(/\(([A-Z]{3})\)/);
-                if (match) {
-                    const currencyCode = match[1];
-                    const exchangeRate = parseFloat(parts[exchangeRateColIndex]);
+                if (currencyMatch && parts.length >= 9) {
+                    const currencyCode = currencyMatch[1];
+                    // Exchange Rate is typically column 8 (index 8)
+                    const exchangeRate = parseFloat(parts[8]);
 
                     if (!isNaN(exchangeRate) && exchangeRate > 0) {
                         exchangeRates[currencyCode] = exchangeRate;
                         console.log(`Parsed rate: ${currencyCode} = ${exchangeRate}`);
-                    }
 
-                    // Get Canadian adjustments (tax)
-                    if (currencyCode === 'CAD' && adjustmentsColIndex >= 0) {
-                        const adj = parseFloat(parts[adjustmentsColIndex]) || 0;
-                        canadianTaxAmount = Math.abs(adj);
-                        console.log('Canadian tax:', canadianTaxAmount);
+                        // Get Canadian adjustments (tax) from column 5
+                        if (currencyCode === 'CAD') {
+                            const adj = parseFloat(parts[5]) || 0;
+                            canadianTaxAmount = Math.abs(adj);
+                            console.log('Canadian tax:', canadianTaxAmount);
+                        }
                     }
                 }
 
-                // Look for total proceeds at bottom (line containing CAD total like "966.18 CAD")
+                // Look for total proceeds at bottom (line containing "XXX.XX CAD")
                 if (line.includes('CAD') && !line.includes('(CAD)')) {
                     const totalMatch = line.match(/([\d,]+\.?\d*)\s*CAD/);
                     if (totalMatch) {
@@ -628,6 +532,7 @@
             exchangeRates['CAD'] = 1.0;
 
             console.log('All exchange rates:', exchangeRates);
+            console.log('Total rates parsed:', Object.keys(exchangeRates).length);
 
             // Display exchange rates
             displayExchangeRates();
@@ -641,6 +546,11 @@
             tbody.innerHTML = '';
 
             const rateCount = Object.keys(exchangeRates).length;
+
+            // Show the exchange rates section
+            if (rateCount > 0) {
+                document.getElementById('ratesSection').classList.add('visible');
+            }
 
             // Add info row at top
             const infoRow = document.createElement('tr');
@@ -851,6 +761,9 @@
 
         function displayResults(data) {
             document.getElementById('resultsSection').classList.add('visible');
+            document.getElementById('ratesSection').classList.add('visible');
+            document.getElementById('breakdownSection').classList.add('visible');
+            document.getElementById('transactionsSection').classList.add('visible');
 
             document.getElementById('totalGrossSales').textContent = formatCurrency(data.totalGrossSales);
             document.getElementById('grossForeign').textContent = formatCurrency(data.grossForeign);
@@ -860,42 +773,6 @@
             document.getElementById('commissionCanadian').textContent = formatCurrency(data.commissionCanadian);
             document.getElementById('taxCanadian').textContent = formatCurrency(data.taxCanadian);
             document.getElementById('totalPayment').textContent = formatCurrency(data.totalPayment);
-
-            // Verification
-            const verification = document.getElementById('verification');
-            const verifyIcon = document.getElementById('verifyIcon');
-            const verifyMessage = document.getElementById('verifyMessage');
-            const verifyDetails = document.getElementById('verifyDetails');
-
-            // Check for missing rates first
-            if (data.missingRatesCount > 0) {
-                verification.className = 'verification error';
-                verifyIcon.textContent = '⚠';
-                verifyMessage.textContent = `WARNING: ${data.missingRatesCount} currencies missing exchange rates (defaulted to 1.0)!`;
-                verifyDetails.innerHTML = `
-                    <strong>Missing rates for:</strong> ${data.missingRatesList.join(', ')}<br>
-                    <strong>Rates parsed:</strong> ${data.exchangeRatesCount}<br>
-                    <em>Check the Exchange Rates tab and verify your payments file contains exchange rates.</em>
-                `;
-            } else if (data.expectedTotal !== null) {
-                const diff = Math.abs(data.totalPayment - data.expectedTotal);
-                if (diff < 0.01) {
-                    verification.className = 'verification success';
-                    verifyIcon.textContent = '✓';
-                    verifyMessage.textContent = 'Calculation verified! Total payment matches payments file.';
-                    verifyDetails.textContent = `Calculated: ${formatCurrency(data.totalPayment)} | Expected: ${formatCurrency(data.expectedTotal)} | Rates used: ${data.exchangeRatesCount}`;
-                } else {
-                    verification.className = 'verification error';
-                    verifyIcon.textContent = '✗';
-                    verifyMessage.textContent = 'Verification failed. Total payment does not match payments file.';
-                    verifyDetails.textContent = `Calculated: ${formatCurrency(data.totalPayment)} | Expected: ${formatCurrency(data.expectedTotal)} | Difference: ${formatCurrency(diff)}`;
-                }
-            } else {
-                verification.className = 'verification';
-                verifyIcon.textContent = '?';
-                verifyMessage.textContent = 'Could not find expected total in payments file for verification.';
-                verifyDetails.textContent = `Rates parsed: ${data.exchangeRatesCount}`;
-            }
 
             // Country breakdown
             const breakdownTbody = document.querySelector('#breakdownTable tbody');
@@ -945,18 +822,6 @@
             return `${symbol}${value.toFixed(2)}${suffix}`;
         }
 
-        // Tab switching
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                const tabId = this.dataset.tab;
-
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-                this.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
     </script>
 </body>
 </html>
