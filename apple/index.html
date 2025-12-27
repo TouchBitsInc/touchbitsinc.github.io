@@ -499,7 +499,17 @@
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     paymentsData = event.target.result;
+                    console.log('Payments file loaded, size:', paymentsData.length, 'bytes');
+                    console.log('First 500 chars:', paymentsData.substring(0, 500));
                     parsePaymentsFile(paymentsData);
+
+                    // Update UI to show how many rates were parsed
+                    const rateCount = Object.keys(exchangeRates).length;
+                    const statusText = rateCount > 5
+                        ? `${file.name} (${rateCount} rates parsed)`
+                        : `${file.name} - WARNING: only ${rateCount} rates found!`;
+                    document.getElementById('paymentsFileName').textContent = statusText;
+
                     checkFilesReady();
                 };
                 reader.readAsText(file);
@@ -517,7 +527,8 @@
             canadianTaxAmount = 0;
             expectedTotalProceeds = 0;
 
-            const lines = content.split('\n');
+            // Handle different line endings (Windows \r\n, Mac \r, Unix \n)
+            const lines = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
 
             // Parse CSV properly (handling quoted values)
             function parseCSVLine(line) {
@@ -629,6 +640,19 @@
             const tbody = document.querySelector('#ratesTable tbody');
             tbody.innerHTML = '';
 
+            const rateCount = Object.keys(exchangeRates).length;
+
+            // Add info row at top
+            const infoRow = document.createElement('tr');
+            infoRow.style.background = rateCount > 5 ? '#e8f5e9' : '#ffebee';
+            infoRow.innerHTML = `
+                <td colspan="3" style="font-weight: bold;">
+                    Parsed ${rateCount} exchange rates from payments file
+                    ${rateCount < 5 ? ' - WARNING: Few rates found, check file format!' : ''}
+                </td>
+            `;
+            tbody.appendChild(infoRow);
+
             for (const [currency, rate] of Object.entries(exchangeRates).sort()) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -645,6 +669,8 @@
             return patterns ? patterns[0] : currency;
         }
 
+        let missingRates = new Set();
+
         function getExchangeRate(countryCode, customerCurrency) {
             // PRIORITY 1: Use customer currency directly (most reliable from sales file)
             if (customerCurrency && exchangeRates[customerCurrency]) {
@@ -657,18 +683,14 @@
                 return exchangeRates[mappedCurrency];
             }
 
-            // PRIORITY 3: Try to find a match in exchange rates using partial matching
-            // This handles cases where payments file uses different naming
-            const searchCurrency = customerCurrency || mappedCurrency;
-            if (searchCurrency) {
-                for (const [currency, rate] of Object.entries(exchangeRates)) {
-                    if (currency === searchCurrency) {
-                        return rate;
-                    }
-                }
+            // Log missing rate (only once per currency)
+            const key = `${countryCode}:${customerCurrency}`;
+            if (!missingRates.has(key)) {
+                missingRates.add(key);
+                console.warn(`Exchange rate not found for ${countryCode} (${customerCurrency}), defaulting to 1.0`);
+                console.warn('Available rates:', Object.keys(exchangeRates));
             }
 
-            console.warn(`Exchange rate not found for ${countryCode} (${customerCurrency}), using 1.0`);
             return 1.0;
         }
 
@@ -676,6 +698,13 @@
         document.getElementById('calculateBtn').addEventListener('click', calculate);
 
         function calculate() {
+            // Reset missing rates tracking
+            missingRates = new Set();
+
+            // Debug: Log exchange rates at start of calculation
+            console.log('Starting calculation with exchange rates:', exchangeRates);
+            console.log('Number of rates:', Object.keys(exchangeRates).length);
+
             const lines = salesData.split('\n');
             let headerIndex = -1;
             let headers = [];
@@ -788,6 +817,11 @@
             // Get expected total from payments file
             const expectedTotal = getExpectedTotal();
 
+            // Log any missing rates
+            if (missingRates.size > 0) {
+                console.error('Missing exchange rates for:', Array.from(missingRates));
+            }
+
             // Display results
             displayResults({
                 totalGrossSales,
@@ -800,7 +834,10 @@
                 totalPayment,
                 expectedTotal,
                 transactions,
-                countryBreakdown
+                countryBreakdown,
+                missingRatesCount: missingRates.size,
+                missingRatesList: Array.from(missingRates),
+                exchangeRatesCount: Object.keys(exchangeRates).length
             });
         }
 
@@ -830,13 +867,23 @@
             const verifyMessage = document.getElementById('verifyMessage');
             const verifyDetails = document.getElementById('verifyDetails');
 
-            if (data.expectedTotal !== null) {
+            // Check for missing rates first
+            if (data.missingRatesCount > 0) {
+                verification.className = 'verification error';
+                verifyIcon.textContent = '⚠';
+                verifyMessage.textContent = `WARNING: ${data.missingRatesCount} currencies missing exchange rates (defaulted to 1.0)!`;
+                verifyDetails.innerHTML = `
+                    <strong>Missing rates for:</strong> ${data.missingRatesList.join(', ')}<br>
+                    <strong>Rates parsed:</strong> ${data.exchangeRatesCount}<br>
+                    <em>Check the Exchange Rates tab and verify your payments file contains exchange rates.</em>
+                `;
+            } else if (data.expectedTotal !== null) {
                 const diff = Math.abs(data.totalPayment - data.expectedTotal);
                 if (diff < 0.01) {
                     verification.className = 'verification success';
                     verifyIcon.textContent = '✓';
                     verifyMessage.textContent = 'Calculation verified! Total payment matches payments file.';
-                    verifyDetails.textContent = `Calculated: ${formatCurrency(data.totalPayment)} | Expected: ${formatCurrency(data.expectedTotal)}`;
+                    verifyDetails.textContent = `Calculated: ${formatCurrency(data.totalPayment)} | Expected: ${formatCurrency(data.expectedTotal)} | Rates used: ${data.exchangeRatesCount}`;
                 } else {
                     verification.className = 'verification error';
                     verifyIcon.textContent = '✗';
@@ -847,7 +894,7 @@
                 verification.className = 'verification';
                 verifyIcon.textContent = '?';
                 verifyMessage.textContent = 'Could not find expected total in payments file for verification.';
-                verifyDetails.textContent = '';
+                verifyDetails.textContent = `Rates parsed: ${data.exchangeRatesCount}`;
             }
 
             // Country breakdown
