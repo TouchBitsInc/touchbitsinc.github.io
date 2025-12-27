@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Commission Fee Calculator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+        h1 {
+            text-align: center;
+            color: #1d1d1f;
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #1d1d1f;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 12px;
+        }
+        .file-upload {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .file-box {
+            flex: 1;
+            min-width: 300px;
+            border: 2px dashed #d2d2d7;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        .file-box:hover {
+            border-color: #0071e3;
+        }
+        .file-box.loaded {
+            border-color: #34c759;
+            background: #f0fff4;
+        }
+        .file-box label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .file-box input[type="file"] {
+            display: none;
+        }
+        .file-box .upload-btn {
+            display: inline-block;
+            background: #0071e3;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .file-box .upload-btn:hover {
+            background: #0077ed;
+        }
+        .file-box .file-name {
+            margin-top: 10px;
+            color: #86868b;
+            font-size: 14px;
+        }
+        .btn {
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #0077ed;
+        }
+        .btn:disabled {
+            background: #d2d2d7;
+            cursor: not-allowed;
+        }
+        .btn-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .results {
+            display: none;
+        }
+        .results.visible {
+            display: block;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .result-card {
+            background: #f5f5f7;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .result-card.highlight {
+            background: #e8f5e9;
+            border: 2px solid #34c759;
+        }
+        .result-card.warning {
+            background: #fff3e0;
+            border: 2px solid #ff9500;
+        }
+        .result-card.error {
+            background: #ffebee;
+            border: 2px solid #ff3b30;
+        }
+        .result-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: #86868b;
+            text-transform: uppercase;
+        }
+        .result-card .value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        .breakdown-table th,
+        .breakdown-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .breakdown-table th {
+            background: #f5f5f7;
+            font-weight: 600;
+        }
+        .breakdown-table tr:hover {
+            background: #f9f9f9;
+        }
+        .verification {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        .verification.success {
+            background: #e8f5e9;
+            border: 1px solid #34c759;
+        }
+        .verification.error {
+            background: #ffebee;
+            border: 1px solid #ff3b30;
+        }
+        .status-icon {
+            font-size: 24px;
+            margin-right: 8px;
+        }
+        .exchange-rates-section {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .transactions-section {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .info-text {
+            color: #86868b;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .tab-container {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #86868b;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab:hover {
+            color: #1d1d1f;
+        }
+        .tab.active {
+            color: #0071e3;
+            border-bottom-color: #0071e3;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .small-text {
+            font-size: 12px;
+            color: #86868b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Apple Commission Fee Calculator</h1>
+
+    <div class="section">
+        <h2>File Upload</h2>
+        <div class="file-upload">
+            <div class="file-box" id="salesBox">
+                <label>Sales File (FD_*.txt)</label>
+                <p class="info-text">Tab-separated file with transaction details</p>
+                <label class="upload-btn" for="salesFile">Choose File</label>
+                <input type="file" id="salesFile" accept=".txt,.tsv">
+                <p class="file-name" id="salesFileName">No file selected</p>
+            </div>
+            <div class="file-box" id="paymentsBox">
+                <label>Payments File (CSV)</label>
+                <p class="info-text">CSV with exchange rates by currency region</p>
+                <label class="upload-btn" for="paymentsFile">Choose File</label>
+                <input type="file" id="paymentsFile" accept=".csv">
+                <p class="file-name" id="paymentsFileName">No file selected</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn" id="calculateBtn" disabled>Calculate Commission</button>
+    </div>
+
+    <div class="section results" id="resultsSection">
+        <h2>Calculation Results</h2>
+
+        <div class="tab-container">
+            <button class="tab active" data-tab="summary">Summary</button>
+            <button class="tab" data-tab="breakdown">Country Breakdown</button>
+            <button class="tab" data-tab="rates">Exchange Rates</button>
+            <button class="tab" data-tab="transactions">All Transactions</button>
+        </div>
+
+        <div class="tab-content active" id="summary">
+            <div class="result-grid">
+                <div class="result-card">
+                    <h3>Total Gross Sales (CAD)</h3>
+                    <p class="value" id="totalGrossSales">$0.00</p>
+                </div>
+                <div class="result-card">
+                    <h3>Gross Foreign (CAD)</h3>
+                    <p class="value" id="grossForeign">$0.00</p>
+                </div>
+                <div class="result-card">
+                    <h3>Gross Canadian (CAD)</h3>
+                    <p class="value" id="grossCanadian">$0.00</p>
+                </div>
+                <div class="result-card">
+                    <h3>Total Commission (CAD)</h3>
+                    <p class="value" id="totalCommission">$0.00</p>
+                </div>
+                <div class="result-card">
+                    <h3>Commission Foreign (CAD)</h3>
+                    <p class="value" id="commissionForeign">$0.00</p>
+                </div>
+                <div class="result-card">
+                    <h3>Commission Canadian (CAD)</h3>
+                    <p class="value" id="commissionCanadian">$0.00</p>
+                </div>
+                <div class="result-card">
+                    <h3>Tax on Canadian Commission</h3>
+                    <p class="value" id="taxCanadian">$0.00</p>
+                </div>
+                <div class="result-card highlight">
+                    <h3>Total Payment (CAD)</h3>
+                    <p class="value" id="totalPayment">$0.00</p>
+                </div>
+            </div>
+
+            <div class="verification" id="verification">
+                <h3><span class="status-icon" id="verifyIcon"></span>Verification</h3>
+                <p id="verifyMessage"></p>
+                <p class="small-text" id="verifyDetails"></p>
+            </div>
+        </div>
+
+        <div class="tab-content" id="breakdown">
+            <div class="transactions-section">
+                <table class="breakdown-table" id="breakdownTable">
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Currency</th>
+                            <th>Transactions</th>
+                            <th>Gross (Local)</th>
+                            <th>Commission (Local)</th>
+                            <th>Exchange Rate</th>
+                            <th>Gross (CAD)</th>
+                            <th>Commission (CAD)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-content" id="rates">
+            <div class="exchange-rates-section">
+                <table class="breakdown-table" id="ratesTable">
+                    <thead>
+                        <tr>
+                            <th>Currency Region</th>
+                            <th>Currency Code</th>
+                            <th>Exchange Rate (to CAD)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-content" id="transactions">
+            <p class="info-text">Total rows processed: <span id="totalRows">0</span></p>
+            <div class="transactions-section">
+                <table class="breakdown-table" id="transactionsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Country</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Customer Price</th>
+                            <th>Partner Share</th>
+                            <th>Commission (Local)</th>
+                            <th>Commission (CAD)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Country code to currency mapping (complete Apple App Store mapping)
+        const COUNTRY_TO_CURRENCY = {
+            // Americas - USD
+            'US': 'USD',
+            // USD Territories
+            'EC': 'USD', 'FM': 'USD', 'PA': 'USD', 'PW': 'USD', 'SV': 'USD', 'TC': 'USD', 'VG': 'USD',
+            // East Caribbean (XCD)
+            'AI': 'XCD', 'AG': 'XCD', 'DM': 'XCD', 'GD': 'XCD', 'KN': 'XCD', 'LC': 'XCD', 'MS': 'XCD', 'VC': 'XCD',
+            // West African CFA (XOF)
+            'BJ': 'XOF', 'BF': 'XOF', 'CI': 'XOF', 'GW': 'XOF', 'ML': 'XOF', 'NE': 'XOF', 'SN': 'XOF',
+            // Central African CFA (XAF)
+            'CM': 'XAF', 'TD': 'XAF', 'CG': 'XAF', 'GA': 'XAF',
+            // Canada - CAD
+            'CA': 'CAD',
+            // Euro Zone - EUR
+            'AT': 'EUR', 'BE': 'EUR', 'CY': 'EUR', 'DE': 'EUR', 'EE': 'EUR', 'ES': 'EUR',
+            'FI': 'EUR', 'FR': 'EUR', 'GR': 'EUR', 'HR': 'EUR', 'IE': 'EUR', 'IT': 'EUR',
+            'LT': 'EUR', 'LU': 'EUR', 'LV': 'EUR', 'MT': 'EUR', 'NL': 'EUR', 'PT': 'EUR',
+            'SI': 'EUR', 'SK': 'EUR',
+            // EUR Non-Eurozone
+            'XK': 'EUR', 'ME': 'EUR',
+            // UK - GBP
+            'GB': 'GBP',
+            // Latin America and Caribbean
+            'AR': 'ARS', 'BS': 'BSD', 'BB': 'BBD', 'BZ': 'BZD', 'BM': 'BMD', 'BO': 'BOB',
+            'BR': 'BRL', 'KY': 'KYD', 'CL': 'CLP', 'CO': 'COP', 'CR': 'CRC', 'DO': 'DOP',
+            'GT': 'GTQ', 'GY': 'GYD', 'HN': 'HNL', 'JM': 'JMD', 'MX': 'MXN', 'NI': 'NIO',
+            'PY': 'PYG', 'PE': 'PEN', 'SR': 'SRD', 'TT': 'TTD', 'UY': 'UYU', 'VE': 'VES',
+            // Europe, Russia, and Central Asia (Non-Euro)
+            'AL': 'ALL', 'BY': 'BYN', 'BA': 'BAM', 'BG': 'BGN', 'CZ': 'CZK', 'DK': 'DKK',
+            'GE': 'GEL', 'HU': 'HUF', 'IS': 'ISK', 'KZ': 'KZT', 'KG': 'KGS', 'MD': 'MDL',
+            'MK': 'MKD', 'NO': 'NOK', 'PL': 'PLN', 'RO': 'RON', 'RU': 'RUB', 'RS': 'RSD',
+            'SE': 'SEK', 'CH': 'CHF', 'TJ': 'TJS', 'TM': 'TMT', 'UA': 'UAH', 'UZ': 'UZS',
+            // Africa
+            'DZ': 'DZD', 'AO': 'AOA', 'BW': 'BWP', 'CV': 'CVE', 'CD': 'CDF', 'SZ': 'SZL',
+            'GH': 'GHS', 'GM': 'GMD', 'KE': 'KES', 'LR': 'LRD', 'MG': 'MGA', 'MW': 'MWK',
+            'MR': 'MRU', 'MU': 'MUR', 'MA': 'MAD', 'MZ': 'MZN', 'NA': 'NAD', 'NG': 'NGN',
+            'RW': 'RWF', 'ST': 'STN', 'SC': 'SCR', 'SL': 'SLL', 'ZA': 'ZAR', 'TZ': 'TZS',
+            'TN': 'TND', 'UG': 'UGX', 'ZM': 'ZMW', 'ZW': 'ZWL', 'EG': 'EGP',
+            // Asia-Pacific
+            'AU': 'AUD', 'NR': 'AUD', 'BT': 'BTN', 'BN': 'BND', 'KH': 'KHR', 'CN': 'CNY',
+            'FJ': 'FJD', 'HK': 'HKD', 'IN': 'INR', 'ID': 'IDR', 'JP': 'JPY', 'LA': 'LAK',
+            'MO': 'MOP', 'MY': 'MYR', 'MV': 'MVR', 'MN': 'MNT', 'MM': 'MMK', 'NP': 'NPR',
+            'NZ': 'NZD', 'PK': 'PKR', 'PG': 'PGK', 'PH': 'PHP', 'SG': 'SGD', 'SB': 'SBD',
+            'KR': 'KRW', 'LK': 'LKR', 'TW': 'TWD', 'TH': 'THB', 'TO': 'TOP', 'VU': 'VUV',
+            'VN': 'VND',
+            // Middle East and Türkiye
+            'AF': 'AFN', 'AM': 'AMD', 'AZ': 'AZN', 'BH': 'BHD', 'IQ': 'IQD', 'IL': 'ILS',
+            'JO': 'JOD', 'KW': 'KWD', 'LB': 'LBP', 'LY': 'LYD', 'OM': 'OMR', 'QA': 'QAR',
+            'SA': 'SAR', 'TR': 'TRY', 'AE': 'AED', 'YE': 'YER',
+        };
+
+        // Currency code to region name mapping for payments file lookup
+        const CURRENCY_PATTERNS = {
+            'USD': ['United States', 'Americas', 'US', 'Rest of World'],
+            'CAD': ['Canada'],
+            'EUR': ['Euro-Zone', 'Europe', 'EU', 'Eurozone'],
+            'GBP': ['United Kingdom', 'UK', 'Britain'],
+            'AUD': ['Australia'],
+            'NZD': ['New Zealand'],
+            'JPY': ['Japan'],
+            'CNY': ['China mainland', 'China', 'Chinese'],
+            'HKD': ['Hong Kong'],
+            'TWD': ['Taiwan'],
+            'SGD': ['Singapore'],
+            'KRW': ['South Korea', 'Korea'],
+            'INR': ['India'],
+            'IDR': ['Indonesia'],
+            'THB': ['Thailand'],
+            'MYR': ['Malaysia'],
+            'PHP': ['Philippines'],
+            'VND': ['Vietnam'],
+            'PKR': ['Pakistan'],
+            'MXN': ['Mexico'],
+            'BRL': ['Brazil'],
+            'RUB': ['Russia'],
+            'TRY': ['Türkiye', 'Turkey'],
+            'PLN': ['Poland'],
+            'CZK': ['Czechia', 'Czech'],
+            'HUF': ['Hungary'],
+            'RON': ['Romania'],
+            'BGN': ['Bulgaria'],
+            'SEK': ['Sweden'],
+            'DKK': ['Denmark'],
+            'NOK': ['Norway'],
+            'CHF': ['Switzerland'],
+            'ILS': ['Israel'],
+            'SAR': ['Saudi Arabia', 'Saudi'],
+            'AED': ['United Arab Emirates', 'UAE'],
+            'QAR': ['Qatar'],
+            'EGP': ['Egypt'],
+            'ZAR': ['South Africa'],
+            'NGN': ['Nigeria'],
+            'KZT': ['Kazakhstan'],
+            'XCD': ['East Caribbean'],
+            'XOF': ['West African'],
+            'XAF': ['Central African'],
+            'ARS': ['Argentina'],
+            'CLP': ['Chile'],
+            'COP': ['Colombia'],
+            'PEN': ['Peru'],
+            'UAH': ['Ukraine'],
+            'AZN': ['Azerbaijan'],
+            'AMD': ['Armenia'],
+            'GEL': ['Georgia'],
+            'KGS': ['Kyrgyzstan'],
+            'TJS': ['Tajikistan'],
+            'UZS': ['Uzbekistan'],
+            'BYN': ['Belarus'],
+            'MDL': ['Moldova'],
+        };
+
+        let salesData = null;
+        let paymentsData = null;
+        let exchangeRates = {};
+
+        // File upload handlers
+        document.getElementById('salesFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('salesFileName').textContent = file.name;
+                document.getElementById('salesBox').classList.add('loaded');
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    salesData = event.target.result;
+                    checkFilesReady();
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        document.getElementById('paymentsFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('paymentsFileName').textContent = file.name;
+                document.getElementById('paymentsBox').classList.add('loaded');
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    paymentsData = event.target.result;
+                    parsePaymentsFile(paymentsData);
+                    checkFilesReady();
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function checkFilesReady() {
+            const btn = document.getElementById('calculateBtn');
+            btn.disabled = !(salesData && paymentsData);
+        }
+
+        // Parse payments file to extract exchange rates
+        function parsePaymentsFile(content) {
+            exchangeRates = {};
+            canadianTaxAmount = 0;
+            expectedTotalProceeds = 0;
+
+            const lines = content.split('\n');
+
+            // Parse CSV properly (handling quoted values)
+            function parseCSVLine(line) {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        result.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                result.push(current.trim());
+                return result;
+            }
+
+            // Find header row - look for row with column headers
+            let headerIndex = -1;
+            let headers = [];
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                // Header row contains these column names
+                if (line.includes('Exchange Rate') || line.includes('exchange rate')) {
+                    headerIndex = i;
+                    headers = parseCSVLine(line);
+                    break;
+                }
+            }
+
+            if (headerIndex === -1) {
+                console.error('Could not find header row in payments file');
+                return;
+            }
+
+            // Find column indices
+            let exchangeRateColIndex = -1;
+            let adjustmentsColIndex = -1;
+            let regionColIndex = 0; // Usually first column
+
+            headers.forEach((col, idx) => {
+                const colLower = col.toLowerCase().trim();
+                if (colLower.includes('exchange rate')) exchangeRateColIndex = idx;
+                if (colLower === 'adjustments') adjustmentsColIndex = idx;
+                if (colLower.includes('country') || colLower.includes('region')) regionColIndex = idx;
+            });
+
+            console.log('Payments file parsed - Header at line:', headerIndex);
+            console.log('Exchange Rate column:', exchangeRateColIndex);
+            console.log('Adjustments column:', adjustmentsColIndex);
+
+            // Parse data rows
+            for (let i = headerIndex + 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+
+                const parts = parseCSVLine(line);
+                if (parts.length <= exchangeRateColIndex) continue;
+
+                const regionCell = parts[regionColIndex] || '';
+
+                // Extract currency code from region like "Australia (AUD)"
+                const match = regionCell.match(/\(([A-Z]{3})\)/);
+                if (match) {
+                    const currencyCode = match[1];
+                    const exchangeRate = parseFloat(parts[exchangeRateColIndex]);
+
+                    if (!isNaN(exchangeRate) && exchangeRate > 0) {
+                        exchangeRates[currencyCode] = exchangeRate;
+                        console.log(`Parsed rate: ${currencyCode} = ${exchangeRate}`);
+                    }
+
+                    // Get Canadian adjustments (tax)
+                    if (currencyCode === 'CAD' && adjustmentsColIndex >= 0) {
+                        const adj = parseFloat(parts[adjustmentsColIndex]) || 0;
+                        canadianTaxAmount = Math.abs(adj);
+                        console.log('Canadian tax:', canadianTaxAmount);
+                    }
+                }
+
+                // Look for total proceeds at bottom (line containing CAD total like "966.18 CAD")
+                if (line.includes('CAD') && !line.includes('(CAD)')) {
+                    const totalMatch = line.match(/([\d,]+\.?\d*)\s*CAD/);
+                    if (totalMatch) {
+                        expectedTotalProceeds = parseFloat(totalMatch[1].replace(/,/g, ''));
+                        console.log('Expected total proceeds:', expectedTotalProceeds);
+                    }
+                }
+            }
+
+            // Ensure CAD is always 1.0
+            exchangeRates['CAD'] = 1.0;
+
+            console.log('All exchange rates:', exchangeRates);
+
+            // Display exchange rates
+            displayExchangeRates();
+        }
+
+        let canadianTaxAmount = 0;
+        let expectedTotalProceeds = 0;
+
+        function displayExchangeRates() {
+            const tbody = document.querySelector('#ratesTable tbody');
+            tbody.innerHTML = '';
+
+            for (const [currency, rate] of Object.entries(exchangeRates).sort()) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${getCurrencyRegionName(currency)}</td>
+                    <td>${currency}</td>
+                    <td>${rate.toFixed(6)}</td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+
+        function getCurrencyRegionName(currency) {
+            const patterns = CURRENCY_PATTERNS[currency];
+            return patterns ? patterns[0] : currency;
+        }
+
+        function getExchangeRate(countryCode, customerCurrency) {
+            // PRIORITY 1: Use customer currency directly (most reliable from sales file)
+            if (customerCurrency && exchangeRates[customerCurrency]) {
+                return exchangeRates[customerCurrency];
+            }
+
+            // PRIORITY 2: Use country code mapping
+            const mappedCurrency = COUNTRY_TO_CURRENCY[countryCode];
+            if (mappedCurrency && exchangeRates[mappedCurrency]) {
+                return exchangeRates[mappedCurrency];
+            }
+
+            // PRIORITY 3: Try to find a match in exchange rates using partial matching
+            // This handles cases where payments file uses different naming
+            const searchCurrency = customerCurrency || mappedCurrency;
+            if (searchCurrency) {
+                for (const [currency, rate] of Object.entries(exchangeRates)) {
+                    if (currency === searchCurrency) {
+                        return rate;
+                    }
+                }
+            }
+
+            console.warn(`Exchange rate not found for ${countryCode} (${customerCurrency}), using 1.0`);
+            return 1.0;
+        }
+
+        // Calculate button handler
+        document.getElementById('calculateBtn').addEventListener('click', calculate);
+
+        function calculate() {
+            const lines = salesData.split('\n');
+            let headerIndex = -1;
+            let headers = [];
+
+            // Find header row (contains "Country of Sale")
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].includes('Country of Sale')) {
+                    headerIndex = i;
+                    headers = lines[i].split('\t').map(h => h.trim());
+                    break;
+                }
+            }
+
+            if (headerIndex === -1) {
+                alert('Could not find header row in sales file');
+                return;
+            }
+
+            // Get column indices
+            const colIndex = {};
+            headers.forEach((h, i) => colIndex[h] = i);
+
+            // Process transactions
+            const transactions = [];
+            const countryBreakdown = {};
+
+            let totalGrossSales = 0;
+            let grossForeign = 0;
+            let grossCanadian = 0;
+            let totalCommission = 0;
+            let commissionForeign = 0;
+            let commissionCanadian = 0;
+
+            // Process each data row
+            for (let i = headerIndex + 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line || line.startsWith('Country Of Sale')) break; // Stop at summary section
+
+                const parts = line.split('\t');
+                if (parts.length < 10) continue;
+
+                const country = parts[colIndex['Country of Sale']]?.trim();
+                const quantity = parseInt(parts[colIndex['Quantity']]?.trim()) || 0;
+                const partnerShare = parseFloat(parts[colIndex['Partner Share']]?.trim()) || 0;
+                const customerPrice = parseFloat(parts[colIndex['Customer Price']]?.trim()) || 0;
+                const customerCurrency = parts[colIndex['Customer Currency']]?.trim();
+                const title = parts[colIndex['Title']]?.trim() || '';
+                const date = parts[colIndex['Transaction Date']]?.trim() || '';
+
+                if (!country || quantity === 0) continue;
+
+                const exchangeRate = getExchangeRate(country, customerCurrency);
+
+                // Calculate for this row
+                const grossLocal = customerPrice * quantity;
+                const commissionLocal = (customerPrice - partnerShare) * quantity;
+                const grossCAD = grossLocal * exchangeRate;
+                const commissionCAD = commissionLocal * exchangeRate;
+
+                // Add to totals
+                totalGrossSales += grossCAD;
+                totalCommission += commissionCAD;
+
+                if (country === 'CA') {
+                    grossCanadian += grossCAD;
+                    commissionCanadian += commissionCAD;
+                } else {
+                    grossForeign += grossCAD;
+                    commissionForeign += commissionCAD;
+                }
+
+                // Track by country
+                if (!countryBreakdown[country]) {
+                    countryBreakdown[country] = {
+                        currency: customerCurrency,
+                        count: 0,
+                        grossLocal: 0,
+                        commissionLocal: 0,
+                        exchangeRate: exchangeRate,
+                        grossCAD: 0,
+                        commissionCAD: 0
+                    };
+                }
+                countryBreakdown[country].count += Math.abs(quantity);
+                countryBreakdown[country].grossLocal += grossLocal;
+                countryBreakdown[country].commissionLocal += commissionLocal;
+                countryBreakdown[country].grossCAD += grossCAD;
+                countryBreakdown[country].commissionCAD += commissionCAD;
+
+                // Store transaction
+                transactions.push({
+                    date,
+                    country,
+                    title,
+                    quantity,
+                    customerPrice,
+                    partnerShare,
+                    commissionLocal,
+                    commissionCAD,
+                    currency: customerCurrency
+                });
+            }
+
+            // Get Canadian tax from payments file (Adjustments column for Canada row)
+            const taxCanadian = getCanadianTax();
+
+            // Calculate total payment
+            const totalPayment = totalGrossSales - totalCommission - taxCanadian;
+
+            // Get expected total from payments file
+            const expectedTotal = getExpectedTotal();
+
+            // Display results
+            displayResults({
+                totalGrossSales,
+                grossForeign,
+                grossCanadian,
+                totalCommission,
+                commissionForeign,
+                commissionCanadian,
+                taxCanadian,
+                totalPayment,
+                expectedTotal,
+                transactions,
+                countryBreakdown
+            });
+        }
+
+        function getCanadianTax() {
+            return canadianTaxAmount;
+        }
+
+        function getExpectedTotal() {
+            return expectedTotalProceeds > 0 ? expectedTotalProceeds : null;
+        }
+
+        function displayResults(data) {
+            document.getElementById('resultsSection').classList.add('visible');
+
+            document.getElementById('totalGrossSales').textContent = formatCurrency(data.totalGrossSales);
+            document.getElementById('grossForeign').textContent = formatCurrency(data.grossForeign);
+            document.getElementById('grossCanadian').textContent = formatCurrency(data.grossCanadian);
+            document.getElementById('totalCommission').textContent = formatCurrency(data.totalCommission);
+            document.getElementById('commissionForeign').textContent = formatCurrency(data.commissionForeign);
+            document.getElementById('commissionCanadian').textContent = formatCurrency(data.commissionCanadian);
+            document.getElementById('taxCanadian').textContent = formatCurrency(data.taxCanadian);
+            document.getElementById('totalPayment').textContent = formatCurrency(data.totalPayment);
+
+            // Verification
+            const verification = document.getElementById('verification');
+            const verifyIcon = document.getElementById('verifyIcon');
+            const verifyMessage = document.getElementById('verifyMessage');
+            const verifyDetails = document.getElementById('verifyDetails');
+
+            if (data.expectedTotal !== null) {
+                const diff = Math.abs(data.totalPayment - data.expectedTotal);
+                if (diff < 0.01) {
+                    verification.className = 'verification success';
+                    verifyIcon.textContent = '✓';
+                    verifyMessage.textContent = 'Calculation verified! Total payment matches payments file.';
+                    verifyDetails.textContent = `Calculated: ${formatCurrency(data.totalPayment)} | Expected: ${formatCurrency(data.expectedTotal)}`;
+                } else {
+                    verification.className = 'verification error';
+                    verifyIcon.textContent = '✗';
+                    verifyMessage.textContent = 'Verification failed. Total payment does not match payments file.';
+                    verifyDetails.textContent = `Calculated: ${formatCurrency(data.totalPayment)} | Expected: ${formatCurrency(data.expectedTotal)} | Difference: ${formatCurrency(diff)}`;
+                }
+            } else {
+                verification.className = 'verification';
+                verifyIcon.textContent = '?';
+                verifyMessage.textContent = 'Could not find expected total in payments file for verification.';
+                verifyDetails.textContent = '';
+            }
+
+            // Country breakdown
+            const breakdownTbody = document.querySelector('#breakdownTable tbody');
+            breakdownTbody.innerHTML = '';
+
+            Object.entries(data.countryBreakdown)
+                .sort((a, b) => b[1].commissionCAD - a[1].commissionCAD)
+                .forEach(([country, info]) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${country}</td>
+                        <td>${info.currency}</td>
+                        <td>${info.count}</td>
+                        <td>${formatCurrency(info.grossLocal, info.currency)}</td>
+                        <td>${formatCurrency(info.commissionLocal, info.currency)}</td>
+                        <td>${info.exchangeRate.toFixed(6)}</td>
+                        <td>${formatCurrency(info.grossCAD)}</td>
+                        <td>${formatCurrency(info.commissionCAD)}</td>
+                    `;
+                    breakdownTbody.appendChild(row);
+                });
+
+            // Transactions
+            document.getElementById('totalRows').textContent = data.transactions.length;
+            const transactionsTbody = document.querySelector('#transactionsTable tbody');
+            transactionsTbody.innerHTML = '';
+
+            data.transactions.forEach(tx => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${tx.date}</td>
+                    <td>${tx.country}</td>
+                    <td>${tx.title}</td>
+                    <td>${tx.quantity}</td>
+                    <td>${formatCurrency(tx.customerPrice, tx.currency)}</td>
+                    <td>${formatCurrency(tx.partnerShare, tx.currency)}</td>
+                    <td>${formatCurrency(tx.commissionLocal, tx.currency)}</td>
+                    <td>${formatCurrency(tx.commissionCAD)}</td>
+                `;
+                transactionsTbody.appendChild(row);
+            });
+        }
+
+        function formatCurrency(value, currency = 'CAD') {
+            const symbol = currency === 'CAD' ? '$' : '';
+            const suffix = currency !== 'CAD' ? ` ${currency}` : '';
+            return `${symbol}${value.toFixed(2)}${suffix}`;
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.dataset.tab;
+
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                this.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
