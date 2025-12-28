@@ -233,6 +233,10 @@
                 <h3>Tax on Canadian Commission</h3>
                 <p class="value" id="taxCanadian">$0.00</p>
             </div>
+            <div class="result-card">
+                <h3>Withholding Tax (CAD)</h3>
+                <p class="value" id="withholdingTax">$0.00</p>
+            </div>
             <div class="result-card highlight">
                 <h3>Total Payment (CAD)</h3>
                 <p class="value" id="totalPayment">$0.00</p>
@@ -461,6 +465,7 @@
             exchangeRates = {};
             canadianTaxAmount = 0;
             expectedTotalProceeds = 0;
+            totalWithholdingTax = 0;
 
             // Handle different line endings (Windows \r\n, Mac \r, Unix \n)
             const lines = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
@@ -515,6 +520,14 @@
                             canadianTaxAmount = Math.abs(adj);
                             console.log('Canadian tax:', canadianTaxAmount);
                         }
+
+                        // Get Withholding Tax from column 6 (already in CAD after conversion)
+                        const wht = parseFloat(parts[6]) || 0;
+                        if (wht !== 0) {
+                            // Withholding tax is in local currency, convert to CAD
+                            totalWithholdingTax += Math.abs(wht) * exchangeRate;
+                            console.log(`Withholding tax for ${currencyCode}:`, wht);
+                        }
                     }
                 }
 
@@ -540,6 +553,7 @@
 
         let canadianTaxAmount = 0;
         let expectedTotalProceeds = 0;
+        let totalWithholdingTax = 0;
 
         function displayExchangeRates() {
             const tbody = document.querySelector('#ratesTable tbody');
@@ -725,11 +739,14 @@
             // Get Canadian tax from payments file (Adjustments column for Canada row)
             const taxCanadian = getCanadianTax();
 
-            // Calculate total payment
-            const totalPayment = totalGrossSales - totalCommission - taxCanadian;
+            // Get withholding tax
+            const withholdingTax = totalWithholdingTax;
 
-            // Get expected total from payments file
-            const expectedTotal = getExpectedTotal();
+            // Get total payment directly from CSV file (Column K at bottom)
+            const totalPayment = expectedTotalProceeds;
+
+            // Calculate total for comparison (includes all deductions)
+            const calculatedTotal = totalGrossSales - totalCommission - taxCanadian - withholdingTax;
 
             // Log any missing rates
             if (missingRates.size > 0) {
@@ -745,22 +762,16 @@
                 commissionForeign,
                 commissionCanadian,
                 taxCanadian,
+                withholdingTax,
                 totalPayment,
-                expectedTotal,
+                calculatedTotal,
                 transactions,
-                countryBreakdown,
-                missingRatesCount: missingRates.size,
-                missingRatesList: Array.from(missingRates),
-                exchangeRatesCount: Object.keys(exchangeRates).length
+                countryBreakdown
             });
         }
 
         function getCanadianTax() {
             return canadianTaxAmount;
-        }
-
-        function getExpectedTotal() {
-            return expectedTotalProceeds > 0 ? expectedTotalProceeds : null;
         }
 
         function displayResults(data) {
@@ -776,7 +787,8 @@
             document.getElementById('commissionForeign').textContent = formatCurrency(data.commissionForeign);
             document.getElementById('commissionCanadian').textContent = formatCurrency(data.commissionCanadian);
             document.getElementById('taxCanadian').textContent = formatCurrency(data.taxCanadian);
-            document.getElementById('totalPayment').textContent = formatCurrency(data.totalPayment);
+            document.getElementById('withholdingTax').textContent = formatCurrency(data.withholdingTax);
+            document.getElementById('totalPayment').innerHTML = `${formatCurrency(data.totalPayment)}<br><span style="font-size: 14px; font-weight: normal; color: #86868b;">(calculated: ${formatCurrency(data.calculatedTotal)})</span>`;
 
             // Country breakdown
             const breakdownTbody = document.querySelector('#breakdownTable tbody');
