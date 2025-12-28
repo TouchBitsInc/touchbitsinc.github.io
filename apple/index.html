@@ -202,7 +202,7 @@
     </div>
 
     <div class="section results" id="resultsSection">
-        <h2>Calculation Results</h2>
+        <h2 id="reportTitle">Calculation Results</h2>
 
         <div class="result-grid">
             <div class="result-card">
@@ -466,11 +466,21 @@
             canadianTaxAmount = 0;
             expectedTotalProceeds = 0;
             totalWithholdingTax = 0;
+            reportTitle = '';
 
             // Handle different line endings (Windows \r\n, Mac \r, Unix \n)
             const lines = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
 
             console.log('Parsing payments file, total lines:', lines.length);
+
+            // Get report title from first row
+            if (lines.length > 0) {
+                const firstLine = lines[0].replace(/"/g, '').replace(/,+$/, '').trim();
+                if (firstLine && !firstLine.includes('Country')) {
+                    reportTitle = firstLine;
+                    console.log('Report title:', reportTitle);
+                }
+            }
 
             // Parse CSV properly (handling quoted values)
             function parseCSVLine(line) {
@@ -554,6 +564,7 @@
         let canadianTaxAmount = 0;
         let expectedTotalProceeds = 0;
         let totalWithholdingTax = 0;
+        let reportTitle = '';
 
         function displayExchangeRates() {
             const tbody = document.querySelector('#ratesTable tbody');
@@ -779,6 +790,9 @@
             document.getElementById('ratesSection').classList.add('visible');
             document.getElementById('breakdownSection').classList.add('visible');
             document.getElementById('transactionsSection').classList.add('visible');
+
+            // Set report title from CSV
+            document.getElementById('reportTitle').textContent = reportTitle || 'Calculation Results';
 
             document.getElementById('totalGrossSales').textContent = formatCurrency(data.totalGrossSales);
             document.getElementById('grossForeign').textContent = formatCurrency(data.grossForeign);
