@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apple Commission Fee Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -181,10 +182,10 @@
         <h2>File Upload</h2>
         <div class="file-upload">
             <div class="file-box" id="salesBox">
-                <label>Sales File (FD_*.txt)</label>
-                <p class="info-text">Tab-separated file with transaction details</p>
+                <label>Sales File (FD_*.txt or .zip)</label>
+                <p class="info-text">Tab-separated file or ZIP containing it</p>
                 <label class="upload-btn" for="salesFile">Choose File</label>
-                <input type="file" id="salesFile" accept=".txt,.tsv">
+                <input type="file" id="salesFile" accept=".txt,.tsv,.zip">
                 <p class="file-name" id="salesFileName">No file selected</p>
             </div>
             <div class="file-box" id="paymentsBox">
@@ -416,17 +417,51 @@
         let exchangeRates = {};
 
         // File upload handlers
-        document.getElementById('salesFile').addEventListener('change', function(e) {
+        document.getElementById('salesFile').addEventListener('change', async function(e) {
             const file = e.target.files[0];
             if (file) {
                 document.getElementById('salesFileName').textContent = file.name;
                 document.getElementById('salesBox').classList.add('loaded');
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    salesData = event.target.result;
-                    checkFilesReady();
-                };
-                reader.readAsText(file);
+
+                // Check if it's a ZIP file
+                if (file.name.toLowerCase().endsWith('.zip')) {
+                    try {
+                        const zip = await JSZip.loadAsync(file);
+                        // Find FD_*.txt file in the ZIP
+                        let foundFile = null;
+                        let foundFileName = null;
+
+                        for (const [filename, zipEntry] of Object.entries(zip.files)) {
+                            if (!zipEntry.dir && filename.match(/FD_.*\.txt$/i)) {
+                                foundFile = zipEntry;
+                                foundFileName = filename;
+                                break;
+                            }
+                        }
+
+                        if (foundFile) {
+                            salesData = await foundFile.async('string');
+                            document.getElementById('salesFileName').textContent = `${file.name} → ${foundFileName}`;
+                            console.log('Extracted from ZIP:', foundFileName);
+                            checkFilesReady();
+                        } else {
+                            alert('No FD_*.txt file found in the ZIP');
+                            document.getElementById('salesBox').classList.remove('loaded');
+                        }
+                    } catch (err) {
+                        console.error('Error reading ZIP:', err);
+                        alert('Error reading ZIP file: ' + err.message);
+                        document.getElementById('salesBox').classList.remove('loaded');
+                    }
+                } else {
+                    // Regular text file
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        salesData = event.target.result;
+                        checkFilesReady();
+                    };
+                    reader.readAsText(file);
+                }
             }
         });
 
