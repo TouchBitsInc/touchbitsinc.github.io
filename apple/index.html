@@ -669,8 +669,12 @@
                 const exchangeRate = getExchangeRate(country, customerCurrency);
 
                 // Calculate for this row
-                const grossLocal = customerPrice * quantity;
-                const commissionLocal = (customerPrice - partnerShare) * quantity;
+                // Note: For returns, quantity is negative and prices are also negative
+                // So we use absolute quantity to avoid double-negative
+                const absQuantity = Math.abs(quantity);
+                const sign = quantity < 0 ? -1 : 1;
+                const grossLocal = Math.abs(customerPrice) * absQuantity * sign;
+                const commissionLocal = (Math.abs(customerPrice) - Math.abs(partnerShare)) * absQuantity * sign;
                 const grossCAD = grossLocal * exchangeRate;
                 const commissionCAD = commissionLocal * exchangeRate;
 
