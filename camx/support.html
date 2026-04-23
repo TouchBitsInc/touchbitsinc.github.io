@@ -1,74 +1,416 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>CamX Support</title>
-    <style>
-        html,
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            width: 100%;
-            height: 100%;
-            padding: 10;
-            margin: 10;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CamX Support — Setup Guide, FAQ & Contact</title>
+<meta name="description" content="CamX setup guide for iPad USB capture, FAQ for UVC/USB troubleshooting, and contact info for feature requests and bug reports." />
+<meta name="theme-color" content="#000000" />
+<link rel="canonical" href="https://touchbits.com/camx/support.html" />
+<link rel="icon" type="image/png" href="img/app-icon.png" />
+<link rel="apple-touch-icon" href="img/app-icon.png" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000000;
+  --ink:#ffffff;
+  --ink-dim:rgba(235,235,245,0.6);
+  --ink-tert:rgba(235,235,245,0.3);
+  --accent:#ffe100;          /* Nikon yellow — solid, no gradient */
+  --accent-2:#64d2ff;        /* cyan — contrast accent (links) */
+  --accent-3:#ffe100;        /* alias to accent */
+  --accent-shadow:rgba(40,30,0,0.55);
+  --card:rgba(255,255,255,0.04);
+  --card-border:rgba(255,255,255,0.08);
+  --divider:rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--ink);
+  min-height:100vh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;line-height:1.6;
+}
 
-        .centered-wrapper {
-            position: relative;
-            text-align: center;
-        }
+/* RGB Lens background — matches PaywallView.RGBLensBackground */
+.aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg)}
+.aurora .blob{
+  position:absolute;top:40%;left:50%;border-radius:50%;
+  filter:blur(60px);mix-blend-mode:screen;opacity:0.45;will-change:transform;
+  transform:translate(-50%,-50%);
+}
+.aurora .blob.r{width:60vw;height:60vw;background:radial-gradient(circle,#ff453a 0%,transparent 60%);animation:spin 40s linear infinite}
+.aurora .blob.g{width:60vw;height:60vw;background:radial-gradient(circle,#30d158 0%,transparent 60%);animation:spin 40s linear infinite;animation-delay:-13.3s}
+.aurora .blob.b{width:60vw;height:60vw;background:radial-gradient(circle,#0a84ff 0%,transparent 60%);animation:spin 40s linear infinite;animation-delay:-26.6s}
+.aurora .blob.p{width:40vw;height:40vw;background:radial-gradient(circle,#bf5af2 0%,transparent 60%);animation:spin 60s linear infinite reverse;opacity:0.28}
+.aurora .blob.c{width:40vw;height:40vw;background:radial-gradient(circle,#64d2ff 0%,transparent 60%);animation:spin 60s linear infinite reverse;animation-delay:-20s;opacity:0.28}
+@keyframes spin{
+  0%  {transform:translate(-50%,-50%) rotate(0deg) translate(22vw) rotate(0deg)}
+  100%{transform:translate(-50%,-50%) rotate(360deg) translate(22vw) rotate(-360deg)}
+}
+.grain{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+}
 
-        .centered-wrapper:before {
-            content: "";
-            position: relative;
-            display: inline-block;
-            width: 0;
-            height: 100%;
-            vertical-align: middle;
-        }
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px 40px;display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  background:rgba(0,0,0,0.5);
+  border-bottom:1px solid var(--card-border);
+}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:-0.02em;text-decoration:none;color:var(--ink)}
+.logo img{width:34px;height:34px;border-radius:8px}
+.nav-links{display:flex;gap:32px}
+.nav-links a{color:var(--ink-dim);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+@media (max-width:720px){nav{padding:16px 20px}.nav-links{display:none}}
 
-        .centered-content {
-            display: inline-block;
-            vertical-align: middle;
-        }
+/* Page container */
+main{max-width:760px;margin:0 auto;padding:140px 24px 60px}
 
-        div.title {
-            font-weight: bold;
-            font-size: 30px;
-            text-align: left;
-            padding: 10px;
-        }
+/* Eyebrow — same as landing section headers (uppercase, tracked, semibold) */
+.eyebrow{
+  display:inline-block;
+  font-size:12px;font-weight:600;color:var(--ink-dim);
+  text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;
+}
 
-        div.body {
-            width: 400px;
-            margin: auto;
-            text-align: left;
-            border-radius: 10px;
-            background: #EAF2F9;
-            padding: 20px;
-            line-height: 1.6;
-        }
-    </style>
+/* Hero */
+h1{
+  font-size:clamp(40px,6vw,64px);
+  font-weight:900;letter-spacing:-0.03em;line-height:1.05;margin-bottom:16px;
+  background:linear-gradient(180deg,#fff 0%,#a0a2af 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.lead{color:var(--ink-dim);font-size:18px;margin-bottom:48px;max-width:620px}
+
+/* Segmented tab switcher — mirrors HelpView's .segmented Picker */
+.tabs{
+  display:flex;gap:2px;padding:3px;margin-bottom:40px;
+  background:rgba(255,255,255,0.07);border-radius:12px;border:1px solid var(--card-border);
+  max-width:520px;
+}
+.tab{
+  flex:1;padding:10px 16px;border-radius:9px;border:none;
+  background:transparent;color:var(--ink-dim);cursor:pointer;
+  font-size:14px;font-weight:600;font-family:inherit;
+  transition:background .2s, color .2s;
+}
+.tab:hover{color:var(--ink)}
+.tab.active{background:rgba(255,255,255,0.15);color:var(--ink)}
+
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Section header — "SUPPORTED DEVICES" / "TIPS" etc. */
+.section-label{
+  font-size:12px;font-weight:600;color:var(--ink-dim);
+  text-transform:uppercase;letter-spacing:0.5px;
+  padding:0 4px 10px;margin-top:28px;
+}
+.section-label:first-child{margin-top:0}
+
+/* Grouped list — mirrors .insetGrouped */
+.group{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:16px;overflow:hidden;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.row{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 18px;
+  border-bottom:1px solid var(--divider);
+}
+.row:last-child{border-bottom:none}
+.row-icon{
+  flex-shrink:0;width:24px;display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-size:16px;margin-top:2px;
+}
+.row-body{flex:1;min-width:0}
+.row-title{
+  font-size:14.5px;font-weight:600;color:var(--ink);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+}
+.row-detail{
+  font-size:13px;color:var(--ink-dim);margin-top:4px;line-height:1.55;
+}
+.row-badge{
+  display:inline-block;padding:2px 6px;border-radius:4px;
+  background:rgba(255,255,255,0.1);font-size:10px;font-weight:700;
+  font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;color:var(--ink-dim);
+}
+.row-extra{
+  margin-top:10px;display:flex;gap:10px;align-items:center;
+  font-size:13px;color:var(--ink-dim);
+}
+
+/* FAQ — question/answer rows */
+.faq-row{
+  padding:18px 20px;border-bottom:1px solid var(--divider);
+}
+.faq-row:last-child{border-bottom:none}
+.faq-q{
+  font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:6px;
+}
+.faq-a{font-size:13px;color:var(--ink-dim);line-height:1.6}
+
+/* Contact section */
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;
+}
+.contact-card{
+  padding:24px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-border);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  text-decoration:none;color:var(--ink);transition:transform .2s, border-color .2s;
+  display:block;
+}
+.contact-card:hover{transform:translateY(-2px);border-color:var(--accent-2)}
+.icon-badge{
+  width:45px;height:45px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;font-size:22px;
+}
+.icon-badge.c-pink{background:rgba(255,45,85,0.15);color:#ff2d55}
+.icon-badge.c-blue{background:rgba(10,132,255,0.15);color:#0a84ff}
+.icon-badge.c-orange{background:rgba(255,159,10,0.15);color:#ff9f0a}
+.icon-badge.c-green{background:rgba(48,209,88,0.15);color:#30d158}
+.icon-badge.c-cyan{background:rgba(100,210,255,0.15);color:#64d2ff}
+.icon-badge.c-purple{background:rgba(191,90,242,0.15);color:#bf5af2}
+.icon-badge.c-indigo{background:rgba(94,92,230,0.15);color:#5e5ce6}
+.icon-badge.c-red{background:rgba(255,69,58,0.15);color:#ff453a}
+.icon-badge.c-yellow{background:rgba(255,214,10,0.15);color:#ffd60a}
+.contact-card h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.contact-card p{color:var(--ink-dim);font-size:13.5px;line-height:1.55}
+.contact-card .link{
+  display:inline-block;margin-top:12px;color:var(--accent-2);
+  font-size:13px;font-weight:600;
+  font-family:'JetBrains Mono',monospace;
+}
+@media (max-width:640px){.contact-grid{grid-template-columns:1fr}}
+
+/* Footer */
+footer{
+  padding:40px 24px 32px;text-align:center;color:var(--ink-dim);font-size:13px;
+  border-top:1px solid var(--card-border);margin-top:80px;
+}
+footer a{color:var(--ink-dim);text-decoration:none;margin:0 10px}
+footer a:hover{color:var(--ink)}
+.footer-tag{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:11px;opacity:0.5}
+</style>
 </head>
+<body>
 
-<body class="centered-wrapper">
-    <div class="centered-content">
-        <div class="title">
-            <img style="vertical-align:middle" src="img/logo.png" width="64" height="64">
-            <span>CamX </span>
+<div class="aurora" aria-hidden="true">
+  <div class="blob r"></div>
+  <div class="blob g"></div>
+  <div class="blob b"></div>
+  <div class="blob p"></div>
+  <div class="blob c"></div>
+</div>
+<div class="grain"></div>
+
+<nav aria-label="Primary">
+  <a href="index.html" class="logo">
+    <img src="img/app-icon.png" alt="CamX app icon" width="34" height="34" />
+    <span>CamX</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#modes">Modes</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="support.html">Support</a>
+  </div>
+</nav>
+
+<main>
+  <span class="eyebrow">Help</span>
+  <h1>Support &amp; Setup Guide</h1>
+  <p class="lead">Everything you need to get CamX running on your iPad — setup instructions, troubleshooting tips, and a direct line to the developer.</p>
+
+  <!-- Tabs (mirrors in-app HelpView: Guide / FAQ / Contact) -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" role="tab" aria-controls="guide" data-tab="guide" type="button">Guide</button>
+    <button class="tab" role="tab" aria-controls="faq" data-tab="faq" type="button">FAQ</button>
+    <button class="tab" role="tab" aria-controls="contact" data-tab="contact" type="button">Contact</button>
+  </div>
+
+  <!-- GUIDE — mirrors guideContent() -->
+  <section id="guide" class="tab-panel active" role="tabpanel">
+    <div class="section-label">Supported Devices</div>
+    <div class="group">
+      <div class="row">
+        <div class="row-icon">📱</div>
+        <div class="row-body">
+          <div class="row-title">iPad with USB-C <span class="row-badge">USB-C</span></div>
+          <div class="row-detail">External USB video capture requires an iPad with a USB-C port.</div>
         </div>
-        <div class="body">
-             <p><strong>App Support</strong></p>
-                 If you have have a question, feature request or a bug report, please posting in the our
-                <a href="https://www.reddit.com/r/touchbits/">subreddit</a>.
-            <p>
-                If you want to talk to our devs directly, contact us <a href="mailto:contact@touchbits.com">
-                    here
-                </a>
-            </p>
-            <p>Thank you</p>
+      </div>
+      <div class="row">
+        <div class="row-icon">🎥</div>
+        <div class="row-body">
+          <div class="row-title">USB Video Class (UVC)</div>
+          <div class="row-detail">Capture from UVC-compatible devices such as capture cards, cameras, and webcams over USB-C only.</div>
         </div>
+      </div>
     </div>
-</body>
 
+    <div class="section-label">Gaming Setup</div>
+    <div class="group">
+      <div class="row">
+        <div class="row-icon">🎮</div>
+        <div class="row-body">
+          <div class="row-title">Connect Your Console</div>
+          <div class="row-detail">Connect the HDMI cable from the console to the capture card, then connect the capture card's USB to the iPad.</div>
+          <div class="row-extra">
+            <span>📱</span><span style="color:var(--ink-tert)">→</span><span>🔌</span><span style="color:var(--ink-tert)">→</span><span>🎮</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Tips</div>
+    <div class="group">
+      <div class="row">
+        <div class="row-icon">⚡</div>
+        <div class="row-body">
+          <div class="row-title">Use a Powered USB Hub</div>
+          <div class="row-detail">A powered hub keeps the iPad charged during video capture.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-icon">📈</div>
+        <div class="row-body">
+          <div class="row-title">USB 3.0 for High Resolution</div>
+          <div class="row-detail">For 1080p 60fps and higher, you'll need a USB 3.0 capture card and a USB 3.0 hub.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-icon">🔄</div>
+        <div class="row-body">
+          <div class="row-title">Screen Tearing Fix</div>
+          <div class="row-detail">Video capture bandwidth may be reduced after the iPad locks. Reconnect the device if you experience screen tearing.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-icon">📄</div>
+        <div class="row-body">
+          <div class="row-title">Format Settings</div>
+          <div class="row-detail">For best quality, use <code style="font-family:'JetBrains Mono',monospace;color:var(--accent-2)">420v</code> (raw). If your device lacks the bandwidth, switch to <code style="font-family:'JetBrains Mono',monospace;color:var(--accent-2)">420f</code> (compressed) under Settings &gt; Device &gt; Format.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ — mirrors faqContent() verbatim -->
+  <section id="faq" class="tab-panel" role="tabpanel">
+    <div class="group">
+      <div class="faq-row">
+        <div class="faq-q">Can I use an external USB camera with my iPhone?</div>
+        <div class="faq-a">External USB cameras are currently supported only on iPad. Apple limits USB video capture (UVC) to iPads with USB-C. This is an Apple platform limitation, not a CamX limitation.</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q">My USB device is not recognized. What should I do?</div>
+        <div class="faq-a">CamX works with devices that support the USB Video Class (UVC) protocol. Some cameras, microscopes, and borescopes use proprietary protocols and won't be recognized by iPadOS. If other UVC apps also don't detect your device, it likely doesn't support UVC. If you're sure your device supports UVC, iPadOS can occasionally fail to attach it; restarting the iPad usually fixes the issue.</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q">The image appears flipped or mirrored.</div>
+        <div class="faq-a">Some capture cards and video sources output a mirrored signal. Use the flip/mirror option in Device settings to correct the orientation.</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q">I'm getting screen tearing or dropped frames.</div>
+        <div class="faq-a">For best quality, use 420v (raw). If your device lacks the bandwidth, switch to 420f (compressed) under Settings &gt; Device &gt; Format. Also try lowering the resolution or frame rate, and make sure you are using a USB 3.0 cable and hub.</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q">My video recording failed to save.</div>
+        <div class="faq-a">Ensure your device has enough storage space before recording. For long sessions, try using a lower resolution to reduce file size. Check the App Cache section under More for any partial recordings.</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q">What USB cable and hub should I use?</div>
+        <div class="faq-a">Use a USB 3.0 cable and a powered USB hub for best results. A powered hub keeps the iPad charged during capture. USB 3.0 is required for 1080p 60fps and higher resolutions.</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q">Do you track any personal data?</div>
+        <div class="faq-a">CamX does not collect or track personal data. Core features work offline. Optional in-app purchases are processed by Apple.</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q">Can I license CamX for OEM or white-label use?</div>
+        <div class="faq-a">Yes. CamX is available for OEM and white-label licensing, including custom branding (app name, icon, theme), tailored feature sets, and capture-card bundling. Reach out via our <a href="https://www.reddit.com/r/touchbits/" target="_blank" rel="noopener" style="color:var(--accent-2)">subreddit</a> with your use case and estimated volume.</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q">Why are you charging for Pro membership?</div>
+        <div class="faq-a">I started CamX as a hobby project. Pro membership helps me sustain development while balancing other paid work. Pro features will focus on advanced tools for power users. Core functionality will remain free forever, and I'll keep adding new features over time.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="tab-panel" role="tabpanel">
+    <div class="section-label">Get in Touch</div>
+    <p style="color:var(--ink-dim);font-size:15px;max-width:560px;margin-bottom:8px">
+      Questions, bug reports, or feature requests — the subreddit is the fastest way to reach us and get answers from other CamX users.
+    </p>
+
+    <div class="contact-grid">
+      <a class="contact-card" href="https://www.reddit.com/r/touchbits/" target="_blank" rel="noopener">
+        <div class="icon-badge c-orange">💬</div>
+        <h3>Community subreddit</h3>
+        <p>Post questions, share setups, swap tips, and follow along as new features ship. Check here before posting — the answer might already be there.</p>
+        <span class="link">r/touchbits →</span>
+      </a>
+
+      <a class="contact-card" href="https://www.reddit.com/r/touchbits/submit" target="_blank" rel="noopener">
+        <div class="icon-badge c-cyan">🐞</div>
+        <h3>Report a bug</h3>
+        <p>Open a post on the subreddit with: your iPad model, iPadOS version, CamX version, reproduction steps, and a screenshot or screen recording if possible.</p>
+        <span class="link">New post →</span>
+      </a>
+
+      <a class="contact-card" href="https://www.reddit.com/r/touchbits/submit" target="_blank" rel="noopener">
+        <div class="icon-badge c-green">✨</div>
+        <h3>Feature request</h3>
+        <p>Have an idea for a new shader, monitoring tool, or workflow? Post it on the subreddit — user requests directly shape the roadmap.</p>
+        <span class="link">Suggest →</span>
+      </a>
+
+      <a class="contact-card" href="https://www.reddit.com/r/touchbits/submit" target="_blank" rel="noopener">
+        <div class="icon-badge c-purple">🏷️</div>
+        <h3>OEM &amp; white-label</h3>
+        <p>Custom branding, tailored feature sets, and capture-card bundling — DM the mods on the subreddit with your use case and estimated volume.</p>
+        <span class="link">Contact →</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>
+    <a href="index.html">CamX</a>·
+    <a href="privacy.html">Privacy</a>·
+    <a href="recommendations.html">Recommendations</a>·
+    <a href="../index.html">TouchBits Inc.</a>
+  </div>
+  <div class="footer-tag">© 2026 TouchBits Inc. · Made with Metal.</div>
+</footer>
+
+<script>
+// Tab switcher
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.tab-panel');
+function showTab(id){
+  tabs.forEach(t=>t.classList.toggle('active', t.dataset.tab===id));
+  panels.forEach(p=>p.classList.toggle('active', p.id===id));
+  history.replaceState(null,'','#'+id);
+}
+tabs.forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));
+// Deep-link via hash
+const h = location.hash.replace('#','');
+if(h && document.getElementById(h) && ['guide','faq','contact'].includes(h)) showTab(h);
+</script>
+</body>
 </html>

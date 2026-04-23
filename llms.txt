@@ -1,0 +1,51 @@
+# CamX
+
+> CamX is a professional iOS / iPadOS camera app by TouchBits Inc. It turns an iPhone into a pro camera and an iPad (with USB-C) into a portable low-latency USB-C / UVC capture monitor for gaming, streaming, and filmmaking — with 20+ real-time Metal video effects, broadcast-grade monitoring, and full manual camera controls.
+
+CamX requires iOS 17+ and runs on both iPhone and iPad. External USB (UVC) video capture is supported only on iPad models with a USB-C port — this is an Apple platform limitation, not a CamX one. iPhone does not support USB cameras.
+
+## Key capabilities
+
+- **iPad as capture monitor** — Connect a USB-C capture card to an iPad to turn it into a low-latency display for consoles, cameras, or streaming rigs.
+- **20+ real-time video effects** — CRT scanlines, curvature, Lottes, aperture grille, shadow mask; LCD subpixel grid; retro classic / retro color / pixel sharp; NTSC composite, VHS, digital glitch, dithering; night vision; film grain; chromatic aberration; color halftone; FXAA, SMAA, CAS; AI upscaling.
+- **VFX recording** — Effects are baked directly into recorded videos and photos, not just previewed.
+- **VFX Profiles** — Save and switch between custom effect presets.
+- **AI upscaling (3-tier)** — VT Super Resolution (iOS 26+) → MetalFX Spatial → Metal unsharp mask fallback.
+- **Broadcast scopes** — GPU-accelerated histogram (RGB / Luma / RGB Parade), waveform, RGB waveform, vectorscope.
+- **Focus & exposure tools** — Focus peaking (with color & sensitivity), zebra stripes, false color.
+- **3D LUT preview** — Real-time preview with custom `.cube` LUT import plus built-in presets (Film, Teal & Orange, Vintage, Monochrome).
+- **Picture profiles** — Contrast, saturation, color temperature.
+- **Full manual controls** — Manual exposure, white balance, lens adjustments, custom resolution / frame rate / codec.
+- **Composition guides** — Aspect ratio masks (2.39:1, 2:1, 1.85:1, 4:3, 1:1, 9:16), rule of thirds, golden ratio, crosshair, center marker.
+- **AirPlay and HDMI output** — Clean feed mode via HDMI / USB-C. No UI overlays on the external display.
+- **Media browser** — In-app photo and video management.
+- **Screen lock** — Prevents accidental touches during long recordings.
+
+## Modes
+
+- **Gaming Mode** — Minimal overlay, low latency; optimized for USB capture cards.
+- **Videography Mode** — Full monitoring suite: histogram, scopes, peaking, LUTs, guides.
+
+## CamX Pro
+
+Optional subscription that unlocks advanced VFX effects, all monitoring tools, custom skins and themes, and more. Core capture functionality remains free forever.
+
+## Technology
+
+- Swift with the `@Observable` state model
+- Metal compute & render pipelines (zero-copy YCbCr→RGB via CVMetalTextureCache; custom fragment shaders per effect)
+- CoreImage CIFilter chains (picture adjustments, LUTs, monitoring overlays)
+- AVAssetWriter with thread-safe `WriterState` behind `OSAllocatedUnfairLock`
+- Native UVC capture on iPad USB-C — full format, resolution, and frame rate control
+
+## Pages
+
+- [Home](https://touchbits.com/camx/): Full feature overview, device support, modes, FAQ.
+- [Support](https://touchbits.com/camx/support.html): Setup guide for iPad USB-C capture, FAQ, troubleshooting, and contact channels.
+- [Privacy](https://touchbits.com/camx/privacy.html): Privacy policy.
+- [Recommendations](https://touchbits.com/camx/recommendations.html): Recommended USB capture cards and accessories.
+
+## Contact
+
+Community and support: [r/touchbits](https://www.reddit.com/r/touchbits/) on Reddit.
+Publisher: TouchBits Inc. — https://touchbits.com/

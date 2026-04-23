@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CamX — Turn your iPad into a Portable USB-C Capture Monitor</title>
+<meta name="description" content="CamX turns your iPad into a portable USB-C / UVC capture monitor for gaming, streaming, and filmmaking. Low-latency HDMI-to-iPad display via USB capture card, with real-time CRT and VFX Metal shaders, 3D LUT preview, broadcast scopes (histogram, waveform, vectorscope), focus peaking, zebra stripes, and AirPlay output." />
+<meta name="keywords" content="CamX, USB, Camera, UVC, Video, Capture, Monitor, Display, HDMI, iPad, USB camera iPad, UVC camera iPad, USB-C capture iPad, HDMI capture iPad, iPad capture monitor, portable monitor iPad, video capture app, video monitor app, external display iPad, iOS camera app, professional camera iPhone, camera app iPad, CRT shader camera, retro camera, video effects, 3D LUT, focus peaking, vectorscope, waveform monitor, HEVC 4K recording, AI upscaling, AirPlay camera, videography app, camera for gamers, cinematic aspect ratio, zebra stripes, false color, picture profile" />
+<meta name="author" content="TouchBits Inc." />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<meta name="googlebot" content="index, follow" />
+<meta name="application-name" content="CamX" />
+<meta name="theme-color" content="#05060a" />
+<meta name="apple-mobile-web-app-title" content="CamX" />
+<link rel="canonical" href="https://touchbits.com/camx/" />
+<link rel="alternate" hreflang="en" href="https://touchbits.com/camx/" />
+<link rel="alternate" hreflang="zh" href="https://touchbits.com/camx/?lang=zh" />
+<link rel="alternate" hreflang="ja" href="https://touchbits.com/camx/?lang=ja" />
+<link rel="alternate" hreflang="x-default" href="https://touchbits.com/camx/" />
+<link rel="icon" type="image/png" href="img/app-icon.png" />
+<link rel="apple-touch-icon" href="img/app-icon.png" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="CamX" />
+<meta property="og:title" content="CamX — Turn your iPad into a Portable USB-C Capture Monitor" />
+<meta property="og:description" content="iPad as a low-latency USB-C / UVC capture display for gaming, streaming, and filmmaking. Real-time CRT/VFX shaders, 3D LUTs, broadcast scopes, focus peaking, AirPlay." />
+<meta property="og:url" content="https://touchbits.com/camx/" />
+<meta property="og:image" content="https://touchbits.com/camx/img/app-icon.png" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="CamX — iPad Capture Monitor" />
+<meta name="twitter:description" content="Turn your iPad into a portable USB-C / UVC capture monitor. Real-time VFX shaders, 3D LUTs, broadcast scopes, focus peaking." />
+<meta name="twitter:image" content="https://touchbits.com/camx/img/app-icon.png" />
+
+<!-- Structured data: SoftwareApplication -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"MobileApplication",
+  "name":"CamX",
+  "operatingSystem":"iOS 17.0+",
+  "applicationCategory":"MultimediaApplication",
+  "applicationSubCategory":"Camera",
+  "description":"Professional iOS camera app with real-time CRT and VFX Metal shaders, 3D LUT color grading, broadcast scopes (histogram, waveform, vectorscope), focus peaking, zebra stripes, 4K HEVC recording, AirPlay and HDMI output, and external USB (UVC) camera support on iPad.",
+  "url":"https://touchbits.com/camx/",
+  "image":"https://touchbits.com/camx/img/app-icon.png",
+  "inLanguage":["en","zh","ja","ko","fr","de","es","it","pt","ru","ar","hi","th","vi","id","tr","nl","pl","sv"],
+  "author":{"@type":"Organization","name":"TouchBits Inc.","url":"https://touchbits.com/"},
+  "publisher":{"@type":"Organization","name":"TouchBits Inc."},
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "featureList":[
+    "Real-time CRT shaders (scanlines, shadow mask, aperture grille, Lottes)",
+    "VFX: VHS, NTSC composite, film grain, chromatic aberration, night vision",
+    "AI upscaling (VT Super Resolution, MetalFX Spatial)",
+    "3D LUT preview with .cube import",
+    "Broadcast scopes: histogram, waveform, RGB parade, vectorscope",
+    "Focus peaking, zebra stripes, false color",
+    "Composition guides and cinematic aspect ratio masks",
+    "4K HEVC and H.264 recording",
+    "AirPlay clean feed and HDMI external display",
+    "AudioKit-powered audio processing",
+    "External USB (UVC) camera support on iPad"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"TouchBits","item":"https://touchbits.com/"},
+    {"@type":"ListItem","position":2,"name":"CamX","item":"https://touchbits.com/camx/"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Does CamX support external USB cameras?","acceptedAnswer":{"@type":"Answer","text":"On iPad, yes. CamX supports UVC-compatible USB cameras, webcams, and HDMI capture devices on iPadOS 17 or later, with full control over format, resolution, and frame rate. iPhone does not support USB cameras."}},
+    {"@type":"Question","name":"What video effects does CamX include?","acceptedAnswer":{"@type":"Answer","text":"CamX includes 20+ real-time Metal shaders: CRT scanlines, shadow mask, aperture grille, Lottes curvature, LCD subpixel grid, NTSC composite, VHS, digital glitch, dithering, night vision, film grain, chromatic aberration, color halftone, FXAA, SMAA, CAS, and AI upscaling."}},
+    {"@type":"Question","name":"Does CamX record the effects into the video file?","acceptedAnswer":{"@type":"Answer","text":"Yes. When any VFX effect or picture adjustment is active, CamX captures processed frames into the recorded video, screenshots, and the live stream — not just the preview."}},
+    {"@type":"Question","name":"What iOS version does CamX require?","acceptedAnswer":{"@type":"Answer","text":"CamX requires iOS 17.0 or later and runs on iPhone and iPad."}}
+  ]
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Matches PaywallView.swift — pure black bg, SwiftUI semantic colors */
+  --bg:#000000;
+  --bg-2:#0a0a0a;
+  --ink:#ffffff;
+  --ink-dim:rgba(235,235,245,0.6);      /* iOS .secondary on dark */
+  --ink-tert:rgba(235,235,245,0.3);     /* iOS .tertiary on dark */
+  --accent:#ffe100;                      /* Nikon yellow — solid, no gradient */
+  --accent-2:#64d2ff;                    /* SwiftUI cyan — contrast accent (links) */
+  --accent-3:#ffe100;                    /* alias to accent so gradients collapse to solid */
+  --accent-4:#ffe100;
+  --accent-shadow:rgba(40,30,0,0.55);    /* darker shadow under yellow elements */
+  /* Semantic feature palette — matches PaywallView.proFeatures colors */
+  --c-pink:#ff2d55;
+  --c-blue:#0a84ff;
+  --c-cyan:#64d2ff;
+  --c-orange:#ff9f0a;
+  --c-indigo:#5e5ce6;
+  --c-green:#30d158;
+  --c-brown:#a2845e;
+  --c-purple:#bf5af2;
+  --c-yellow:#ffd60a;
+  --c-red:#ff453a;
+  --c-mint:#66d4cf;
+  --c-teal:#40c8e0;
+  --card:rgba(255,255,255,0.04);
+  --card-border:rgba(255,255,255,0.08);
+  --divider:rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* RGB Lens background — mirrors PaywallView's RGBLensBackground
+   chromatic R/G/B/purple/cyan blobs, 60px blur, screen blend */
+.aurora{
+  position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg);
+  mix-blend-mode:normal;
+}
+.aurora .blob{
+  position:absolute;border-radius:50%;filter:blur(60px);mix-blend-mode:screen;
+  opacity:0.45;will-change:transform;
+}
+.aurora .blob.r{width:60vw;height:60vw;background:radial-gradient(circle,#ff453a 0%,transparent 60%);animation:spin 40s linear infinite}
+.aurora .blob.g{width:60vw;height:60vw;background:radial-gradient(circle,#30d158 0%,transparent 60%);animation:spin 40s linear infinite;animation-delay:-13.3s}
+.aurora .blob.b{width:60vw;height:60vw;background:radial-gradient(circle,#0a84ff 0%,transparent 60%);animation:spin 40s linear infinite;animation-delay:-26.6s}
+.aurora .blob.p{width:40vw;height:40vw;background:radial-gradient(circle,#bf5af2 0%,transparent 60%);animation:spin 60s linear infinite reverse;opacity:0.28}
+.aurora .blob.c{width:40vw;height:40vw;background:radial-gradient(circle,#64d2ff 0%,transparent 60%);animation:spin 60s linear infinite reverse;animation-delay:-20s;opacity:0.28}
+@keyframes spin{
+  0%  {transform:translate(-50%,-50%) rotate(0deg) translate(22vw) rotate(0deg)}
+  100%{transform:translate(-50%,-50%) rotate(360deg) translate(22vw) rotate(-360deg)}
+}
+.aurora .blob{top:40%;left:50%;transform:translate(-50%,-50%)}
+
+/* Grain overlay */
+.grain{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+}
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px 40px;display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  background:rgba(5,6,10,0.5);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:-0.02em}
+.logo img{width:34px;height:34px;border-radius:8px}
+.nav-links{display:flex;gap:32px}
+.nav-links a{color:var(--ink-dim);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.cta-btn{
+  padding:10px 22px;border-radius:999px;font-weight:700;font-size:14px;
+  background:var(--accent);
+  color:#000;text-decoration:none;border:none;cursor:pointer;
+  box-shadow:0 12px 32px -8px var(--accent-shadow), 0 2px 6px rgba(0,0,0,0.4);
+  transition:transform .2s, box-shadow .2s, background .2s;
+}
+.cta-btn:hover{background:#ffec4a}
+.cta-btn:hover{transform:translateY(-2px);background:#ffec4a;box-shadow:0 18px 40px -10px var(--accent-shadow), 0 4px 10px rgba(0,0,0,0.5)}
+.lang-switch{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--card);border:1px solid var(--card-border)}
+.lang-btn{
+  padding:6px 12px;border-radius:999px;border:none;background:transparent;color:var(--ink-dim);
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;cursor:pointer;
+  transition:background .2s, color .2s;
+}
+.lang-btn:hover{color:var(--ink)}
+.lang-btn.active{background:var(--accent);color:#000}
+@media (max-width:900px){.lang-switch{display:none}}
+
+/* Hero */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:140px 24px 80px;position:relative;
+}
+/* Eyebrow — matches PaywallView.sectionHeader: footnote/semibold, uppercase, tracking 0.5 */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:600;color:var(--ink-dim);
+  text-transform:uppercase;letter-spacing:0.5px;
+  margin-bottom:16px;
+  font-family:'Inter',-apple-system,sans-serif;
+}
+/* Optional pill variant (used in hero) */
+.eyebrow.pill{
+  padding:8px 16px;border-radius:999px;border:1px solid var(--card-border);
+  background:var(--card);letter-spacing:0.08em;
+  font-family:'JetBrains Mono',monospace;
+}
+/* PRO badge — matches PaywallView "Pro" label exactly:
+   monospaced heavy, tracking 4, uppercase, black-on-tint, 4pt corners */
+.pro-badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;font-weight:800;
+  letter-spacing:4px;text-transform:uppercase;
+  color:#000;background:var(--accent);
+  padding:6px 14px;border-radius:4px;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 12px #4ade80;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.5}}
+h1{
+  font-size:clamp(48px,9vw,120px);font-weight:900;letter-spacing:-0.04em;line-height:0.95;
+  background:linear-gradient(180deg,#fff 0%,#fff 40%,#8c8e9a 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:24px;
+}
+h1 .grad{
+  color:var(--accent);
+  -webkit-text-fill-color:var(--accent);
+  text-shadow:0 4px 32px rgba(255,225,0,0.25);
+}
+.subtitle{font-size:clamp(16px,2vw,20px);color:var(--ink-dim);max-width:640px;margin:0 auto 40px}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.btn-secondary{
+  padding:14px 28px;border-radius:999px;border:1px solid var(--card-border);
+  background:var(--card);color:var(--ink);text-decoration:none;font-weight:600;font-size:15px;
+  backdrop-filter:blur(10px);transition:all .2s;
+}
+.btn-secondary:hover{border-color:var(--accent-2);color:var(--accent-2)}
+.btn-primary-lg{
+  padding:14px 32px;border-radius:999px;font-size:15px;font-weight:700;
+  background:var(--accent);color:#000;text-decoration:none;
+  box-shadow:0 18px 44px -12px var(--accent-shadow), 0 4px 10px rgba(0,0,0,0.5);
+  transition:transform .2s, background .2s;
+}
+.btn-primary-lg:hover{transform:translateY(-2px);background:#ffec4a}
+
+/* Marquee tags */
+.tag-strip{
+  margin-top:80px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:900px;
+}
+.tag{
+  padding:6px 14px;border-radius:999px;background:var(--card);border:1px solid var(--card-border);
+  font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--ink-dim);
+}
+
+/* Sections */
+section{padding:120px 24px;position:relative}
+.container{max-width:1280px;margin:0 auto}
+.section-head{text-align:center;max-width:760px;margin:0 auto 80px}
+.section-head .eyebrow{margin-bottom:16px}
+.section-head h2{
+  font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:20px;
+  background:linear-gradient(180deg,#fff 0%,#a0a2af 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.section-head p{color:var(--ink-dim);font-size:18px}
+
+/* Feature grid (bento) */
+.bento{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:16px;
+}
+.card{
+  position:relative;border-radius:24px;overflow:hidden;padding:32px;
+  background:var(--card);border:1px solid var(--card-border);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  transition:transform .3s, border-color .3s;
+  min-height:260px;display:flex;flex-direction:column;justify-content:space-between;
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.18)}
+.card::before{
+  content:"";position:absolute;inset:0;opacity:0;transition:opacity .3s;
+  background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),rgba(255,46,99,0.1),transparent 40%);
+  pointer-events:none;
+}
+.card:hover::before{opacity:1}
+/* Icon badge — matches PaywallView.iconBadge: 45×45 rounded-rect radius 14,
+   background color.opacity(0.15), icon color at full opacity. */
+.card-icon{
+  width:45px;height:45px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;font-size:22px;
+  background:rgba(255,45,85,0.15);     /* default pink */
+  color:var(--c-pink);
+  border:none;
+}
+.card-icon.c-pink{background:rgba(255,45,85,0.15);color:var(--c-pink)}
+.card-icon.c-blue{background:rgba(10,132,255,0.15);color:var(--c-blue)}
+.card-icon.c-cyan{background:rgba(100,210,255,0.15);color:var(--c-cyan)}
+.card-icon.c-orange{background:rgba(255,159,10,0.15);color:var(--c-orange)}
+.card-icon.c-indigo{background:rgba(94,92,230,0.15);color:var(--c-indigo)}
+.card-icon.c-green{background:rgba(48,209,88,0.15);color:var(--c-green)}
+.card-icon.c-brown{background:rgba(162,132,94,0.15);color:var(--c-brown)}
+.card-icon.c-purple{background:rgba(191,90,242,0.15);color:var(--c-purple)}
+.card-icon.c-yellow{background:rgba(255,214,10,0.15);color:var(--c-yellow)}
+.card-icon.c-red{background:rgba(255,69,58,0.15);color:var(--c-red)}
+.card-icon.c-mint{background:rgba(102,212,207,0.15);color:var(--c-mint)}
+.card-icon.c-teal{background:rgba(64,200,224,0.15);color:var(--c-teal)}
+.card h3{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:10px}
+.card p{color:var(--ink-dim);font-size:14.5px;line-height:1.6}
+
+.span-3{grid-column:span 3}
+.span-2{grid-column:span 2}
+.span-4{grid-column:span 4}
+.span-6{grid-column:span 6}
+
+/* Hero card (large feature) */
+.hero-card{
+  background:
+    radial-gradient(ellipse at top right,rgba(0,229,255,0.15),transparent 50%),
+    radial-gradient(ellipse at bottom left,rgba(255,46,99,0.12),transparent 50%),
+    var(--card);
+  min-height:420px;padding:48px;
+}
+.hero-card h3{font-size:36px;line-height:1.05;margin-bottom:16px}
+.hero-card p{font-size:16px;max-width:480px}
+
+/* VFX visual */
+.vfx-demo{
+  position:relative;height:180px;border-radius:16px;overflow:hidden;margin-top:24px;
+  background:
+    repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(0,0,0,0.35) 3px,rgba(0,0,0,0.35) 4px),
+    linear-gradient(135deg,#ff2e63,#b56bff,#00e5ff);
+  box-shadow:inset 0 0 100px rgba(0,0,0,0.4);
+}
+.vfx-demo::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,0.6) 100%);
+}
+.vfx-label{
+  position:absolute;top:14px;left:14px;font-family:'JetBrains Mono',monospace;font-size:11px;
+  padding:4px 10px;border-radius:6px;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);
+  color:#00ff88;letter-spacing:0.1em;z-index:2;
+}
+
+/* Scope visual */
+.scope-demo{
+  height:120px;margin-top:20px;border-radius:12px;overflow:hidden;position:relative;
+  background:#000;border:1px solid rgba(0,229,255,0.2);
+}
+.scope-demo svg{width:100%;height:100%}
+
+/* Stream platforms */
+.platforms{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;
+}
+.platform{
+  padding:8px 14px;border-radius:10px;background:rgba(255,255,255,0.05);
+  border:1px solid var(--card-border);font-size:13px;font-weight:500;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:60px;text-align:center;
+}
+.stat-num{
+  font-size:56px;font-weight:900;letter-spacing:-0.04em;line-height:1;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-3));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-lbl{color:var(--ink-dim);font-size:13px;margin-top:8px;font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase}
+
+/* Modes section */
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.mode-card{
+  padding:40px 32px;border-radius:24px;border:1px solid var(--card-border);
+  background:var(--card);position:relative;overflow:hidden;min-height:360px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  transition:transform .3s;
+}
+.mode-card:hover{transform:translateY(-6px)}
+.mode-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:220px;opacity:0.6;
+}
+.mode-gaming::before{background:radial-gradient(ellipse at top,rgba(255,46,99,0.4),transparent 70%)}
+.mode-videography::before{background:radial-gradient(ellipse at top,rgba(255,209,102,0.35),transparent 70%)}
+.mode-streaming::before{background:radial-gradient(ellipse at top,rgba(0,229,255,0.4),transparent 70%)}
+.mode-emoji{font-size:64px;position:absolute;top:36px;left:50%;transform:translateX(-50%);filter:drop-shadow(0 0 30px rgba(255,255,255,0.4))}
+.mode-card h3{font-size:28px;font-weight:800;letter-spacing:-0.02em;margin-bottom:10px;position:relative}
+.mode-card p{color:var(--ink-dim);font-size:14px;position:relative}
+.mode-card ul{list-style:none;margin-top:16px;position:relative}
+.mode-card li{font-size:13px;color:var(--ink-dim);padding:4px 0;font-family:'JetBrains Mono',monospace}
+.mode-card li::before{content:"→ ";color:var(--accent-2)}
+
+/* Tech strip */
+.tech-strip{
+  margin-top:60px;padding:40px;border-radius:24px;border:1px solid var(--card-border);
+  background:var(--card);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;
+}
+.tech-item h4{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-2);letter-spacing:0.1em;margin-bottom:8px}
+.tech-item p{font-size:14px;color:var(--ink-dim);line-height:1.5}
+
+/* CTA */
+.cta-section{
+  text-align:center;padding:120px 24px;
+  background:
+    radial-gradient(ellipse at center,rgba(255,46,99,0.15),transparent 50%);
+}
+.cta-section h2{font-size:clamp(40px,6vw,80px);font-weight:900;letter-spacing:-0.04em;line-height:1;margin-bottom:24px}
+
+/* Footer */
+footer{
+  padding:60px 24px 40px;border-top:1px solid var(--card-border);text-align:center;
+  color:var(--ink-dim);font-size:13px;
+}
+footer a{color:var(--ink-dim);text-decoration:none;margin:0 12px}
+footer a:hover{color:var(--ink)}
+
+/* Responsive */
+@media (max-width:900px){
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .span-3,.span-4,.span-2,.span-6{grid-column:span 2}
+  .modes{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr);gap:24px}
+  .tech-strip{grid-template-columns:1fr 1fr;gap:24px;padding:28px}
+  section{padding:80px 20px}
+  .hero-card{padding:32px}
+  .hero-card h3{font-size:28px}
+}
+
+/* Reveal animation */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s, transform .8s}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true">
+  <div class="blob r"></div>
+  <div class="blob g"></div>
+  <div class="blob b"></div>
+  <div class="blob p"></div>
+  <div class="blob c"></div>
+</div>
+<div class="grain"></div>
+
+<nav aria-label="Primary">
+  <div class="logo">
+    <img src="img/app-icon.png" alt="CamX app icon" width="34" height="34" />
+    <span>CamX</span>
+  </div>
+  <div class="nav-links">
+    <a href="#features" data-i18n="navFeatures">Features</a>
+    <a href="#modes" data-i18n="navModes">Modes</a>
+    <a href="#vfx" data-i18n="navVFX">VFX</a>
+    <a href="#faq" data-i18n="navFAQ">FAQ</a>
+    <a href="support.html" data-i18n="navSupport">Support</a>
+  </div>
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button data-lang="en" class="lang-btn active" type="button">EN</button>
+    <button data-lang="zh" class="lang-btn" type="button">中文</button>
+    <button data-lang="ja" class="lang-btn" type="button">日本語</button>
+  </div>
+  <a href="https://apps.apple.com/app/camx" class="cta-btn" data-i18n="navCTA">Get on App Store</a>
+</nav>
+
+<main><header class="hero" role="banner">
+  <span class="eyebrow pill" data-i18n="heroEyebrow"><span class="dot"></span> iPadOS 17+ &nbsp;·&nbsp; USB-C capture &nbsp;·&nbsp; UVC</span>
+  <h1 data-i18n-html="heroTitle">Your iPad is a<br/><span class="grad">portable monitor.</span></h1>
+  <p class="subtitle" data-i18n="heroSubtitle">Plug a USB-C capture card into your iPad and CamX turns it into a low-latency capture display for gaming, streaming, and filmmaking — with real-time video effects and broadcast monitoring built in.</p>
+  <div class="hero-cta">
+    <a href="https://apps.apple.com/app/camx" class="btn-primary-lg" data-i18n="heroCTA1">Download Free</a>
+    <a href="#features" class="btn-secondary" data-i18n="heroCTA2">See the features ↓</a>
+  </div>
+  <div class="tag-strip">
+    <span class="tag">4K HEVC</span>
+    <span class="tag">CRT Shaders</span>
+    <span class="tag">AI Upscale</span>
+    <span class="tag">3D LUT</span>
+    <span class="tag">Vectorscope</span>
+    <span class="tag">Focus Peaking</span>
+    <span class="tag">AirPlay</span>
+    <span class="tag">iPad USB-C Capture</span>
+    <span class="tag">UVC</span>
+    <span class="tag">Media Browser</span>
+  </div>
+</header>
+
+<!-- FEATURES BENTO -->
+<section id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="featEyebrow">Features</span>
+      <h2 data-i18n="featTitle">Everything a pro camera should be.</h2>
+      <p data-i18n="featSubtitle">Real-time effects, professional monitoring, and full manual control — a studio in your pocket.</p>
+    </div>
+
+    <div class="bento">
+      <div class="card hero-card span-4 reveal">
+        <div>
+          <div class="card-icon c-red">🎬</div>
+          <h3 data-i18n="f1t">20+ real-time effects — baked into your recording.</h3>
+          <p data-i18n="f1d">CRT scanlines, screen curvature, shadow masks, retro pixel styles, LCD grids, VHS, NTSC composite, dithering, night vision, film grain, chromatic aberration, and more. Apply live and capture directly into your video and photos.</p>
+        </div>
+        <div class="vfx-demo">
+          <span class="vfx-label">● CRT · LOTTES · 0.6</span>
+        </div>
+      </div>
+
+      <div class="card span-2 reveal">
+        <div class="card-icon c-purple">🎛️</div>
+        <h3 data-i18n="f2t">VFX Profiles</h3>
+        <p data-i18n="f2d">Save and switch between custom effect presets instantly. Dial in your look once — recall it with a tap.</p>
+      </div>
+
+      <div class="card span-2 reveal">
+        <div class="card-icon c-blue">🧠</div>
+        <h3 data-i18n="f3t">AI upscaling</h3>
+        <p data-i18n="f3d">Enhance low-resolution sources with sharper visuals. Three-tier engine: VT Super Resolution, MetalFX Spatial, and a Metal unsharp shader.</p>
+      </div>
+
+      <div class="card span-2 reveal">
+        <div class="card-icon c-cyan">📊</div>
+        <h3 data-i18n="f4t">GPU histogram & scopes</h3>
+        <p data-i18n="f4d">RGB, Luma, and RGB Parade histograms. Waveform, RGB waveform, and vectorscope — all Metal-accelerated, full frame rate.</p>
+        <div class="scope-demo">
+          <svg viewBox="0 0 200 80" preserveAspectRatio="none">
+            <path d="M0,60 Q20,20 40,45 T80,30 T120,50 T160,20 T200,40 L200,80 L0,80 Z" fill="rgba(0,229,255,0.3)" stroke="#00e5ff" stroke-width="1"/>
+            <path d="M0,50 Q25,35 50,55 T100,25 T150,45 T200,30 L200,80 L0,80 Z" fill="rgba(255,46,99,0.2)" stroke="#ff2e63" stroke-width="1"/>
+            <path d="M0,65 Q30,30 60,50 T120,40 T180,55 L200,50 L200,80 L0,80 Z" fill="rgba(255,209,102,0.2)" stroke="#ffd166" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="card span-2 reveal">
+        <div class="card-icon c-red">🔍</div>
+        <h3 data-i18n="f5t">Focus & exposure</h3>
+        <p data-i18n="f5d">Focus peaking with color and sensitivity, zebra stripes for overexposure, and false-color heat maps. The same tools your DP uses.</p>
+      </div>
+
+      <div class="card span-2 reveal">
+        <div class="card-icon c-indigo">🎨</div>
+        <h3 data-i18n="f6t">3D LUT preview</h3>
+        <p data-i18n="f6d">Real-time preview with custom .cube LUT import. Plus built-in presets — Film, Teal &amp; Orange, Vintage, Monochrome.</p>
+      </div>
+
+      <div class="card span-3 reveal">
+        <div class="card-icon c-yellow">🎚️</div>
+        <h3 data-i18n="f7t">Full manual camera controls</h3>
+        <p data-i18n="f7d">Manual exposure, white balance, and lens adjustments. Custom resolution, frame rate, and codec settings. Plus picture profiles — contrast, saturation, color temperature.</p>
+      </div>
+
+      <div class="card span-3 reveal">
+        <div class="card-icon c-yellow">📐</div>
+        <h3 data-i18n="f8t">Composition guides</h3>
+        <p data-i18n="f8d">Aspect ratio masks (2.39:1, 2:1, 1.85:1, 4:3, 1:1, 9:16), rule of thirds, golden ratio, crosshairs, center marker, and configurable guide colors.</p>
+      </div>
+
+      <div class="card span-2 reveal">
+        <div class="card-icon c-teal">🖥️</div>
+        <h3 data-i18n="f9t">iPad as a capture monitor</h3>
+        <p data-i18n="f9d">Connect a USB capture card to an iPad with USB-C — instantly turn it into a portable display for gaming, streaming, or filmmaking.</p>
+      </div>
+
+      <div class="card span-2 reveal">
+        <div class="card-icon c-teal">📺</div>
+        <h3 data-i18n="f10t">AirPlay &amp; HDMI out</h3>
+        <p data-i18n="f10d">Clean feed mode with HDMI / USB-C output — no overlays on the external display. Perfect for monitors and streaming setups.</p>
+      </div>
+
+      <div class="card span-2 reveal">
+        <div class="card-icon c-orange">🗂️</div>
+        <h3 data-i18n="f11t">Media browser &amp; screen lock</h3>
+        <p data-i18n="f11d">Manage photos and videos directly in the app. Lock the screen to prevent accidental touches during long recordings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section id="modes">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="modesEyebrow">Two modes, one app</span>
+      <h2 data-i18n="modesTitle">Tuned for the way you shoot.</h2>
+      <p data-i18n="modesSubtitle">Switch modes to reconfigure the UI, the HUD, and the performance envelope — so the camera gets out of your way.</p>
+    </div>
+    <div class="modes" style="grid-template-columns:repeat(2,1fr)">
+      <div class="mode-card mode-gaming reveal">
+        <div class="mode-emoji">🎮</div>
+        <h3 data-i18n="modeGamingTitle">Gaming Mode</h3>
+        <p data-i18n="modeGamingDesc">Minimal overlay with low latency, optimized for capture cards. Perfect for consoles and retro hardware.</p>
+        <ul>
+          <li data-i18n="modeGaming1">Low-latency preview</li>
+          <li data-i18n="modeGaming2">CRT / retro shaders</li>
+          <li data-i18n="modeGaming3">Clean HDMI feed</li>
+        </ul>
+      </div>
+      <div class="mode-card mode-videography reveal">
+        <div class="mode-emoji">🎥</div>
+        <h3 data-i18n="modeVideoTitle">Videography Mode</h3>
+        <p data-i18n="modeVideoDesc">Full monitoring tools including histogram, scopes, focus peaking, LUTs, composition guides, and picture adjustments.</p>
+        <ul>
+          <li data-i18n="modeVideo1">RGB parade + vectorscope</li>
+          <li data-i18n="modeVideo2">Focus peaking + zebra</li>
+          <li data-i18n="modeVideo3">3D LUT preview</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRO -->
+<section id="pro" aria-labelledby="pro-head">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pro-badge" style="margin-bottom:20px">PRO</span>
+      <h2 id="pro-head" data-i18n="proTitle" style="margin-top:4px">Unlock the full studio.</h2>
+      <p data-i18n="proSubtitle">Pro unlocks VFX effects, advanced monitoring tools, custom skins, and more. Everything you already love about CamX stays free.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VFX DEEP DIVE -->
+<section id="vfx">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="vfxEyebrow">Video Effects</span>
+      <h2 data-i18n="vfxTitle">A shader playground in your pocket.</h2>
+      <p data-i18n="vfxSubtitle">20+ effects across 7 categories, rendered in Metal. Real-time and recorded.</p>
+    </div>
+    <div class="bento">
+      <div class="card span-2 reveal"><div class="card-icon c-teal">📺</div><h3 data-i18n="vfx1t">CRT family</h3><p data-i18n="vfx1d">Scanlines · Curved · Lottes · Aperture grille · Shadow mask · Barrel distortion · Bloom.</p></div>
+      <div class="card span-2 reveal"><div class="card-icon c-indigo">🟦</div><h3 data-i18n="vfx2t">LCD / Retro</h3><p data-i18n="vfx2d">LCD subpixel grid · Pixel sharp · Retro classic · Retro color.</p></div>
+      <div class="card span-2 reveal"><div class="card-icon c-brown">📻</div><h3 data-i18n="vfx3t">Analog</h3><p data-i18n="vfx3d">NTSC composite · VHS · Digital glitch · Dithering.</p></div>
+      <div class="card span-3 reveal"><div class="card-icon c-green">🌌</div><h3 data-i18n="vfx4t">Stylized</h3><p data-i18n="vfx4d">Night vision · Film grain · Chromatic aberration · Color halftone — cinematic looks applied in real time over the full capture pipeline.</p></div>
+      <div class="card span-3 reveal"><div class="card-icon c-cyan">⚡</div><h3 data-i18n="vfx5t">Anti-aliasing & upscale</h3><p data-i18n="vfx5d">FXAA · SMAA · CAS · AI upscaling — pristine output even from modest sources.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="techEyebrow">Under the hood</span>
+      <h2 data-i18n="techTitle">Engineered without compromise.</h2>
+      <p data-i18n="techSubtitle">Written in Swift with an @Observable state model, lock-free capture pipelines, and a GPU-first rendering architecture.</p>
+    </div>
+
+    <div class="stats reveal">
+      <div><div class="stat-num">7</div><div class="stat-lbl" data-i18n="stat1">Effect Categories</div></div>
+      <div><div class="stat-num">20+</div><div class="stat-lbl" data-i18n="stat2">Real-time Effects</div></div>
+      <div><div class="stat-num">4K</div><div class="stat-lbl" data-i18n="stat3">HEVC Recording</div></div>
+      <div><div class="stat-num">19</div><div class="stat-lbl" data-i18n="stat4">Languages</div></div>
+    </div>
+
+    <div class="tech-strip reveal">
+      <div class="tech-item"><h4>// METAL</h4><p data-i18n="techMetal">Zero-copy YCbCr→RGB via CVMetalTextureCache. Custom fragment shaders for every effect.</p></div>
+      <div class="tech-item"><h4>// COREIMAGE</h4><p data-i18n="techCI">CIFilter chains for picture adjustments, LUTs, and monitoring overlays.</p></div>
+      <div class="tech-item"><h4>// AVFOUNDATION</h4><p data-i18n="techAV">AVAssetWriter with thread-safe WriterState behind OSAllocatedUnfairLock.</p></div>
+      <div class="tech-item"><h4>// UVC</h4><p data-i18n="techUVC">Native UVC capture on iPad with USB-C — full format, resolution, and frame rate control.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (indexable visible content) -->
+<section id="faq" aria-labelledby="faq-head">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="faqEyebrow">FAQ</span>
+      <h2 id="faq-head" data-i18n="faqTitle">Frequently asked questions.</h2>
+    </div>
+    <div class="bento" style="grid-template-columns:repeat(2,1fr)">
+      <article class="card span-3 reveal"><h3 data-i18n="faq1Q">Does CamX support external USB cameras?</h3><p data-i18n="faq1A">Yes, on iPad with USB-C. CamX supports UVC-compatible USB cameras, webcams, and HDMI capture devices on iPad running iPadOS 17 or later, with full control over format, resolution, and frame rate. iPhone does not support USB cameras.</p></article>
+      <article class="card span-3 reveal"><h3 data-i18n="faq2Q">Can I use my iPad as a portable capture monitor?</h3><p data-i18n="faq2A">Yes. Connect a USB-C capture card to an iPad and CamX instantly turns it into a low-latency portable display — perfect for gaming, streaming, or filmmaking.</p></article>
+      <article class="card span-3 reveal"><h3 data-i18n="faq3Q">Are the video effects recorded into the file?</h3><p data-i18n="faq3A">Yes. When VFX or picture adjustments are active, CamX bakes the effects into the recorded video and photos — not just the preview.</p></article>
+      <article class="card span-3 reveal"><h3 data-i18n="faq4Q">What iOS version is required?</h3><p data-i18n="faq4A">CamX requires iOS 17.0 or later and runs on both iPhone and iPad. Photo capture via the volume button requires iOS 17.2+.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" aria-labelledby="cta-head">
+  <div class="container">
+    <h2 id="cta-head" class="reveal" data-i18n-html="ctaTitle">Your next shoot<br/><span style="color:var(--accent)">starts now.</span></h2>
+    <p class="reveal" data-i18n="ctaSubtitle" style="color:var(--ink-dim);font-size:18px;max-width:560px;margin:0 auto 40px">Free to download. Pro features unlock the full studio.</p>
+    <div class="reveal">
+      <a href="https://apps.apple.com/app/camx" class="btn-primary-lg" data-i18n="ctaButton">Download on App Store</a>
+    </div>
+  </div>
+</section>
+
+</main><footer role="contentinfo">
+  <div class="logo" style="justify-content:center;margin-bottom:20px"><img src="img/app-icon.png" alt="CamX" width="34" height="34"/><span>CamX</span></div>
+  <div>
+    <a href="privacy.html">Privacy</a>·
+    <a href="support.html">Support</a>·
+    <a href="recommendations.html">Recommendations</a>·
+    <a href="../index.html">TouchBits Inc.</a>
+  </div>
+  <div style="margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:11px;opacity:0.5">© 2026 TouchBits Inc. · Made with Metal.</div>
+</footer>
+
+<script>
+// i18n ────────────────────────────────────────
+const I18N = {
+  en: {
+    metaTitle:"CamX — Turn your iPad into a Portable USB-C Capture Monitor",
+    metaDesc:"CamX turns your iPad into a portable USB-C / UVC capture monitor for gaming, streaming, and filmmaking. Low-latency HDMI-to-iPad display via USB capture card, with real-time CRT and VFX Metal shaders, 3D LUT preview, broadcast scopes, focus peaking, zebra stripes, and AirPlay output.",
+    navFeatures:"Features", navModes:"Modes", navVFX:"VFX", navFAQ:"FAQ", navSupport:"Support", navCTA:"Get on App Store",
+    heroEyebrow:'<span class="dot"></span> iPadOS 17+ &nbsp;·&nbsp; USB-C capture &nbsp;·&nbsp; UVC',
+    heroTitle:'Your iPad is a<br/><span class="grad">portable monitor.</span>',
+    heroSubtitle:"Plug a USB-C capture card into your iPad and CamX turns it into a low-latency capture display for gaming, streaming, and filmmaking — with real-time video effects and broadcast monitoring built in.",
+    heroCTA1:"Download Free", heroCTA2:"See the features ↓",
+    featEyebrow:"Features", featTitle:"Everything a pro camera should be.",
+    featSubtitle:"Real-time effects, professional monitoring, and full manual control — a studio in your pocket.",
+    f1t:"20+ real-time effects — baked into your recording.",
+    f1d:"CRT scanlines, screen curvature, shadow masks, retro pixel styles, LCD grids, VHS, NTSC composite, dithering, night vision, film grain, chromatic aberration, and more. Apply live and capture directly into your video and photos.",
+    f2t:"VFX Profiles", f2d:"Save and switch between custom effect presets instantly. Dial in your look once — recall it with a tap.",
+    f3t:"AI upscaling", f3d:"Enhance low-resolution sources with sharper visuals. Three-tier engine: VT Super Resolution, MetalFX Spatial, and a Metal unsharp shader.",
+    f4t:"GPU histogram & scopes", f4d:"RGB, Luma, and RGB Parade histograms. Waveform, RGB waveform, and vectorscope — all Metal-accelerated, full frame rate.",
+    f5t:"Focus & exposure", f5d:"Focus peaking with color and sensitivity, zebra stripes for overexposure, and false-color heat maps. The same tools your DP uses.",
+    f6t:"3D LUT preview", f6d:"Real-time preview with custom .cube LUT import. Plus built-in presets — Film, Teal & Orange, Vintage, Monochrome.",
+    f7t:"Full manual camera controls", f7d:"Manual exposure, white balance, and lens adjustments. Custom resolution, frame rate, and codec settings. Plus picture profiles — contrast, saturation, color temperature.",
+    f8t:"Composition guides", f8d:"Aspect ratio masks (2.39:1, 2:1, 1.85:1, 4:3, 1:1, 9:16), rule of thirds, golden ratio, crosshairs, center marker, and configurable guide colors.",
+    f9t:"iPad as a capture monitor", f9d:"Connect a USB capture card to an iPad with USB-C — instantly turn it into a portable display for gaming, streaming, or filmmaking.",
+    f10t:"AirPlay & HDMI out", f10d:"Clean feed mode with HDMI / USB-C output — no overlays on the external display. Perfect for monitors and streaming setups.",
+    f11t:"Media browser & screen lock", f11d:"Manage photos and videos directly in the app. Lock the screen to prevent accidental touches during long recordings.",
+    modesEyebrow:"Two modes, one app", modesTitle:"Tuned for the way you shoot.",
+    modesSubtitle:"Switch modes to reconfigure the UI, the HUD, and the performance envelope — so the camera gets out of your way.",
+    modeGamingTitle:"Gaming Mode", modeGamingDesc:"Minimal overlay with low latency, optimized for capture cards. Perfect for consoles and retro hardware.",
+    modeGaming1:"Low-latency preview", modeGaming2:"CRT / retro shaders", modeGaming3:"Clean HDMI feed",
+    modeVideoTitle:"Videography Mode", modeVideoDesc:"Full monitoring tools including histogram, scopes, focus peaking, LUTs, composition guides, and picture adjustments.",
+    modeVideo1:"RGB parade + vectorscope", modeVideo2:"Focus peaking + zebra", modeVideo3:"3D LUT preview",
+    proEyebrow:"CamX Pro", proTitle:"Unlock the full studio.",
+    proSubtitle:"Pro unlocks VFX effects, advanced monitoring tools, custom skins, and more. Everything you already love about CamX stays free.",
+    vfxEyebrow:"Video Effects", vfxTitle:"A shader playground in your pocket.", vfxSubtitle:"20+ effects across 7 categories, rendered in Metal. Real-time and recorded.",
+    vfx1t:"CRT family", vfx1d:"Scanlines · Curved · Lottes · Aperture grille · Shadow mask · Barrel distortion · Bloom.",
+    vfx2t:"LCD / Retro", vfx2d:"LCD subpixel grid · Pixel sharp · Retro classic · Retro color.",
+    vfx3t:"Analog", vfx3d:"NTSC composite · VHS · Digital glitch · Dithering.",
+    vfx4t:"Stylized", vfx4d:"Night vision · Film grain · Chromatic aberration · Color halftone — cinematic looks applied in real time over the full capture pipeline.",
+    vfx5t:"Anti-aliasing & upscale", vfx5d:"FXAA · SMAA · CAS · AI upscaling — pristine output even from modest sources.",
+    techEyebrow:"Under the hood", techTitle:"Engineered without compromise.",
+    techSubtitle:"Written in Swift with an @Observable state model, lock-free capture pipelines, and a GPU-first rendering architecture.",
+    stat1:"Effect Categories", stat2:"Real-time Effects", stat3:"HEVC Recording", stat4:"Languages",
+    techMetal:"Zero-copy YCbCr→RGB via CVMetalTextureCache. Custom fragment shaders for every effect.",
+    techCI:"CIFilter chains for picture adjustments, LUTs, and monitoring overlays.",
+    techAV:"AVAssetWriter with thread-safe WriterState behind OSAllocatedUnfairLock.",
+    techUVC:"Native UVC capture on iPad with USB-C — full format, resolution, and frame rate control.",
+    faqEyebrow:"FAQ", faqTitle:"Frequently asked questions.",
+    faq1Q:"Does CamX support external USB cameras?",
+    faq1A:"Yes, on iPad with USB-C. CamX supports UVC-compatible USB cameras, webcams, and HDMI capture devices on iPad running iPadOS 17 or later, with full control over format, resolution, and frame rate. iPhone does not support USB cameras.",
+    faq2Q:"Can I use my iPad as a portable capture monitor?",
+    faq2A:"Yes. Connect a USB-C capture card to an iPad and CamX instantly turns it into a low-latency portable display — perfect for gaming, streaming, or filmmaking.",
+    faq3Q:"Are the video effects recorded into the file?",
+    faq3A:"Yes. When VFX or picture adjustments are active, CamX bakes the effects into the recorded video and photos — not just the preview.",
+    faq4Q:"What iOS version is required?",
+    faq4A:"CamX requires iOS 17.0 or later and runs on both iPhone and iPad. Photo capture via the volume button requires iOS 17.2+.",
+    ctaTitle:'Your next shoot<br/><span style="color:var(--accent)">starts now.</span>',
+    ctaSubtitle:"Free to download. Pro features unlock the full studio.",
+    ctaButton:"Download on App Store",
+  },
+  zh: {
+    metaTitle:"CamX — 让 iPad 变成便携 USB-C 采集监视器",
+    metaDesc:"CamX 让你的 iPad 变成便携的 USB-C / UVC 采集监视器，适用于游戏、直播和影视制作。通过 USB 采集卡将 HDMI 信号低延迟显示在 iPad 上，提供实时 CRT 与 VFX Metal 滤镜、3D LUT 预览、广播级示波器、峰值对焦、斑马纹和 AirPlay 输出。",
+    navFeatures:"功能", navModes:"模式", navVFX:"特效", navFAQ:"常见问题", navSupport:"支持", navCTA:"前往 App Store",
+    heroEyebrow:'<span class="dot"></span> iPadOS 17+ &nbsp;·&nbsp; USB-C 采集 &nbsp;·&nbsp; UVC',
+    heroTitle:'让 iPad 变成<br/><span class="grad">便携监视器。</span>',
+    heroSubtitle:"将 USB-C 采集卡接入 iPad，CamX 立即将其变为低延迟采集显示器——面向游戏、直播与影视制作，内建实时视频特效与广播级监看工具。",
+    heroCTA1:"免费下载", heroCTA2:"查看功能 ↓",
+    featEyebrow:"功能", featTitle:"专业相机应有的一切。",
+    featSubtitle:"实时特效、专业监看、完整手动控制——口袋里的工作室。",
+    f1t:"20+ 实时特效，直接录入画面。",
+    f1d:"CRT 扫描线、屏幕弧面、荫罩、复古像素、LCD 网格、VHS、NTSC 合成信号、抖动、夜视、胶片颗粒、色差等。实时应用并直接烘焙进视频和照片。",
+    f2t:"特效配置文件", f2d:"保存并一键切换自定义预设。调好一次，随叫随到。",
+    f3t:"AI 超分辨率", f3d:"让低分辨率源画面更清晰。三级引擎：VT Super Resolution、MetalFX Spatial，以及 Metal 非锐化着色器。",
+    f4t:"GPU 直方图与示波器", f4d:"RGB、亮度、RGB Parade 直方图。波形图、RGB 波形、矢量示波器——全部 Metal 加速、满帧运行。",
+    f5t:"对焦与曝光辅助", f5d:"峰值对焦（可选颜色与灵敏度）、斑马纹、伪彩色——与专业摄影指导同款工具。",
+    f6t:"3D LUT 预览", f6d:"支持导入 .cube LUT 实时预览。内置预设：Film、Teal & Orange、Vintage、Monochrome。",
+    f7t:"完整手动相机控制", f7d:"手动曝光、白平衡、镜头调节。自定义分辨率、帧率、编码格式。还有画面配置文件——对比度、饱和度、色温。",
+    f8t:"构图辅助", f8d:"宽高比遮罩（2.39:1、2:1、1.85:1、4:3、1:1、9:16）、三分法、黄金比例、十字线、中心标记、可配置辅助线颜色。",
+    f9t:"iPad 即采集监视器", f9d:"将 USB 采集卡接入带 USB-C 的 iPad——立即变身为便携显示器，适用于游戏、直播或影视制作。",
+    f10t:"AirPlay 与 HDMI 输出", f10d:"纯净画面模式配合 HDMI / USB-C 输出——外接显示无任何叠加层，监视器与直播配置的理想选择。",
+    f11t:"媒体浏览器与屏幕锁", f11d:"在应用内管理照片和视频。长时间录制时锁定屏幕，防止误触。",
+    modesEyebrow:"两种模式，一款应用", modesTitle:"为你的拍摄方式而调校。",
+    modesSubtitle:"切换模式即可重构 UI、HUD 与性能策略——让相机远离干扰。",
+    modeGamingTitle:"游戏模式", modeGamingDesc:"最简叠加与低延迟显示，为采集卡场景优化。适合游戏主机与复古硬件。",
+    modeGaming1:"低延迟预览", modeGaming2:"CRT / 复古滤镜", modeGaming3:"纯净 HDMI 输出",
+    modeVideoTitle:"影像模式", modeVideoDesc:"完整监看工具，包括直方图、示波器、峰值对焦、LUT、构图辅助与画面调节。",
+    modeVideo1:"RGB Parade + 矢量示波器", modeVideo2:"峰值对焦 + 斑马纹", modeVideo3:"3D LUT 预览",
+    proEyebrow:"CamX Pro", proTitle:"解锁完整工作室。",
+    proSubtitle:"Pro 解锁视频特效、进阶监看工具、自定义皮肤等。你喜爱的 CamX 功能依然免费。",
+    vfxEyebrow:"视频特效", vfxTitle:"口袋里的着色器游乐场。", vfxSubtitle:"7 个类别、20+ 种 Metal 特效。实时应用并直接录制。",
+    vfx1t:"CRT 家族", vfx1d:"扫描线 · 弧面 · Lottes · 孔栅 · 荫罩 · 桶形畸变 · 辉光。",
+    vfx2t:"LCD / 复古", vfx2d:"LCD 子像素网格 · 像素锐化 · 复古经典 · 复古色彩。",
+    vfx3t:"模拟信号", vfx3d:"NTSC 合成 · VHS · 数字故障 · 抖动。",
+    vfx4t:"风格化", vfx4d:"夜视 · 胶片颗粒 · 色差 · 彩色半调——在完整采集管线中实时应用的电影化风格。",
+    vfx5t:"抗锯齿与放大", vfx5d:"FXAA · SMAA · CAS · AI 超分辨率——即便是普通信号源也能呈现清晰画面。",
+    techEyebrow:"底层架构", techTitle:"毫不妥协的工程设计。",
+    techSubtitle:"基于 Swift @Observable 状态模型、无锁采集管线与 GPU 优先渲染架构。",
+    stat1:"特效分类", stat2:"实时特效", stat3:"HEVC 录制", stat4:"语言支持",
+    techMetal:"通过 CVMetalTextureCache 实现零拷贝 YCbCr→RGB 转换。每种特效都有专属片段着色器。",
+    techCI:"CIFilter 链条处理画面调节、LUT 与监看叠加层。",
+    techAV:"AVAssetWriter 配合 OSAllocatedUnfairLock 保障线程安全的 WriterState。",
+    techUVC:"iPad USB-C 原生 UVC 采集——完整控制格式、分辨率与帧率。",
+    faqEyebrow:"常见问题", faqTitle:"常见问题。",
+    faq1Q:"CamX 支持外接 USB 摄像头吗？",
+    faq1A:"是的，支持配备 USB-C 的 iPad。CamX 支持 iPadOS 17 及以上系统的 UVC 兼容 USB 摄像头、网络摄像头和 HDMI 采集设备，可完整控制格式、分辨率和帧率。iPhone 不支持 USB 摄像头。",
+    faq2Q:"可以把 iPad 当便携采集监视器用吗？",
+    faq2A:"可以。将 USB-C 采集卡接入 iPad，CamX 立即将其变成低延迟便携显示器——适合游戏、直播或影视制作。",
+    faq3Q:"视频特效会录入文件吗？",
+    faq3A:"会。当视频特效或画面调节开启时，CamX 会将效果直接烘焙进录制的视频和照片——而非仅预览。",
+    faq4Q:"需要什么系统版本？",
+    faq4A:"CamX 需要 iOS 17.0 或更高版本，支持 iPhone 与 iPad。通过音量键拍照需要 iOS 17.2+。",
+    ctaTitle:'下一次拍摄<br/><span style="color:var(--accent)">此刻开始。</span>',
+    ctaSubtitle:"免费下载。Pro 解锁完整工作室。",
+    ctaButton:"前往 App Store 下载",
+  },
+  ja: {
+    metaTitle:"CamX — iPad をポータブル USB-C キャプチャーモニターに",
+    metaDesc:"CamX は iPad をポータブル USB-C / UVC キャプチャーモニターに変えます。USB キャプチャーカード経由で HDMI 信号を低遅延表示、リアルタイム CRT & VFX Metal シェーダー、3D LUT プレビュー、プロ用スコープ、フォーカスピーキング、ゼブラ、AirPlay 出力を搭載。",
+    navFeatures:"機能", navModes:"モード", navVFX:"エフェクト", navFAQ:"FAQ", navSupport:"サポート", navCTA:"App Store で入手",
+    heroEyebrow:'<span class="dot"></span> iPadOS 17+ &nbsp;·&nbsp; USB-C キャプチャー &nbsp;·&nbsp; UVC',
+    heroTitle:'iPad が、<br/><span class="grad">ポータブルモニターに。</span>',
+    heroSubtitle:"iPad に USB-C キャプチャーカードを接続するだけで、CamX が低遅延のキャプチャーディスプレイに変身。ゲーム・配信・映像制作に、リアルタイム映像エフェクトとプロ用モニタリングを搭載。",
+    heroCTA1:"無料ダウンロード", heroCTA2:"機能を見る ↓",
+    featEyebrow:"機能", featTitle:"プロカメラに必要なすべて。",
+    featSubtitle:"リアルタイムエフェクト、プロモニタリング、フルマニュアル制御——ポケットの中のスタジオ。",
+    f1t:"20種類以上のリアルタイムエフェクトを映像に直接焼き込み。",
+    f1d:"CRT スキャンライン、画面湾曲、シャドウマスク、レトロピクセル、LCD グリッド、VHS、NTSC コンポジット、ディザ、ナイトビジョン、フィルムグレイン、色収差ほか。リアルタイムで適用し、動画と写真に直接記録。",
+    f2t:"エフェクトプロファイル", f2d:"カスタムプリセットを保存し、ワンタップで切り替え。一度調整したルックを即座に呼び出し。",
+    f3t:"AI アップスケール", f3d:"低解像度ソースをシャープに。3段階エンジン：VT Super Resolution、MetalFX Spatial、Metal アンシャープシェーダー。",
+    f4t:"GPU ヒストグラム & スコープ", f4d:"RGB・輝度・RGB Parade ヒストグラム。波形、RGB 波形、ベクトルスコープ——すべて Metal 高速化、フルフレームレート。",
+    f5t:"フォーカス & 露出", f5d:"色と感度を設定可能なフォーカスピーキング、ゼブラストライプ、フォルスカラー——プロの撮影監督と同じツール。",
+    f6t:"3D LUT プレビュー", f6d:"カスタム .cube LUT をリアルタイムプレビュー。内蔵プリセット：Film、Teal & Orange、Vintage、Monochrome。",
+    f7t:"フルマニュアルカメラ制御", f7d:"マニュアル露出、ホワイトバランス、レンズ調整。解像度・フレームレート・コーデックのカスタム設定。ピクチャープロファイル（コントラスト・彩度・色温度）も。",
+    f8t:"構図ガイド", f8d:"アスペクト比マスク（2.39:1、2:1、1.85:1、4:3、1:1、9:16）、三分割、黄金比、クロスヘア、センターマーカー、ガイドカラー設定。",
+    f9t:"iPad をキャプチャーモニターに", f9d:"USB-C 対応 iPad に USB キャプチャーカードを接続——即座にポータブルディスプレイに変身。ゲーム、配信、映像制作に最適。",
+    f10t:"AirPlay & HDMI 出力", f10d:"クリーンフィードモード × HDMI / USB-C 出力——外部ディスプレイにオーバーレイなし。モニターや配信環境に最適。",
+    f11t:"メディアブラウザ & 画面ロック", f11d:"アプリ内で写真と動画を管理。長時間録画中の誤タッチを画面ロックで防止。",
+    modesEyebrow:"2つのモード、1つのアプリ", modesTitle:"撮り方に合わせて最適化。",
+    modesSubtitle:"モードを切り替えて UI、HUD、パフォーマンスを再構成——カメラが邪魔にならないように。",
+    modeGamingTitle:"ゲーミングモード", modeGamingDesc:"低遅延で最小限のオーバーレイ。キャプチャーカード向けに最適化。コンソールやレトロ機器に最適。",
+    modeGaming1:"低遅延プレビュー", modeGaming2:"CRT / レトロシェーダー", modeGaming3:"クリーン HDMI 出力",
+    modeVideoTitle:"ビデオグラフィモード", modeVideoDesc:"ヒストグラム、スコープ、フォーカスピーキング、LUT、構図ガイド、画質調整を含むフルモニタリング。",
+    modeVideo1:"RGB Parade + ベクトルスコープ", modeVideo2:"ピーキング + ゼブラ", modeVideo3:"3D LUT プレビュー",
+    proEyebrow:"CamX Pro", proTitle:"フルスタジオ体験を解放。",
+    proSubtitle:"Pro で VFX エフェクト、高度なモニタリング、カスタムスキンなどを解放。今まで使っていた機能はすべて無料のまま。",
+    vfxEyebrow:"映像エフェクト", vfxTitle:"ポケットの中のシェーダー遊園地。", vfxSubtitle:"7カテゴリー、20種類以上の Metal エフェクト。リアルタイム適用＆録画。",
+    vfx1t:"CRT ファミリー", vfx1d:"スキャンライン · 湾曲 · Lottes · アパーチャーグリル · シャドウマスク · 樽型歪み · ブルーム。",
+    vfx2t:"LCD / レトロ", vfx2d:"LCD サブピクセルグリッド · ピクセルシャープ · レトロクラシック · レトロカラー。",
+    vfx3t:"アナログ", vfx3d:"NTSC コンポジット · VHS · デジタルグリッチ · ディザリング。",
+    vfx4t:"スタイライズ", vfx4d:"ナイトビジョン · フィルムグレイン · 色収差 · カラーハーフトーン——キャプチャー全体に映画的ルックをリアルタイム適用。",
+    vfx5t:"アンチエイリアス & アップスケール", vfx5d:"FXAA · SMAA · CAS · AI アップスケール——控えめなソースからも鮮明な出力を。",
+    techEyebrow:"内部アーキテクチャ", techTitle:"妥協なきエンジニアリング。",
+    techSubtitle:"Swift の @Observable ステートモデル、ロックフリーキャプチャーパイプライン、GPU ファーストレンダリングで設計。",
+    stat1:"エフェクト分類", stat2:"リアルタイム エフェクト", stat3:"HEVC 録画", stat4:"対応言語",
+    techMetal:"CVMetalTextureCache によるゼロコピー YCbCr→RGB 変換。エフェクトごとに専用フラグメントシェーダー。",
+    techCI:"CIFilter チェーンで画像調整・LUT・モニタリングオーバーレイを処理。",
+    techAV:"AVAssetWriter と OSAllocatedUnfairLock による スレッドセーフな WriterState。",
+    techUVC:"USB-C 搭載 iPad でのネイティブ UVC キャプチャー——フォーマット、解像度、フレームレートを完全制御。",
+    faqEyebrow:"FAQ", faqTitle:"よくある質問。",
+    faq1Q:"CamX は外部 USB カメラに対応していますか？",
+    faq1A:"はい、USB-C 搭載 iPad で対応しています。CamX は iPadOS 17 以降で UVC 対応の USB カメラ、ウェブカム、HDMI キャプチャーデバイスをサポートし、フォーマット・解像度・フレームレートを完全に制御できます。iPhone は USB カメラをサポートしていません。",
+    faq2Q:"iPad をポータブルキャプチャーモニターとして使えますか？",
+    faq2A:"はい。iPad に USB-C キャプチャーカードを接続すれば、CamX が低遅延のポータブルディスプレイに即座に変身——ゲーム、配信、映像制作に最適です。",
+    faq3Q:"映像エフェクトは録画ファイルに保存されますか？",
+    faq3A:"はい。VFX や画質調整が有効な場合、CamX はエフェクトをプレビューだけでなく録画した動画や写真に直接焼き込みます。",
+    faq4Q:"必要な iOS バージョンは？",
+    faq4A:"CamX は iOS 17.0 以降が必要で、iPhone と iPad の両方で動作します。音量ボタンでの写真撮影には iOS 17.2 以降が必要です。",
+    ctaTitle:'次の撮影は、<br/><span style="color:var(--accent)">今から。</span>',
+    ctaSubtitle:"ダウンロード無料。Pro でフルスタジオを解放。",
+    ctaButton:"App Store でダウンロード",
+  }
+};
+
+function applyLang(lang){
+  if(!I18N[lang]) lang='en';
+  const d = I18N[lang];
+  document.documentElement.lang = lang;
+  document.title = d.metaTitle;
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if(metaDesc) metaDesc.setAttribute('content', d.metaDesc);
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.getAttribute('data-i18n');
+    if(d[k] !== undefined) el.textContent = d[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const k = el.getAttribute('data-i18n-html');
+    if(d[k] !== undefined) el.innerHTML = d[k];
+  });
+  // heroEyebrow contains HTML (dot span)
+  const he = document.querySelector('[data-i18n="heroEyebrow"]');
+  if(he && d.heroEyebrow) he.innerHTML = d.heroEyebrow;
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  try{ localStorage.setItem('camx-lang', lang); }catch(e){}
+}
+
+(function initLang(){
+  const urlLang = new URLSearchParams(location.search).get('lang');
+  let stored = null;
+  try{ stored = localStorage.getItem('camx-lang'); }catch(e){}
+  const browser = (navigator.language || 'en').toLowerCase();
+  let initial = urlLang || stored;
+  if(!initial){
+    if(browser.startsWith('zh')) initial='zh';
+    else if(browser.startsWith('ja')) initial='ja';
+    else initial='en';
+  }
+  applyLang(initial);
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.addEventListener('click', ()=>applyLang(b.dataset.lang));
+  });
+})();
+
+// Mouse-follow glow on cards
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    card.style.setProperty('--my',(e.clientY-r.top)+'px');
+  });
+});
+
+// Reveal on scroll
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
